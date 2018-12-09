@@ -9,6 +9,8 @@ Ver: https://vuetifyjs.com/en/components/data-tables.
     <v-container>
       <!-- Dentro del siguiente tag se debe agregar el buscador y los metodos de ordenamiento. -->
       <v-layout row class="mb-3">
+        <formulario-cliente/>
+
         <!-- Boton para ordenar por nombre. -->
         <v-btn small flat color="grey" @click="ordenarPor('nombre')">
           <v-icon small left>sort_by_alpha</v-icon>
@@ -63,7 +65,13 @@ Ver: https://vuetifyjs.com/en/components/data-tables.
 // Importar la lista de clientes. 
 // Este json se deberia obtener desde la base de datos. FIXME.
 var clientes = require('../assets/listaClientes').listaClientes;
+
+import formularioCliente from '../forms/FormularioCliente'
+
 export default {
+  components : {
+    formularioCliente
+  },
   data() {
     return {
       // La lista de clientes.
