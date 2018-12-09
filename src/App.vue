@@ -1,31 +1,31 @@
+<!-- Vista general de la app. Contiene un toolbar y la vista del router. -->
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app class="grey lighten-3">
+    <!-- Utilizar mi navigationbar -->
+    <navigationBar/>
+    <!-- 
+      El contenido sera la vista del router.
+      Aplica un margen de 4 a los bordes laterales y un margen de 2 al borde superior e inferior.
+      Mas info: https://vuetifyjs.com/en/layout/spacing
+    -->
+    <v-content class="mx-4 my-2">
+      <router-view/>
+    </v-content>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+// Importar mi toolbar.
+import navigationBar from '@/components/myNavigationBar'
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+export default {
+  name: 'App',
+
+  components :{
+    navigationBar
+  },
+
+  data () {return {}}
 }
-</style>
+</script>

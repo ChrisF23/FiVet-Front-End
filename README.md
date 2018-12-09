@@ -1,29 +1,15 @@
-# front-end-1
+# FiVet Front-End
 
-## Project setup
+## Instalacion:
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
+## Compilar y ejecutar:
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Estructura del proyecto:
+* **src/components**: Componentes de la pagina. Por ejemplo, la barra de navegacion.
+* **src/views**: Contiene las vistas. Son el contenido de la pagina.
+* **src/router.js**: Especificacion de las rutas.

@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+
+import Inicio from './views/Inicio.vue'
+import Pacientes from './views/Pacientes.vue'
+import Clientes from './views/Clientes.vue'
+import DetalleCliente from './views/DetalleCliente.vue'
+import RegistrosMedicos from './views/RegistrosMedicos.vue'
 
 Vue.use(Router)
 
@@ -8,18 +13,36 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    // Muestra la pagina principal.
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'inicio',
+      component: Inicio
     },
+    // Muestra la lista de pacientes.
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/pacientes',
+      name: 'pacientes',
+      component: Pacientes
+    },
+    // Muestra la lista de clientes.
+    {
+      path: '/clientes',
+      name: 'clientes',
+      component: Clientes
+    },
+    // Muestra el detalle de un cliente dado su id.
+    {
+      path: '/clientes/:id',
+      name: 'cliente',
+      props: true,
+      component: DetalleCliente
+    },
+    // Muestra la lista de registros medicos.
+    {
+      path: '/registros',
+      name: 'registrosMedicos',
+      component: RegistrosMedicos
     }
   ]
 })
