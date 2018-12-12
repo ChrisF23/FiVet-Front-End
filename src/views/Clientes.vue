@@ -5,7 +5,8 @@ Ver: https://vuetifyjs.com/en/components/data-tables.
 <template>
   <div class="clientes">
     <h1>Clientes</h1>
-    <v-layout row wrap>
+
+    <v-layout column>
       <v-data-table :headers="atributosCliente" :items="listaClientes" class="elevation-1">
         <template slot="items" slot-scope="props">
           <td>{{ props.item.nombre }}</td>
@@ -15,9 +16,8 @@ Ver: https://vuetifyjs.com/en/components/data-tables.
           <td class="text-xs-left">{{ props.item.direccion }}</td>
         </template>
       </v-data-table>
-
-      <formulario-cliente/>
     </v-layout>
+    <formulario-cliente/>
   </div>
 </template>
 
