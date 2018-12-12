@@ -2,68 +2,19 @@
   <div class="pacientes">
     <h1>Pacientes</h1>  
    
-   
-    <v-container>
-      <!-- Dentro del siguiente tag se debe agregar el buscador y los metodos de ordenamiento. -->
-      <v-layout row class="mb-3">
-        <formulario-paciente/>
-
-        <!-- Boton para ordenar por nombre. -->
-        <v-btn small flat color="grey" @click="ordenarPor('nombre')">
-          <v-icon small left>sort_by_alpha</v-icon>
-          <span class="caption text-lowercase">por Nombre</span>
-        </v-btn>
-      </v-layout>
-
-      <!-- Renderiza una tarjeta por cada paciente en la listaPacientes -->
-      <v-card flat class="pa-3" v-for="paciente in listaPacientes" :key="paciente.id">
-        <v-layout row wrap>
-          <!-- Columnas -->
-          <v-flex xs6 md3>
-            <div class="caption grey--text">Nombre</div>
-            <div>{{ paciente.nombre }}</div>
-          </v-flex>
-
-          <v-flex xs6 md2>
-            <div class="caption grey--text">Dueño</div>
- 
-            <!-- FIXME: llamar a nombre de dueño a traves de id -->
-            <div>{{ paciente.duenio }}</div>
-          </v-flex>
-
-          <v-flex xs6 md2>
-            <div class="caption grey--text">Especie</div>
-            <div>{{ paciente.especie }}</div>
-          </v-flex>
-
-          <v-flex xs6 md2>
-            <div class="caption grey--text">Sexo</div>
-            <div>{{ paciente.sexo }}</div>
-          </v-flex>
-
-          <v-flex xs6 md2>
-            <div class="caption grey--text">Castrado</div>
-            <div>{{ paciente.castrado }}</div>
-          </v-flex>
-
-          <v-flex xs6 md2>
-            <div class="caption grey--text">Fecha de Nacimiento</div>
-            
-            <!-- FIXME: obtención por ultimo registro -->
-            <div>{{ paciente.fechaNacimiento }}</div>
-          </v-flex>
-
-          <!-- Boton para ingresar al detalle del paciente. TODO. -->
-          <v-flex xs1 sm1>
-            <!-- No es la mejor forma de linkear. FIXME. -->
-            <v-btn small flat icon color="warning" router :to="'/pacientes/'+paciente.id">
-              <v-icon>remove_red_eye</v-icon>
-            </v-btn>
-          </v-flex>
-
-        </v-layout>
-      </v-card>
-    </v-container>
+  <v-layout column>
+      <v-data-table :headers="atributosPaciente" :items="listaPacientes" class="elevation-1">
+        <template slot="items" slot-scope="props">
+          <td>{{ props.item.nombre }}</td>
+          <td class="text-xs-left">{{ props.item.duenio }}</td>
+          <td class="text-xs-left">{{ props.item.especie }}</td>
+          <td class="text-xs-left">{{ props.item.sexo }}</td>
+          <td class="text-xs-left">{{ props.item.castrado }}</td>
+          <td class="text-xs-left">{{ props.item.fechaNacimiento }}</td>
+        </template>
+      </v-data-table>
+    </v-layout>
+    <formulario-paciente/>
   </div>
 </template>
 
@@ -81,7 +32,15 @@ export default {
   data() {
     return {
       // La lista de pacientes.
-      listaPacientes : pacientes
+      listaPacientes : pacientes,
+       atributosPaciente: [
+        { text: "Nombre", value: "nombre", sortable: true },
+        { text: "Dueño", value: "duenio", sortable: true },
+        { text: "Especie", value: "especie", sortable: true },
+        { text: "Sexo", value: "sexo", sortable: true },
+        { text: "Castrado", value: "castrado", sortable: true },
+        { text: "Fecha de Nacimiento", value: "fechaNacimiento", sortable: true }
+      ]
     };
   },
 

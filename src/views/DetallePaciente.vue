@@ -8,7 +8,7 @@
         <v-layout row>
           <v-flex pa-3 xs1>
            
-            <v-avatar size="200">
+            <v-avatar size="400">
               <img :src="paciente.imageUrl">
             </v-avatar>
           </v-flex>
