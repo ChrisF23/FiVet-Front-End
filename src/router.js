@@ -5,6 +5,7 @@ import Inicio from './views/Inicio.vue'
 import Pacientes from './views/Pacientes.vue'
 import Clientes from './views/Clientes.vue'
 import DetalleCliente from './views/DetalleCliente.vue'
+import DetallePaciente from './views/DetallePaciente.vue'
 import RegistrosMedicos from './views/RegistrosMedicos.vue'
 
 Vue.use(Router)
@@ -24,6 +25,13 @@ export default new Router({
       path: '/pacientes',
       name: 'pacientes',
       component: Pacientes
+    },
+    // Muestra el detalle de un paciente dado su id.
+    {
+      path: '/pacientes/:id',
+      name: 'paciente',
+      props: true,
+      component: DetallePaciente
     },
     // Muestra la lista de clientes.
     {

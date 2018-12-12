@@ -77,7 +77,7 @@
 
 <script>
 
-var pacientes = require("../assets/listaPacientes").listapacientes;
+var pacientes = require("../assets/listaPacientes").listaPacientes;
 export default {
   props: ["id"],
   data() {

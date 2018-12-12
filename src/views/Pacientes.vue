@@ -80,7 +80,7 @@ export default {
   },
   data() {
     return {
-      // La lista de clientes.
+      // La lista de pacientes.
       listaPacientes : pacientes
     };
   },
