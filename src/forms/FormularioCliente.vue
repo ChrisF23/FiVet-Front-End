@@ -1,5 +1,5 @@
 <template>
-  <v-layout row justify-center>
+  <v-layout justify-end>
     <!-- Se crea un enlace con el dialogo a traves de v-model="dialog" -->
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-btn round slot="activator" color="primario darken-1" dark>
