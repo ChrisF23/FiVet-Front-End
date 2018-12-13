@@ -17,11 +17,12 @@
     <formulario-paciente/>
   </div>
 </template>
-
 <script>
-  // Importar la lista de pacientes. 
+// Importar la lista de clientes. 
 // Este json se deberia obtener desde la base de datos. FIXME.
-var pacientes = require('../assets/listaPacientes').listaPacientes;
+//var clientes = require('../assets/listaClientes').listaClientes;
+const axios = require('axios');
+
 
 import formularioPaciente from '../forms/FormularioPaciente'
 
@@ -43,19 +44,32 @@ export default {
       ]
     };
   },
+// Fetches posts when the component is created.
+  created() {
+    axios.get(`http://localhost:3000/api/pacientes`)
+    .then(response => {
+      // JSON responses are automatically parsed.
+      this.listaPacientes = response.data
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+  },
+
+  mounted() {
+    axios.get(`http://localhost:3000/api/pacientes`)
+    .then(response => {
+      // JSON responses are automatically parsed.
+      this.listaPacientes = response.data
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+  },
 
   methods: {
-    ordenarPor(atributo) {
-      this.listaPacientes.sort((c1, c2) => c1[atributo] < c2[atributo] ? -1 : 1);
+    actualizarLista(){
       
-    },
-
-    // No implementado.
-    buscar (_nombre){
-      return this.listaPacientes.filter(paciente => {
-        if (_nombre)
-        return paciente.nombre === _nombre;
-      })
     }
   }
 };
