@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-// Importar la lista de clientes. 
+// Importar la lista de Pacientes. 
 // Este json se deberia obtener desde la base de datos. FIXME.
 //var clientes = require('../assets/listaClientes').listaClientes;
 const axios = require('axios');
