@@ -1,21 +1,21 @@
 <template>
-  <v-layout justify-end>
+  <v-layout row justify-center>
     <!-- Se crea un enlace con el dialogo a traves de v-model="dialog" -->
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-btn round slot="activator" color="primario darken-1" dark>
-        <v-icon left>add</v-icon>Agregar Cliente
+        <v-icon left>add</v-icon>Agregar Paciente
       </v-btn>
       <v-card>
         <v-card-title>
-          <span class="headline">Agregar Cliente</span>
+          <span class="headline">Agregar Paciente</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6>
                 <v-text-field
-                  label="Nombres"
-                  v-model="tf_nombres"
+                  label="Nombre"
+                  v-model="tf_nombre"
                   required
                   :rules="this.reglasNombre"
                 ></v-text-field>
@@ -23,34 +23,40 @@
 
               <v-flex xs12 sm6>
                 <v-text-field
-                  label="Apellidos"
-                  v-model="tf_apellidos"
+                  label="Especie"
+                  v-model="tf_especie"
                   required
-                  :rules="this.reglasApellido"
+                  :rules="this.reglasEspecie"
                 ></v-text-field>
               </v-flex>
 
               <v-flex xs6>
-                <v-text-field
-                  label="Rut"
-                  v-model="tf_rut"
-                  hint="12.345.678-0"
-                  required
-                  :rules="this.reglasRut"
-                ></v-text-field>
+                <v-text-field label="Raza" v-model="tf_raza"></v-text-field>
               </v-flex>
 
               <v-flex xs6>
-                <v-text-field label="Telefono" v-model="tf_telefono" hint="+56X XXXXXXXX"></v-text-field>
+                <v-text-field label="Color" v-model="tf_color"></v-text-field>
+              </v-flex>
+              
+              <v-flex xs6>
+                <v-text-field label="Número de Chip" v-model="tf_id"></v-text-field>
+              </v-flex>
+              
+              
+              <v-flex xs12 sm6 d-flex>
+                <v-select
+                  :items="items"
+                  label="Castrado:"
+                  outline
+                ></v-select>
               </v-flex>
 
-              <v-flex xs6>
-                <v-text-field label="Email" v-model="tf_email"></v-text-field>
-              </v-flex>
 
-              <v-flex xs6>
-                <v-text-field label="Direccion" v-model="tf_direccion" hint="Calle #XXXX"></v-text-field>
-              </v-flex>
+              <!-- Corregir: Poner la ultima fecha de registro medico -->
+              <v-date-picker label="Ultima Visita:" v-model="ultimaVisitaInput" :reactive="reactive" ></v-date-picker> 
+              
+              
+
             </v-layout>
           </v-container>
         </v-card-text>
@@ -72,9 +78,10 @@ export default {
     dialog: false,
     valid: false,
 
+    items: ['Si', 'No'],
+
     reglasNombre: [v => !!v || "Se requiere un nombre."],
-    reglasApellido: [v => !!v || "Se requiere un apellido."],
-    reglasRut: [v => !!v || "Se requiere un rut."]
+    reglasEspecie: [v => !!v || "Especifique una especie."]
   }),
 
   methods: {
