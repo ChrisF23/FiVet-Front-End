@@ -83,18 +83,19 @@ export default {
 
     methods: {
       initialize () {
-          this.$http.get('http://localhost:3000/api/clientes')
+          this.$http.get('http://localhost:3000/api/pacientes')
             .then(function(response) {
-              this.clientes = response.body;
+              this.pacientes = response.body;
               this.$http.get('http://localhost:3000/api/registro_medico')
                 .then(function(response) {
                   this.registrosMedicos = response.body;
                   console.log(this.registrosMedicos);
                   this.registrosMedicos.forEach(registro => {
-                    registro.paciente = this.clientes.find(function(cliente) {
-                      console.log(cliente);
-                      return cliente.id == registro.paciente_id;
+                    let paciente = this.pacientes.find(function(p) {
+                      return p.id == registro.paciente_id;
                     });
+                    console.log('paciente', paciente);
+                    registro.paciente = paciente.nombre;
                   });
               });
           });
