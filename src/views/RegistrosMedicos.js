@@ -108,7 +108,7 @@ export default {
 
       deleteItem (item) {
         const index = this.registrosMedicos.indexOf(item)
-        if (confirm('¿Estás seguro que quieres eliminat el registro médico?') && this.registrosMedicos.splice(index, 1)){
+        if (confirm('¿Estás seguro de que quieres eliminar el registro médico?') && this.registrosMedicos.splice(index, 1)){
           this.$http.delete('http://localhost:3000/api/registro_medico/' + item.id).then(
             function (response) {
               console.log(response);
