@@ -141,7 +141,7 @@ export default {
           this.$http.put('http://localhost:3000/api/registro_medico', this.cleanedItem(this.editedItem))
             .then(function(response) {
               console.log('updated reg', this.registrosMedicos);
-              this.registrosMedicos[this.editedIndex] = this.editedItem;
+              this.registrosMedicos.splice(this.editedIndex, 1, this.editedItem);
               console.log('registro de arreglo', this.registrosMedicos[this.editedIndex]);
           });
         } else {
