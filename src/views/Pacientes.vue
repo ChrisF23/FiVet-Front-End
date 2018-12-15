@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       // La lista de pacientes.
-      listaPacientes : pacientes,
+      listaPacientes : [],
        atributosPaciente: [
         { text: "Nombre", value: "nombre", sortable: true },
         { text: "Dueño", value: "duenio", sortable: true },
