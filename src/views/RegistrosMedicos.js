@@ -12,6 +12,7 @@ export default {
         { text: 'Fecha', value: 'fecha' }
       ],
       registrosMedicos: [],
+      pacientes: [],
       editedIndex: -1,
       editedItem: {
         id: '',
@@ -82,9 +83,20 @@ export default {
 
     methods: {
       initialize () {
-          this.$http.get('http://localhost:3000/api/registro_medico')
+          this.$http.get('http://localhost:3000/api/clientes')
             .then(function(response) {
-              this.registrosMedicos = response.body;
+              this.clientes = response.body;
+              this.$http.get('http://localhost:3000/api/registro_medico')
+                .then(function(response) {
+                  this.registrosMedicos = response.body;
+                  console.log(this.registrosMedicos);
+                  this.registrosMedicos.forEach(registro => {
+                    registro.paciente = this.clientes.find(function(cliente) {
+                      console.log(cliente);
+                      return cliente.id == registro.paciente_id;
+                    });
+                  });
+              });
           });
         },
 
@@ -126,7 +138,12 @@ export default {
       save () {
         if (this.editedItem.id) {
           console.log("edited item");
-          this.registrosMedicos.push(this.editedItem)
+          this.$http.put('http://localhost:3000/api/registro_medico', this.cleanedItem(this.editedItem))
+            .then(function(response) {
+              console.log('updated reg', this.registrosMedicos);
+              this.registrosMedicos[this.editedIndex] = this.editedItem;
+              console.log('registro de arreglo', this.registrosMedicos[this.editedIndex]);
+          });
         } else {
           console.log("nuevo item", this.editedItem);
           delete this.editedItem.id;
@@ -136,6 +153,7 @@ export default {
             .then(function(response) {
               console.log(this.registrosMedicos);
               this.registrosMedicos[this.editedIndex].push(response.body);
+              this.initialize();
           });
         }
         this.close()

@@ -32,9 +32,6 @@
                 </v-flex>
               </v-layout>
               <v-layout wrap>
-              <v-flex xs12 sm6 md4>
-                <v-datetime-picker v-model="editedItem.fecha" :landscape="landscape" :reactive="reactive"></v-date-picker>
-              </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.peso" label="Peso"></v-text-field>
                 </v-flex>
@@ -103,7 +100,7 @@
     >
       <template slot="items" slot-scope="props">
         <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.paciente_id }}</td>
+        <td class="text-xs-right">{{ props.item.paciente }}</td>
         <td class="text-xs-right">{{ props.item.fecha }}</td>
         <td class="justify-center layout px-0">
           <v-icon
