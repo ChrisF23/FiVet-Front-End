@@ -1,6 +1,6 @@
 <template>
   <div class="registros">
-    <h1>Registros Medicos</h1>    
+    <h1>Registros Medicos</h1>
   </div>
 </template>
 
@@ -11,21 +11,27 @@
   <div>
     <v-toolbar flat color="white">
       <v-toolbar-title>Registros Medicos</v-toolbar-title>
-      <v-divider
-        class="mx-2"
-        inset
-        vertical
-      ></v-divider>
+      <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
-      <v-dialog v-model="dialog" max-width="500px">
+      <v-dialog v-model="dialog" max-width="800px">
         <v-btn slot="activator" color="primary" dark class="mb-2">Nuevo Registro</v-btn>
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
           </v-card-title>
 
-          <v-card-text >
-            <v-container grid-list-md >
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-autocomplete
+                v-model="model"
+                :items="nombresPaciente_Duenio"
+                label="Busque un paciente."
+                persistent-hint
+                prepend-icon="pets"
+              >
+                <v-slide-x-reverse-transition slot="append-outer" mode="out-in"></v-slide-x-reverse-transition>
+              </v-autocomplete>
+
               <v-layout row wrap>
                 <v-flex>
                   <v-textarea v-model="editedItem.anamnesia" label="Anamnesia"></v-textarea>
@@ -45,16 +51,25 @@
                   <v-text-field v-model="editedItem.pulso" label="Pulso"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.frecuencia_cardiaca" label="Frecuencia Cardiaca"></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.frecuencia_cardiaca"
+                    label="Frecuencia Cardiaca"
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.frecuencia_respiratoria" label="Frecuencia Respiratoria"></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.frecuencia_respiratoria"
+                    label="Frecuencia Respiratoria"
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.mucosas" label="Mucosas"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.tiempo_de_llenado_capilar" label="Tiempo de llenado capilar"></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.tiempo_de_llenado_capilar"
+                    label="Tiempo de llenado capilar"
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.ganglios" label="Ganglios"></v-text-field>
@@ -66,7 +81,10 @@
                   <v-text-field v-model="editedItem.reflejo_deglutorio" label="Reflejo Deglutorio"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.palpitacion_abdominal" label="Palpitación Abdominal"></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.palpitacion_abdominal"
+                    label="Palpitación Abdominal"
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.palmopercusion" label="Palmopercusion"></v-text-field>
@@ -80,8 +98,6 @@
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.condicion_corporal" label="Condicion Corporal"></v-text-field>
                 </v-flex>
- 
-
               </v-layout>
             </v-container>
           </v-card-text>
@@ -96,29 +112,33 @@
     <v-data-table
       :headers="headers"
       :items="registrosMedicos"
+      :rows-per-page-items="rows_per_page_items"
+      :rows-per-page-text="rows_per_page_text"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.paciente }}</td>
-        <td class="text-xs-right">{{ props.item.fecha }}</td>
+        <td>{{ props.item.id }}</td>
+        <td class="text-xs-left">{{ props.item.paciente }}</td>
+        <td class="text-xs-left">{{ props.item.anamnesia }}</td>
+        <td class="text-xs-left">{{ props.item.fecha }}</td>
+
         <td class="justify-center layout px-0">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(props.item)"
-          >
-            edit
-          </v-icon>
-          <v-icon
-            small
-            @click="deleteItem(props.item)"
-          >
-            delete
-          </v-icon>
+          <v-btn flat icon color="warning" @click="editItem(props.item)">
+            <v-icon>edit</v-icon>
+          </v-btn>
+          <v-btn flat icon color="error" @click="deleteItem(props.item)">
+            <v-icon>delete</v-icon>
+          </v-btn>
         </td>
       </template>
-      <template slot="no-data"></template>
+      <template slot="no-data">
+        <!-- FIXME: Se puede dar el caso de lista vacia. -->
+        <div>Cargando...</div>
+      </template>
+      <template
+        slot="pageText"
+        slot-scope="props"
+      >Clientes {{ props.pageStart }} - {{ props.pageStop }} (Total: {{ props.itemsLength }})</template>
     </v-data-table>
   </div>
 </template>
