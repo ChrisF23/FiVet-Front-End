@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script src= './RegistrosMedicos'>
+<script src= '../scripts/RegistrosMedicos'>
 </script>
 
 <template>
