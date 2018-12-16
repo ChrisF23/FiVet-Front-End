@@ -138,7 +138,7 @@
       <template
         slot="pageText"
         slot-scope="props"
-      >Clientes {{ props.pageStart }} - {{ props.pageStop }} (Total: {{ props.itemsLength }})</template>
+      >Registros {{ props.pageStart }} - {{ props.pageStop }} (Total: {{ props.itemsLength }})</template>
     </v-data-table>
   </div>
 </template>
