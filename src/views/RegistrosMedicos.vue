@@ -14,7 +14,9 @@
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="800px">
-        <v-btn slot="activator" color="primary" dark class="mb-2">Nuevo Registro</v-btn>
+        <v-btn round slot="activator" color="primario darken-1" dark class="mb-2">
+          <v-icon small left>add</v-icon>Nuevo Registro
+        </v-btn>
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -22,6 +24,7 @@
 
           <v-card-text>
             <v-container grid-list-md>
+              <!-- Buscar paciente. -->
               <v-autocomplete
                 v-model="model"
                 :items="nombresPaciente_Duenio"
@@ -122,13 +125,34 @@
         <td class="text-xs-left">{{ props.item.anamnesia }}</td>
         <td class="text-xs-left">{{ props.item.fecha }}</td>
 
-        <td class="justify-center layout px-0">
-          <v-btn flat icon color="warning" @click="editItem(props.item)">
-            <v-icon>edit</v-icon>
-          </v-btn>
-          <v-btn flat icon color="error" @click="deleteItem(props.item)">
-            <v-icon>delete</v-icon>
-          </v-btn>
+        <td class="justify-center layout">
+          <v-tooltip top>
+            <v-btn
+              slot="activator"
+              flat
+              icon
+              color="primario"
+              router
+              :to="'/registros/'+props.item.id"
+            >
+              <v-icon>remove_red_eye</v-icon>
+            </v-btn>
+            <span>Ir al detalle</span>
+          </v-tooltip>
+
+          <v-tooltip top>
+            <v-btn slot="activator" flat icon color="warning" @click="editItem(props.item)">
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <span>Editar</span>
+          </v-tooltip>
+
+          <v-tooltip top>
+            <v-btn slot="activator" flat icon color="error" @click="deleteItem(props.item)">
+              <v-icon>delete</v-icon>
+            </v-btn>
+            <span>Eliminar</span>
+          </v-tooltip>
         </td>
       </template>
       <template slot="no-data">

@@ -6,8 +6,7 @@ export default {
       { text: 'Paciente', value: 'paciente', sortable: true },
       { text: 'Anamnesia', value: 'anamnesia', sortable: true },
       { text: 'Fecha', value: 'fecha', sortable: true, width: "20%" },
-      { text: 'Acciones', width: "5%"}
-
+      { text: 'Acciones', sortable: false, width: "5%"}
     ],
 
     rows_per_page_text: "Registros por pagina:",

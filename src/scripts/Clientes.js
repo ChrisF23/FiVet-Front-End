@@ -1,9 +1,8 @@
-import checkRut from '../Utils'
-
 export default {
   data: () => ({
     valid: false,
     dialog: false,
+    search: '',
     headers: [
       { text: "ID", value: "id", sortable: true },
       { text: "Nombre", value: "nombre", sortable: true },
@@ -71,6 +70,7 @@ export default {
         .then(function (response) {
           this.clientes = response.body;
         });
+      this.search = '';
     },
 
     // Carga el cliente seleccionado y lo muestra en el dialogo para editarlo.
@@ -95,11 +95,16 @@ export default {
     //---
     cleanedItem(item) {
       var newItem = JSON.parse(JSON.stringify(item));
+      //Para dejar una propiedad vacia, habria que borrar esto.
+        //El backend se encarga de que no se ingresen datos invalidos.
+        /*
       for (var propName in newItem) {
         if (newItem[propName] == null || !newItem[propName] || newItem[propName] == 0) {
           delete newItem[propName];
         }
       }
+      */
+
       return newItem;
     },
 
