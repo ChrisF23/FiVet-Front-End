@@ -16,7 +16,6 @@ export default {
     pacientes: [],
     
     // Array de strings en el siguiente formato: "NombrePaciente (NombreDuenio)"
-    nombresPaciente_Duenio : [],
     editedIndex: -1,
     editedItem: {
       id: '',
@@ -114,7 +113,6 @@ export default {
       this.$http.get('http://localhost:3000/api/registro_medico')
         .then(function (response) {
           this.registrosMedicos = response.body;
-          console.log(this.registrosMedicos);
         });
 
     },

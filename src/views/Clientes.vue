@@ -1,9 +1,3 @@
-<template>
-  <div class="registros">
-    <h1>Registros Medicos</h1>
-  </div>
-</template>
-
 <script src= '../scripts/Clientes'>
 </script>
 

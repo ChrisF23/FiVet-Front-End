@@ -26,8 +26,8 @@
             <v-container grid-list-md>
               <!-- Buscar paciente. -->
               <v-autocomplete
-                v-model="model"
-                :items="nombresPaciente_Duenio"
+                v-model="buscar_paciente"
+                :items="pacientes"
                 label="Busque un paciente."
                 persistent-hint
                 prepend-icon="pets"
