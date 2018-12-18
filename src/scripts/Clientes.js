@@ -92,18 +92,14 @@ export default {
       }
     },
 
-    //---
+    //Limpia el item de datos nulos o vacios (strings = "")
     cleanedItem(item) {
       var newItem = JSON.parse(JSON.stringify(item));
-      //Para dejar una propiedad vacia, habria que borrar esto.
-        //El backend se encarga de que no se ingresen datos invalidos.
-        /*
       for (var propName in newItem) {
-        if (newItem[propName] == null || !newItem[propName] || newItem[propName] == 0) {
+        if (newItem[propName] == null || !newItem[propName] || newItem[propName] == 0 || newItem[propName] == "") {
           delete newItem[propName];
         }
       }
-      */
 
       return newItem;
     },
@@ -141,6 +137,14 @@ export default {
           });
       }
       this.close()
+    },
+
+    hayDatos() {
+      if (this.clientes == null || this.clientes == undefined){
+        return false;
+      } else {
+        return this.clientes.length > 0;
+      }
     }
   }
 }

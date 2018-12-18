@@ -86,7 +86,7 @@ export default {
 
   methods: {
     initialize() {
-      /*
+      
         this.$http.get('http://localhost:3000/api/pacientes')
           .then(function(response) {
             this.pacientes = response.body;
@@ -103,9 +103,9 @@ export default {
                 });
             });
         });
-        */
+        
 
-      this.$http.get('http://localhost:3000/api/pacientes')
+      /*this.$http.get('http://localhost:3000/api/pacientes')
         .then(function (response) {
           this.pacientes = response.body;
         });
@@ -113,7 +113,7 @@ export default {
       this.$http.get('http://localhost:3000/api/registro_medico')
         .then(function (response) {
           this.registrosMedicos = response.body;
-        });
+        });*/
 
     },
 
@@ -137,7 +137,7 @@ export default {
     cleanedItem(item) {
       var newItem = JSON.parse(JSON.stringify(item));
       for (var propName in newItem) {
-        if (newItem[propName] == null || !newItem[propName] || newItem[propName] == 0) {
+        if (newItem[propName] == null || !newItem[propName] || newItem[propName] == 0 || newItem[propName] == "") {
           delete newItem[propName];
         }
       }

@@ -120,7 +120,8 @@
         icon="info"
       >No se encontraron resultados para tu busqueda.</v-alert>
       <template slot="no-data">
-        <div>Cargando...</div>
+        <div v-if="hayDatos()">Cargando...</div>
+        <div v-else>No hay datos.</div>
       </template>
       <template
         slot="pageText"
