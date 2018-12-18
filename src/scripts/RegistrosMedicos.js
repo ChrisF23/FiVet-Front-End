@@ -137,7 +137,7 @@ export default {
     cleanedItem(item) {
       var newItem = JSON.parse(JSON.stringify(item));
       for (var propName in newItem) {
-        if (newItem[propName] == null || !newItem[propName] || newItem[propName] == 0) {
+        if (newItem[propName] == null || !newItem[propName] || newItem[propName] == 0 || newItem[propName] == "") {
           delete newItem[propName];
         }
       }
