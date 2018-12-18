@@ -141,6 +141,14 @@ export default {
           });
       }
       this.close()
+    },
+
+    hayDatos() {
+      if (this.clientes == null || this.clientes == undefined){
+        return false;
+      } else {
+        return this.clientes.length > 0;
+      }
     }
   }
 }
