@@ -103,18 +103,6 @@ export default {
                 });
             });
         });
-        
-
-      /*this.$http.get('http://localhost:3000/api/pacientes')
-        .then(function (response) {
-          this.pacientes = response.body;
-        });
-
-      this.$http.get('http://localhost:3000/api/registro_medico')
-        .then(function (response) {
-          this.registrosMedicos = response.body;
-        });*/
-
     },
 
     editItem(item) {
@@ -174,6 +162,13 @@ export default {
           });
       }
       this.close()
+    },
+    hayDatos() {
+      if (this.clientes == null || this.clientes == undefined){
+        return false;
+      } else {
+        return this.clientes.length > 0;
+      }
     }
   }
 }

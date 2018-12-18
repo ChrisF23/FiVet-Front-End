@@ -24,16 +24,6 @@
 
           <v-card-text>
             <v-container grid-list-md>
-              <!-- Buscar paciente. -->
-              <v-autocomplete
-                v-model="buscar_paciente"
-                :items="pacientes"
-                label="Busque un paciente."
-                persistent-hint
-                prepend-icon="pets"
-              >
-                <v-slide-x-reverse-transition slot="append-outer" mode="out-in"></v-slide-x-reverse-transition>
-              </v-autocomplete>
 
               <v-layout row wrap>
                 <v-flex>
