@@ -1,4 +1,5 @@
 <template>
+  
   <v-data-table
     :headers="headers"
     :items="registrosMedicos"
@@ -13,6 +14,11 @@
 
 <script>
 export default {
+
+  props: {
+        id: Number
+    },
+
   data: function() {
       return  {
       valid: false,
@@ -31,11 +37,12 @@ export default {
     },
 
     methods: {
-      //Al inicializar, cargar la lista de pacientes.
+      //Al inicializar, cargar la lista de registros.
       initialize() {
         this.$http.get('http://localhost:3000/api/registros/')
           .then(function (response) {
-            this.registrosMedicos = response.body;
+            //this.registrosMedicos = response.body
+            response.body.forEach(rm => {if (rm.paciente_id == this.$props.id) {this.registrosMedicos.push(rm)}});
           });
         this.search = '';
       },

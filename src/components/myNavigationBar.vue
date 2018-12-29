@@ -27,6 +27,7 @@
 
 <script>
 export default {
+
     data() {
         return {
             // Por defecto, el drawer se encuentra escondido (false).
