@@ -77,6 +77,7 @@
       :rows-per-page-text="rows_per_page_text"
     >
       <template slot="items" slot-scope="props">
+        <tr @click="editItem(props.item)">
         <td>{{props.item.id}}</td>
         <td>{{ props.item.nombre }}</td>
         <td>{{props.item.numero_chip}}</td>
@@ -84,16 +85,7 @@
         <td>{{props.item.raza}}</td>
         <td>{{props.item.color}}</td>
         <td>{{props.item.castrado}}</td>
-
-        <!-- 
-          id: '',
-        nombre: '',
-        numero_chip: '',
-        especie: '',
-        raza: '',
-        color: '',
-        castrado: ''
-        -->
+        
         <td class="justify-center layout px-0">
           <v-tooltip top>
             <v-btn
@@ -123,6 +115,7 @@
             <span>Eliminar</span>
           </v-tooltip>
         </td>
+        </tr>
       </template>
       <v-alert
         slot="no-results"
