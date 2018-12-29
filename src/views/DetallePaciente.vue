@@ -8,7 +8,7 @@
         <v-layout row>
           <v-flex pa-3 xs1>
            
-            <v-avatar size="400">
+            <v-avatar size="200">
               <img :src="paciente.imageUrl">
             </v-avatar>
           </v-flex>
@@ -72,14 +72,23 @@
         <v-icon left small>delete</v-icon>Eliminar
       </v-btn>
     </v-card>
+
+    <tabla-registros-medicos/>
+
   </div>
 </template>
 
 <script>
 
+import tablaRegistrosMedicos from '../components/tablaRegistrosMedicos'
 var pacientes = require("../assets/listaPacientes").listaPacientes;
 export default {
   props: ["id"],
+
+  components :{
+    tablaRegistrosMedicos
+  },
+
   data() {
     return {
       paciente: pacientes.find(cli => cli.id === this.id)
