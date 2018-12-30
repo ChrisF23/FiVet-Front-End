@@ -117,7 +117,7 @@ export default {
     save() {
       if (this.editedItem.id) {
         console.log("edited item");
-        this.$http.put('http://localhost:3000/api/clientes', this.cleanedItem(this.editedItem))
+        this.$http.put('http://localhost:3000/api/clientes', this.editedItem)
           .then(function (response) {
             this.clientes.splice(this.editedIndex, 1, this.editedItem);
 

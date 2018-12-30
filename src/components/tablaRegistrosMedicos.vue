@@ -1,20 +1,23 @@
 <template>
-  
+  <div>
   <v-data-table
     :headers="headers"
     :items="registrosMedicos"
     class="elevation-1"
   >
     <template slot="items" slot-scope="props">
-      <td>{{ props.item.anamnesia }}</td>
-      <td>{{ props.item.fecha }}</td>
+      <td>{{ props.item.patologia }}</td>
+      <td>{{ props.item.motivo }}</td>
+      <td>{{ props.item.anamnesis }}</td>
+      <td>{{ props.item.fecha_creacion }}</td> 
     </template>
   </v-data-table>
+  </div>
 </template>
 
 <script>
 
-import '../Utils';
+const utils = require('../Utils')
 export default {
 
   props: {
@@ -27,7 +30,9 @@ export default {
       dialog: false,
       search: '',
       headers: [
-        { text: "Anamnesia", value: "anamnesia", sortable: true },
+        { text: "Patologia", value: "patologia", sortable: true },
+        { text: "Motivo", value: "motivo", sortable: true },
+        { text: "Anamnesis", value: "anamnesis", sortable: true },
         { text: "Fecha", value: "fecha", sortable: true },
       ],
 
@@ -41,10 +46,10 @@ export default {
     methods: {
       //Al inicializar, cargar la lista de registros.
       initialize() {
-        this.$http.get(api + '/registros')
+        this.$http.get('http://localhost:3000/api/registros')
           .then(function (response) {
             //this.registrosMedicos = response.body
-            response.body.forEach(rm => {if (rm.paciente_id == this.$props.id) {this.registrosMedicos.push(rm)}});
+            response.body.forEach(rm => {if (rm.id_paciente == this.$props.id) {this.registrosMedicos.push(rm)}});
           });
         this.search = '';
       },

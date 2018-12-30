@@ -7,7 +7,7 @@
           <v-flex pa-3 xs1>
            
             <v-avatar size="200">
-              <img :src="paciente.imageUrl">
+              <img src="https://i.imgur.com/3pwLlj2.jpg">
             </v-avatar>
           </v-flex>
         </v-layout>
@@ -83,6 +83,8 @@
 </template>
 
 <script>
+
+import '../Utils'
 export default {
       props: {
         id: Number
@@ -90,7 +92,7 @@ export default {
 
     data: function() {
         return {
-        paciente: ""
+        paciente: null
         };
     },
 

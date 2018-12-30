@@ -47,5 +47,5 @@ export default {
         return true;
     },
     
-    api: "http://localhost:3000",
+    api: "http://localhost:3000/api",
 }

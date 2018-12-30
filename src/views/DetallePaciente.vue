@@ -3,7 +3,9 @@
   <div class="paciente">
 
     <datosPaciente :id="paciente_id"></datosPaciente>
-    <tablaRegistrosMedicos :id="paciente_id"></tablaRegistrosMedicos>
+    <!-- FIXME: Debe enviarse un evento para recargar la tabla de registros -->
+    <dialog-agregar-registro-medico :id_paciente="paciente_id"></dialog-agregar-registro-medico>
+    <tablaRegistrosMedicos :id="paciente_id" v-on:db_updatet="initialize"></tablaRegistrosMedicos>
 
   </div>
 </template>
@@ -12,6 +14,7 @@
 
 import tablaRegistrosMedicos from '../components/tablaRegistrosMedicos'
 import datosPaciente from '../components/detalleEdicionPaciente'
+import dialogAgregarRegistroMedico from '../components/agregarRegistroMedico'
 export default {
   props: {
         id: Number
@@ -19,7 +22,8 @@ export default {
 
   components :{
     tablaRegistrosMedicos,
-    datosPaciente
+    datosPaciente,
+    dialogAgregarRegistroMedico,
   },
 
   data: () => ({
