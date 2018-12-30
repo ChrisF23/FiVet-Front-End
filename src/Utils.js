@@ -45,5 +45,7 @@ export default {
         if(dvEsperado != dv) { return false; }
 
         return true;
-    }
+    },
+    
+    api: "http://localhost:3000",
 }
