@@ -41,6 +41,29 @@
                 ></v-select>
               </v-flex>
             </v-layout>
+
+            <v-layout wrap>
+              <v-flex xs12>
+                <v-combobox v-model="select" :items="clientes" label="Seleccione Cliente" v-if="!clienteNuevo"></v-combobox>
+                <v-btn color="purple" dark v-on:click="clienteNuevo=true" v-if="!clienteNuevo">El cliente es nuevo</v-btn>
+              </v-flex>
+
+              <v-flex xs12 sm6 md4 v-if="clienteNuevo">
+                <v-text-field v-model="cliente.nombre" label="Nombre cliente" required></v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md4 v-if="clienteNuevo">
+                <v-text-field v-model="cliente.rut" label="Rut"></v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md4 v-if="clienteNuevo">
+                <v-text-field v-model="cliente.email" label="Correo Electronico" required></v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md4 v-if="clienteNuevo">
+                <v-text-field v-model="cliente.telefono" label="Telefono" required></v-text-field>
+              </v-flex>
+            </v-layout>
           </v-container>
         </v-card-text>
       </v-form>
@@ -66,19 +89,30 @@ export default {
 
   data: function() {
     return {
+
+      clienteNuevo: false,
       valid: false,
       dialog: false,
 
-      registrosMedicos: null,
+      clientes: [],
+
+      pacientes: null,
 
       editedItem: {
-        id: '',
-        nombre: '',
-        numero_chip: '',
-        especie: '',
-        raza: '',
-        color: '',
-        castrado: 'No'
+        id: "",
+        nombre: "",
+        numero_chip: "",
+        especie: "",
+        raza: "",
+        color: "",
+        castrado: "No"
+      },
+
+      cliente:  {
+        rut: "",
+        nombre: "",
+        email: "",
+        telefono: "",
       },
     };
   },
@@ -95,15 +129,24 @@ export default {
 
   methods: {
     initialize() {
+      this.$http
+        .get("http://localhost:3000/api/clientes/")
+        .then(function(response) {
+          this.clientes = response.body.map(function(item) {
+            return item.nombre + " (" + item.rut + ")";
+          });
+        });
+
       if (this.$props.id_paciente) {
         this.editedItem.id_paciente = this.$props.id_paciente;
         return;
+      } else {
+        this.$http
+          .get("http://localhost:3000/api/pacientes/" + this.$props.id_registro)
+          .then(function(response) {
+            this.editedItem = response.body;
+          });
       }
-      this.$http
-        .get("http://localhost:3000/api/registros/" + this.$props.id_registro)
-        .then(function(response) {
-          this.editedItem = response.body;
-        });
     },
 
     //Limpia el item de datos nulos o vacios (strings = "")
@@ -128,11 +171,11 @@ export default {
       this.dialog = false;
     },
 
-    save: function() {
+    savePaciente: function() {
       if (this.editedItem.id) {
         this.$http
           .put(
-            "http://localhost:3000/api/registros",
+            "http://localhost:3000/api/pacientes",
             cleanedItem(this.editedItem)
           )
           .then(function() {
@@ -143,7 +186,7 @@ export default {
         delete this.editedItem.id;
         this.$http
           .post(
-            "http://localhost:3000/api/registros",
+            "http://localhost:3000/api/pacientes",
             this.cleanedItem(this.editedItem)
           )
           .then(function(response) {
@@ -151,6 +194,10 @@ export default {
           });
       }
       this.close();
+    },
+
+    saveCliente: function() {
+      
     }
   }
 };

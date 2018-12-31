@@ -12,58 +12,7 @@
         <v-spacer></v-spacer>
 
         <!-- Inicio formulario -->
-        <v-dialog v-model="dialog" max-width="600px">
-          <v-btn round slot="activator" color="primario darken-1" dark class="mb-2">
-            <v-icon small left>add</v-icon>Nuevo Paciente
-          </v-btn>
-
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
-            <v-form v-model="valid">
-              <v-card-text>
-                <v-container grid-list-md>
-                  <v-layout wrap>
-                    <v-flex xs12 sm6 md4>
-                      <v-text-field v-model="editedItem.nombre" label="Nombre" required></v-text-field>
-                    </v-flex>
-
-                    <v-flex xs12 sm6 md4>
-                      <v-text-field v-model="editedItem.numero_chip" label="Numero de chip"></v-text-field>
-                    </v-flex>
-
-                    <v-flex xs12 sm6 md4>
-                      <v-text-field v-model="editedItem.especie" label="Especie" required></v-text-field>
-                    </v-flex>
-
-                    <v-flex xs12 sm6 md4>
-                      <v-text-field v-model="editedItem.raza" label="Raza"></v-text-field>
-                    </v-flex>
-
-                    <v-flex xs12 sm6 md4>
-                      <v-text-field v-model="editedItem.color" label="Color"></v-text-field>
-                    </v-flex>
-
-                    <v-flex xs12 sm6 md4>
-                      <v-select
-                        v-model="editedItem.castrado"
-                        :items="['Si', 'No']"
-                        label="Castrado:"
-                        outline
-                      ></v-select>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card-text>
-            </v-form>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" v-on:click="close">Cancelar</v-btn>
-              <v-btn color="blue darken-1" v-on:click="save">Guardar</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+      <dialogoAgregarPaciente></dialogoAgregarPaciente>
       </v-card-title>
     </v-card>
 

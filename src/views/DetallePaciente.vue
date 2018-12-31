@@ -3,9 +3,8 @@
   <div class="paciente">
 
     <datosPaciente :id="paciente_id"></datosPaciente>
-    <!-- FIXME: Debe enviarse un evento para recargar la tabla de registros -->
     <dialog-agregar-registro-medico :id_paciente="paciente_id"></dialog-agregar-registro-medico>
-    <tablaRegistrosMedicos :id="paciente_id" v-on:db_updatet="initialize"></tablaRegistrosMedicos>
+    <tablaRegistrosMedicos :id="paciente_id"></tablaRegistrosMedicos>
 
   </div>
 </template>
@@ -40,7 +39,7 @@ export default {
 
 
   methods: {
-    //Al inicializar, cargar la lista de registros.
+    //se carga el id del paciente para ser usado por los components
     initialize() {
       this.paciente_id = this.$props.id;
     },
