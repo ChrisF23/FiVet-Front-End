@@ -27,9 +27,17 @@ export default {
   },
 
   data: () => ({
+      update_db: false,
       paciente_id: null,
       paciente: null,
     }),
+
+  watch: {
+    dialog(val) {
+      val || this.close()
+    }
+  },
+
 
   methods: {
     //Al inicializar, cargar la lista de registros.

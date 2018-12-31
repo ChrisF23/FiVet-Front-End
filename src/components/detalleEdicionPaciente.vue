@@ -14,12 +14,13 @@
 
         <!-- El segundo layout dentro del layout exterior. Los elementos dentro de el estaran en la misma columna. -->
         <v-layout column wrap>
-          <v-flex pb-2 xs1>
+          
+          <v-flex pb-2 xs1 align-self-left=true>
             <div class="caption grey--text">Nombre</div>
-            <div>{{ paciente.nombre }}</div>
+            <div>{{ paciente.Nombre }}</div>
           </v-flex>
 
-          <v-flex pb-2 xs1>
+          <v-flex pb-2 xs1 align-self-left=true>
             <div class="caption grey--text">Especie</div>
             <div>{{ paciente.Especie }}</div>
           </v-flex>
@@ -54,8 +55,10 @@
           </v-flex>
 
           <v-flex pb-2 xs1>
-            <div class="caption grey--text">Sexo</div>
-            <div>{{ paciente.Sexo }}</div>
+            <v-text-field
+                v-model="paciente.nombre"
+                label="Sexo"
+              ></v-text-field>
           </v-flex>
 
           <v-flex pb-2 xs1>

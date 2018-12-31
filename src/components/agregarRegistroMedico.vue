@@ -17,7 +17,10 @@
               </v-btn>
             </v-flex>
             <v-flex>
-              <v-textarea v-model="editedItem.anamnesis" label="Anamnesia" autofocus="true"></v-textarea>
+              <v-textarea v-model="editedItem.motivo" label="Motivo" autofocus="true"></v-textarea>
+            </v-flex>
+            <v-flex>
+              <v-textarea v-model="editedItem.anamnesis" label="Anamnesia"></v-textarea>
             </v-flex>
           </v-layout>
           <v-layout wrap>
@@ -105,7 +108,8 @@ export default {
   props: {
     //id del registroMedico a editar
     id_paciente: Number,
-    id_registro: Number
+    id_registro: Number,
+    update_db: Boolean
   },
 
   data: function() {
@@ -194,8 +198,9 @@ export default {
             "http://localhost:3000/api/registros",
             cleanedItem(this.editedItem)
           )
-          .then(function(response) {
-            this.initialize();
+          .then(function() {
+            this.$root.$emit("db_update");
+            this.dialog = false;
           });
       } else {
         delete this.editedItem.id;
@@ -205,11 +210,9 @@ export default {
             this.cleanedItem(this.editedItem)
           )
           .then(function(response) {
-            // Actualiza la lista.
-            this.initialize();
+            this.$root.$emit("db_update");
           });
       }
-      this.$emit('db_update', str)
       this.close();
     }
   }
