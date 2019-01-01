@@ -1,18 +1,20 @@
 import dialogoAgregarPaciente from '../components/nuevoPaciente.vue'
+import detallePaciente from '../components/detalleEdicionPaciente.vue'
 export default {
 
   components :{
     dialogoAgregarPaciente,
+    detallePaciente,
   },
 
   data: () => ({
     valid: false,
     dialog: false,
+    dialogoDetalle: false,
     search: '',
     headers: [
-      { text: "ID", value: "id", sortable: true },
       { text: "Nombre", value: "nombre", sortable: true },
-      { text: "Numero de Chip", value: "numero_chip", sortable: true },
+      { text: "Dueño", value: "dueño", sortable: true },
       { text: "Especie", value: "especie", sortable: true },
       { text: "Raza", value: "raza", sortable: true },
       { text: "Color", value: "color", sortable: true },
@@ -21,6 +23,7 @@ export default {
     ],
 
     pacientes: [],
+    id_paciente: null,
 
     rows_per_page_text: "Pacientes por pagina:",
     rows_per_page_items: [5, 10, 20, { 'text': 'Todos', 'value': -1 }],
@@ -74,6 +77,17 @@ export default {
           this.pacientes = response.body;
         });
       this.search = '';
+    },
+
+    redireccionDetallePaciente() {
+      this.$router.push('/pacientes/'+this.id_paciente)
+    },
+
+    mostrarDetallePaciente(id_paciente) {
+      this.id_paciente=id_paciente
+      this.$root.$emit("db_update")
+      //setTimeout(() => {this.dialogoDetalle = true;}, 2500);
+      this.dialogoDetalle = true;
     },
 
     // Carga el paciente seleccionado y lo muestra en el dialogo para editarlo.

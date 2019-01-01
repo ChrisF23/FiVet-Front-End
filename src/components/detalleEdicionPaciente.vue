@@ -15,32 +15,32 @@
       <v-layout column wrap>
         <v-flex pb-2 xs1 align-self-left="true">
           <div class="caption grey--text">Nombre</div>
-          <div>{{ paciente.Nombre }}</div>
+          <div>{{ paciente.nombre }}</div>
         </v-flex>
 
         <v-flex pb-2 xs1 align-self-left="true">
           <div class="caption grey--text">Especie</div>
-          <div>{{ paciente.Especie }}</div>
+          <div>{{ paciente.especie }}</div>
         </v-flex>
 
         <v-flex pb-2 xs1>
           <div class="caption grey--text">Castrado</div>
-          <div>{{ paciente.Castrado }}</div>
+          <div>{{ paciente.castrado }}</div>
         </v-flex>
 
         <v-flex pb-2 xs1>
           <div class="caption grey--text">Raza</div>
-          <div>{{ paciente.Raza }}</div>
+          <div>{{ paciente.raza }}</div>
         </v-flex>
 
         <v-flex pb-2 xs1>
           <div class="caption grey--text">Color</div>
-          <div>{{ paciente.Color }}</div>
+          <div>{{ paciente.color }}</div>
         </v-flex>
 
         <v-flex pb-2 xs1>
           <div class="caption grey--text">Fecha de Nacimiento</div>
-          <div>{{ paciente.Fecha }}</div>
+          <div>{{ paciente.fecha_nacimiento }}</div>
         </v-flex>
       </v-layout>
       <v-layout column wrap>
@@ -56,7 +56,7 @@
 
         <v-flex pb-2 xs1>
           <div class="caption grey--text">Color</div>
-          <div>{{ paciente.Color }}</div>
+          <div>{{ paciente.color }}</div>
         </v-flex>
 
         <v-flex pb-2 xs1>
@@ -109,7 +109,9 @@ export default {
           this.paciente = response.body;
           //obtenemos el cliente basado en la id_cliente que devolvio la reques getPaciente
           this.$http
-            .get("http://localhost:3000/api/clientes/" + this.paciente.id_cliente)
+            .get(
+              "http://localhost:3000/api/clientes/" + this.paciente.id_cliente
+            )
             .then(function(response) {
               this.cliente = response.body;
             });
@@ -119,6 +121,19 @@ export default {
 
   created() {
     this.initialize();
-  }
+  },
+
+ watch: {
+    id: function (newId) {
+      this.initialize();
+    }
+  },
+
+  // updated() {
+  //   //Reinicializa el componente para reflejas cambios en la base de datos
+  //   this.$root.$on("db_update", () => {
+  //     this.initialize();
+  //   });
+  // }
 };
 </script>
