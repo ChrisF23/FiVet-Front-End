@@ -1,6 +1,9 @@
 <template>
   <div>
     <v-data-table :headers="headers" :items="registrosMedicos" class="elevation-1">
+      <template slot="no-data">
+        <v-alert :value="true" color="error" icon="warning">No hay registros para mostrar</v-alert>
+      </template>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.patologia }}</td>
         <td>{{ props.item.motivo }}</td>
