@@ -46,12 +46,16 @@ export default {
       this.$http
         .get("http://localhost:3000/api/registros")
         .then(function(response) {
-          //this.registrosMedicos = response.body
-          response.body.forEach(rm => {
-            if (rm.id_paciente == this.$props.id) {
-              this.registrosMedicos.push(rm);
-            }
-          });
+          if(this.$props.id == undefined || this.$props.id == null){
+            this.registrosMedicos = response.body;
+          } else {
+            //this.registrosMedicos = response.body
+            response.body.forEach(rm => {
+              if (rm.id_paciente == this.$props.id) {
+                this.registrosMedicos.push(rm);
+              }
+            });
+          }
         });
       this.search = "";
     }
