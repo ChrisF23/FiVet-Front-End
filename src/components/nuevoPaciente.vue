@@ -50,8 +50,8 @@
             <v-layout wrap>
               <v-flex xs12>
                 <v-combobox
-                  v-model="select"
-                  :items="clientes"
+                  v-model="cliente_seleccionado"
+                  :items="nombreRutClientes"
                   label="Seleccione Cliente"
                   :rules="rules.no_vacio"
                   v-if="!clienteNuevo"
@@ -96,8 +96,8 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" v-on:click="close">Cancelar</v-btn>
-        <v-btn v-if="valid" color="green" v-on:click="save">Guardar</v-btn>
-        <v-btn v-if="!valid" disabled="true" v-on:click="save">Guardar</v-btn>
+        <v-btn v-if="valid" color="green" v-on:click="save()">Guardar</v-btn>
+        <v-btn v-if="!valid" disabled="true" v-on:click="save()">Guardar</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -108,10 +108,8 @@ import common_rules from "../scripts/rules";
 
 export default {
   props: {
-    //id del registroMedico a editar
-    id_paciente: Number,
-    id_registro: Number,
-    update_db: Boolean
+    //paciente en caso de que estemos editando
+    id_paciente: Number
   },
 
   data: function() {
@@ -121,8 +119,12 @@ export default {
       dialog: false,
 
       clientes: [],
-
+      cliente_seleccionado: [],
+      nombreRutClientes: [],
       rules: common_rules.common_rules,
+
+      //En esta variable se guardan las responses de la request en caso de error
+      debug_response: "",
 
       pacientes: null,
 
@@ -146,9 +148,13 @@ export default {
         id_cliente: ""
       },
 
+      //concatenacion del nombre y rut del cliente seleccionado
+      cliente_seleccionado: "",
+
       cliente: {
         rut: "",
         nombre: "",
+        apellido_p: "",
         email: "",
         telefono: ""
       }
@@ -165,13 +171,24 @@ export default {
     }
   },
 
+  computed: {
+    // a computed getter
+    cliente_a_guardar: function() {
+      // `this` points to the vm instance
+      return this.clientes.filter(
+        cliente => cliente.rut == this.cliente_seleccionado.split(" ")[1]
+      )[0].id;
+    }
+  },
+
   methods: {
     initialize() {
       this.$http
         .get("http://localhost:3000/api/clientes/")
         .then(function(response) {
-          this.clientes = response.body.map(function(item) {
-            return item.nombre + " (" + item.rut + ")";
+          this.clientes = response.body;
+          this.nombreRutClientes = response.body.map(function(item) {
+            return item.nombre + " " + item.rut;
           });
         });
     },
@@ -193,13 +210,15 @@ export default {
       return newItem;
     },
 
-    // Cierra el dialogo.
+    // Cierra el dialogo y limpia los datos.
     close: function() {
       this.dialog = false;
       this.clienteNuevo = false;
       this.paciente = this.pacienteDefault;
+      this.cliente_seleccionado = "";
     },
 
+    //guardar el paciente en la base de datos
     savePaciente: function() {
       this.$http
         .post(
@@ -208,24 +227,44 @@ export default {
         )
         .then(function(response) {
           this.$root.$emit("db_update");
+          this.debug_response = response;
         });
       this.close();
     },
 
+    //Guarda al cliente en la base de datos y luego al paciente para mantener integridad en la db
     save: function() {
-      if (valid == true) {
+      //Si el formulario esta mal llenado
+      if (!this.valid) {
         return;
       }
+
+      //FIXME: agregar un metodo buscar por rut desde la api rest
+
+      // si el cliente ya existe
+      if (!this.clienteNuevo) {
+        this.paciente.id_cliente = this.cliente_a_guardar;
+        this.savePaciente();
+        return;
+      }
+      //Si el cliente es nuevo
       this.$http
         .post(
           "http://localhost:3000/api/clientes",
-          this.cleanedItem(this.cliente)
+          //this.cleanedItem(this.cliente)
         )
-        .then(function(response) {
-          this.$root.$emit("db_update");
-          this.paciente.id_cliente = response.id;
-          savePaciente();
-        });
+        .then(
+          function(response) {
+            this.$root.$emit("db_update");
+            this.debug_response = response;
+            this.paciente.id_cliente = response.id;
+            this.savePaciente();
+          },
+          function(response) {
+            this.debug_response = response;
+          }
+        );
+      this.close();
     }
   }
 };
