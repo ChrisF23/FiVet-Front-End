@@ -22,19 +22,11 @@
               </v-flex>
 
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="paciente.numero_chip" label="Numero de chip"></v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md4>
                 <v-text-field v-model="paciente.especie" label="Especie" required></v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md4>
                 <v-text-field v-model="paciente.raza" label="Raza"></v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="paciente.color" label="Color"></v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md4>
@@ -68,6 +60,15 @@
                 <v-text-field
                   v-model="cliente.nombre"
                   label="Nombre cliente"
+                  :rules="rules.no_vacio"
+                  required
+                ></v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md4 v-if="clienteNuevo">
+                <v-text-field
+                  v-model="cliente.apellido_p"
+                  label="Apellido Pater"
                   :rules="rules.no_vacio"
                   required
                 ></v-text-field>
@@ -130,20 +131,16 @@ export default {
 
       paciente: {
         nombre: "",
-        numero_chip: "",
         especie: "",
         raza: "",
-        color: "",
         castrado: "No",
         id_cliente: ""
       },
 
       pacienteDefault: {
         nombre: "",
-        numero_chip: "",
         especie: "",
         raza: "",
-        color: "",
         castrado: "No",
         id_cliente: ""
       },
@@ -221,15 +218,13 @@ export default {
     //guardar el paciente en la base de datos
     savePaciente: function() {
       this.$http
-        .post(
-          "http://localhost:3000/api/pacientes",
-          this.cleanedItem(this.paciente)
-        )
+        .post("http://localhost:3000/api/pacientes", this.paciente)
         .then(function(response) {
           this.$root.$emit("db_update");
           this.debug_response = response;
+          this.$router.push("/pacientes/" + response.body.id);
         });
-      this.close();
+      //this.close();
     },
 
     //Guarda al cliente en la base de datos y luego al paciente para mantener integridad en la db
@@ -248,23 +243,21 @@ export default {
         return;
       }
       //Si el cliente es nuevo
-      this.$http
-        .post(
-          "http://localhost:3000/api/clientes",
-          //this.cleanedItem(this.cliente)
-        )
-        .then(
-          function(response) {
-            this.$root.$emit("db_update");
-            this.debug_response = response;
-            this.paciente.id_cliente = response.id;
-            this.savePaciente();
-          },
-          function(response) {
-            this.debug_response = response;
-          }
-        );
-      this.close();
+      this.$http.post("http://localhost:3000/api/clientes", this.cliente).then(
+        function(response) {
+          this.$root.$emit("db_update");
+          this.debug_response = response;
+          this.paciente.id_cliente = response.body.id;
+          this.savePaciente();
+          //En este punto debug response contiene la response de la request para guardar el paciente
+          // y por lo tanto su id
+          //redireccionamos a la pagina del paciente
+        },
+        function(response) {
+          this.debug_response = response;
+        }
+      );
+      // this.close();
     }
   }
 };
