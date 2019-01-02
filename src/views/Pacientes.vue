@@ -28,28 +28,19 @@
     <v-data-table
       class="elevation-1"
       :headers="headers"
-      :items="pacientes"
-      :search="search"
+      :items="filteredPacientes()"
       :rows-per-page-items="rows_per_page_items"
       :rows-per-page-text="rows_per_page_text"
     >
       <template slot="items" slot-scope="props">
         <tr @click="mostrarDetallePaciente(props.item.id)">
           <td>{{ props.item.nombre }}</td>
-          <td>{{props.item.Cliente.nombre}}</td>
+          <td>{{props.item.Cliente.nombre}} {{props.item.Cliente.apellido_p}} ({{props.item.Cliente.rut}})</td>
           <td>{{props.item.especie}}</td>
           <td>{{props.item.raza}}</td>
           <td>{{props.item.color}}</td>
-          <td>{{props.item.castrado}}</td>
-
-          <td class="justify-center layout px-0">
-            <v-tooltip top>
-              <v-btn slot="activator" flat icon color="error" @click="deleteItem(props.item)">
-                <v-icon>delete</v-icon>
-              </v-btn>
-              <span>Eliminar</span>
-            </v-tooltip>
-          </td>
+          <td v-if="props.item.castrado">{{'Si'}}</td>
+          <td v-else>{{'No'}}</td>
         </tr>
       </template>
       <v-alert

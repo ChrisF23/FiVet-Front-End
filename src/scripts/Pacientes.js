@@ -18,8 +18,7 @@ export default {
       { text: "Especie", value: "especie", sortable: true },
       { text: "Raza", value: "raza", sortable: true },
       { text: "Color", value: "color", sortable: true },
-      { text: "Castrado", value: "castrado", sortable: true },
-      { text: 'Acciones', width: "5%" }
+      { text: "Castrado", value: "castrado", sortable: true }
     ],
 
     pacientes: [],
@@ -70,13 +69,22 @@ export default {
   },
 
   methods: {
+    filteredPacientes() {
+      //TODO: Ineficiencie en su maxima expresion.
+      let filtered = this.pacientes.filter((p) => {
+        let text = p.nombre + p.Cliente.nombre + p.Cliente.rut + p.Cliente.apellido_p;
+        return text.indexOf(this.search) != -1;
+      });
+      return filtered;
+    },
+
     //Al inicializar, cargar la lista de pacientes.
     initialize() {
       this.$http.get('http://localhost:3000/api/pacientes')
         .then(function (response) {
           this.pacientes = response.body;
+          this.search = '';
         });
-      this.search = '';
     },
 
     redireccionDetallePaciente() {
