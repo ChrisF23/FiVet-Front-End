@@ -8,19 +8,20 @@
       v-if="!clienteNuevo"
     ></v-combobox>
     <div>
-    <tablaRegistrosMedicos :id="null"></tablaRegistrosMedicos>
+    <tablaRegistrosMedicosReactive :id="null"></tablaRegistrosMedicosReactive>
+    
     </div>
   </div>
 </template>
 
 <script>
 import common_rules from "../scripts/rules";
-import tablaRegistrosMedicos from '../components/tablaRegistrosMedicos';
+import tablaRegistrosMedicosReactive from '../components/tablaRegistrosMedicosReactive';
 
 export default {
 
   components :{
-    tablaRegistrosMedicos
+    tablaRegistrosMedicosReactive
   },
 
   data: function() {

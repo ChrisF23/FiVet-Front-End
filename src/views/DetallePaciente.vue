@@ -11,9 +11,9 @@
 
 <script>
 
-import tablaRegistrosMedicos from '../components/tablaRegistrosMedicos'
-import datosPaciente from '../components/detalleEdicionPaciente'
-import dialogAgregarRegistroMedico from '../components/agregarRegistroMedico'
+import tablaRegistrosMedicos from '../components/tablaRegistrosMedicos';
+import datosPaciente from '../components/detalleEdicionPaciente';
+import dialogAgregarRegistroMedico from '../components/agregarRegistroMedico';
 export default {
   props: {
         id: Number
