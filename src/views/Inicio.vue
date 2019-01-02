@@ -7,13 +7,22 @@
       :rules="rules.no_vacio"
       v-if="!clienteNuevo"
     ></v-combobox>
+    <div>
+    <tablaRegistrosMedicos :id="null"></tablaRegistrosMedicos>
+    </div>
   </div>
 </template>
 
 <script>
 import common_rules from "../scripts/rules";
+import tablaRegistrosMedicos from '../components/tablaRegistrosMedicos';
 
 export default {
+
+  components :{
+    tablaRegistrosMedicos
+  },
+
   data: function() {
     return {
       valid: true,
