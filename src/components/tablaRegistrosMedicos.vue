@@ -1,16 +1,27 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="registrosMedicos" class="elevation-1">
-      <template slot="no-data">
-        <v-alert :value="true" color="error" icon="warning">No hay registros para mostrar</v-alert>
-      </template>
-      <template slot="items" slot-scope="props">
-        <td>{{ props.item.patologia }}</td>
-        <td>{{ props.item.motivo }}</td>
-        <td>{{ props.item.anamnesis }}</td>
-        <td>{{ props.item.fecha_creacion }}</td>
-      </template>
-    </v-data-table>
+
+    
+    <v-card>
+          <v-text-field v-model="search" append-icon="search" label="Buscar" hide-details></v-text-field>
+
+      <v-data-table 
+      :headers="headers" 
+      :items="registrosMedicos"
+      :search="search" 
+      class="elevation-1"
+      >
+        <template slot="no-data">
+          <v-alert :value="true" color="error" icon="warning">No hay registros para mostrar</v-alert>
+        </template>
+        <template slot="items" slot-scope="props">
+          <td>{{ props.item.patologia }}</td>
+          <td>{{ props.item.motivo }}</td>
+          <td>{{ props.item.anamnesis }}</td>
+          <td>{{ props.item.fecha_creacion }}</td>
+        </template>
+      </v-data-table>
+    </v-card>
   </div>
 </template>
 
@@ -46,7 +57,7 @@ export default {
       this.$http
         .get("http://localhost:3000/api/registros")
         .then(function(response) {
-          if(this.$props.id == undefined || this.$props.id == null){
+          if (this.$props.id == undefined || this.$props.id == null) {
             this.registrosMedicos = response.body;
           } else {
             //this.registrosMedicos = response.body
