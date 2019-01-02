@@ -33,7 +33,7 @@
       :rows-per-page-text="rows_per_page_text"
     >
       <template slot="items" slot-scope="props">
-        <tr @click="mostrarDetallePaciente(props.item.id)">
+        <tr @click="redireccionDetallePaciente(props.item.id)">
           <td>{{ props.item.nombre }}</td>
           <td>{{props.item.Cliente.nombre}} {{props.item.Cliente.apellido_p}} ({{props.item.Cliente.rut}})</td>
           <td>{{props.item.especie}}</td>

@@ -1,11 +1,9 @@
 <template>
   <div class="inicio">
     <v-combobox
-      v-model="paciente_seleccionado"
       :items="pacienteNombreRutClientes"
-      label="Seleccione Cliente"
-      :rules="rules.no_vacio"
-      v-if="!clienteNuevo"
+      label="Buscar Paciente"
+      v-model="PacienteSelected"
     ></v-combobox>
     <div>
     <tablaRegistrosMedicosReactive :id="null"></tablaRegistrosMedicosReactive>
@@ -29,10 +27,12 @@ export default {
       valid: true,
       clienteNuevo: false,
       dialog: false,
+      pacienteSelected: "",
 
       clientes: [],
       cliente_seleccionado: [],
-      nombreRutClientes: [],
+      // Formato: nombre_paciente (nombre_cliente rut_cliente)
+      pacienteNombreRutClientes: [], 
       rules: common_rules.common_rules,
 
       //En esta variable se guardan las responses de la request en caso de error
@@ -73,24 +73,27 @@ export default {
     this.initialize();
   },
 
-  watch: {
-    dialog(val) {
-      val || this.close();
+  methods: {
+    initialize() {
+      this.$http
+        .get("http://localhost:3000/api/pacientes/")
+        .then(function(response) {
+          this.clientes = response.body;
+          this.pacienteNombreRutClientes = response.body.map(function(item) {
+            return item.nombre + " (" + item.Cliente.nombre + " " + item.Cliente.apellido_p + " " + item.Cliente.rut + ")";
+          });
+        });
     }
   },
 
   computed: {
-    // a computed getter
-    cliente_a_guardar: function() {
-      // `this` points to the vm instance
-      return this.clientes.filter(
-        cliente => cliente.rut == this.cliente_seleccionado.split(" ")[1]
-      )[0].id;
-    }
-  },
-
-  methods: {
-    initialize() {
+    PacienteSelected: {
+      get: function() {
+        return 
+      },
+      set: function(newValue) {
+        this.pacienteSelected = newValue;
+      }
     }
   }
 };

@@ -70,9 +70,10 @@ export default {
 
   methods: {
     filteredPacientes() {
+      this.search = this.search.toLowerCase();
       //TODO: Ineficiencie en su maxima expresion.
       let filtered = this.pacientes.filter((p) => {
-        let text = p.nombre + p.Cliente.nombre + p.Cliente.rut + p.Cliente.apellido_p;
+        let text = (p.nombre + p.Cliente.nombre + p.Cliente.rut + p.Cliente.apellido_p).toLowerCase();
         return text.indexOf(this.search) != -1;
       });
       return filtered;
@@ -89,6 +90,10 @@ export default {
 
     redireccionDetallePaciente() {
       this.$router.push('/pacientes/'+this.id_paciente)
+    },
+
+    redireccionDetallePaciente(id_paciente) {
+      this.$router.push('/pacientes/'+id_paciente)
     },
 
     mostrarDetallePaciente(id_paciente) {
