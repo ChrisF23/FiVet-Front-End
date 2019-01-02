@@ -1,4 +1,11 @@
+import tablaRegistros from '../components/tablaRegistrosMedicos'
+
 export default {
+
+  components: {
+    tablaRegistros
+  },
+
   data: () => ({
     dialog: false,
     headers: [
@@ -90,7 +97,7 @@ export default {
         this.$http.get('http://localhost:3000/api/pacientes')
           .then(function(response) {
             this.pacientes = response.body;
-            this.$http.get('http://localhost:3000/api/registro_medico')
+            this.$http.get('http://localhost:3000/api/registros')
               .then(function(response) {
                 this.registrosMedicos = response.body;
                 console.log(this.registrosMedicos);
@@ -114,7 +121,7 @@ export default {
     deleteItem(item) {
       const index = this.registrosMedicos.indexOf(item)
       if (confirm('¿Estás seguro de que quieres eliminar el registro médico?') && this.registrosMedicos.splice(index, 1)) {
-        this.$http.delete('http://localhost:3000/api/registro_medico/' + item.id).then(
+        this.$http.delete('http://localhost:3000/api/registros/' + item.id).then(
           function (response) {
             console.log(response);
           }
@@ -143,7 +150,7 @@ export default {
     save() {
       if (this.editedItem.id) {
         console.log("edited item");
-        this.$http.put('http://localhost:3000/api/registro_medico', this.cleanedItem(this.editedItem))
+        this.$http.put('http://localhost:3000/api/registros', this.cleanedItem(this.editedItem))
           .then(function (response) {
             console.log('updated reg', this.registrosMedicos);
             this.registrosMedicos.splice(this.editedIndex, 1, this.editedItem);
@@ -154,7 +161,7 @@ export default {
         delete this.editedItem.id;
         this.editedItem.paciente_id = 1;
         this.editedItem.cliente_id = 1;
-        this.$http.post('http://localhost:3000/api/registro_medico', this.cleanedItem(this.editedItem))
+        this.$http.post('http://localhost:3000/api/registros', this.cleanedItem(this.editedItem))
           .then(function (response) {
             console.log(this.registrosMedicos);
             this.registrosMedicos.push(response.body);
