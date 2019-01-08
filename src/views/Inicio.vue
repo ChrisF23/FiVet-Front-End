@@ -44,16 +44,22 @@
         slot-scope="props"
       >Pacientes {{ props.pageStart }} - {{ props.pageStop }} (Total: {{ props.itemsLength }})</template>
     </v-data-table>
+    <p></p>
+    <template>
+    <tablaRegistrosMedicosReactive :id="null"></tablaRegistrosMedicosReactive>
+    </template>
   </div>
 </template>
 
 <script>
 import common_rules from "../scripts/rules";
 import dialogoAgregarPaciente from '../components/nuevoPaciente.vue';
+import tablaRegistrosMedicosReactive from '../components/tablaRegistrosMedicosReactive.vue';
 export default {
 
   components :{
-    dialogoAgregarPaciente
+    dialogoAgregarPaciente,
+    tablaRegistrosMedicosReactive
   },
 
   data: () => ({
