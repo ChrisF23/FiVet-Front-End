@@ -10,12 +10,17 @@
 
       <v-card-text>
         <v-container grid-list-md>
-          <v-layout row wrap>
+
             <v-flex xs3 offset-xs9 justify-right>
               <v-btn color="red" dark v-on:click="dialog=false">Cancelar
                 <v-icon dark right>close</v-icon>
               </v-btn>
             </v-flex>
+          <v-flex>
+            <v-textarea v-model="editedItem.patologia" label="Patologia" autofocus="true"></v-textarea>
+          </v-flex>
+          <v-layout row wrap>
+
             <v-flex>
               <v-textarea v-model="editedItem.motivo" label="Motivo" autofocus="true"></v-textarea>
             </v-flex>
@@ -76,7 +81,7 @@
               <v-text-field v-model="editedItem.tonsilas" label="Tonsilas"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
-              <v-text-field v-model="editedItem.conciencia" label="Pulso"></v-text-field>
+              <v-text-field v-model="editedItem.conciencia" label="Conciencia"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-text-field v-model="editedItem.condicion_corporal" label="Condicion Corporal"></v-text-field>
