@@ -13,7 +13,7 @@
 
         <!-- Inicio formulario -->
         <v-dialog v-model="dialog" max-width="600px">
-          <v-btn round slot="activator" color="primario darken-1" dark class="mb-2">
+          <v-btn slot="activator" color="purple" dark class="mb-2">
             <v-icon small left>add</v-icon>Nuevo Cliente
           </v-btn>
 
@@ -55,9 +55,10 @@
               </v-card-text>
             </v-form>
             <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" v-on:click="close">Cancelar</v-btn>
-              <v-btn color="blue darken-1" v-on:click="save">Guardar</v-btn>
+             <v-layout justify-center >
+            <v-btn right color="error" v-on:click="close">Cancelar</v-btn>
+            <v-btn left color="info" v-on:click="save">Guardar</v-btn>
+            </v-layout>
             </v-card-actions>
           </v-card>
         </v-dialog>
