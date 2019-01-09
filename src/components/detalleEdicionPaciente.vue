@@ -1,18 +1,29 @@
 <template>
 <div>
   <!--Fila de datos de paciente y cliente.-->
-  <v-layout row >
-    <v-layout column>
       <!--Tarjeta del paciente.-->
-      <v-card class="pa-3 ma-1">
-        <v-layout row>
+      
+      <v-card class="pa-2 ">
+            <v-btn
+            class="mb-4"
+              flat
+              absolute
+              bottom
+              right
+              color="warning"
+            >
+              <v-icon top left absolute small>edit</v-icon>Editar
+            </v-btn>
+        
+        <v-layout row >
           <v-layout column>
             <v-flex pa-3 xs1>
-              <v-avatar size="200">
+              <v-avatar size="100">
                 <img src="https://i.imgur.com/3pwLlj2.jpg">
               </v-avatar>
             </v-flex>
           </v-layout>
+          
 
           <v-layout column>
             <v-flex v-if="paciente.nombre" pb-1 xs1 align-self-left="true">
@@ -29,7 +40,8 @@
               <div class="caption grey--text">Castrado</div>
               <div>{{ paciente.castrado }}</div>
             </v-flex>
-
+          </v-layout >
+          <v-layout column>
             <v-flex v-if="paciente.raza" pb-1 xs1>
               <div class="caption grey--text">Raza</div>
               <div>{{ paciente.raza }}</div>
@@ -44,7 +56,8 @@
               <div class="caption grey--text">Sexo</div>
               <div>{{ paciente.sexo }}</div>
             </v-flex>
-
+          </v-layout>
+          <v-layout column>
             <v-flex v-if="paciente.id" pb-2 xs1>
               <div class="caption grey--text">Numero de Chip</div>
               <div>{{ paciente.id }}</div>
@@ -55,21 +68,7 @@
               <div>{{ paciente.color }}</div>
             </v-flex>
           </v-layout>
-        </v-layout>
-
-        <v-btn flat color="warning">
-          <v-icon left small>edit</v-icon>Editar
-        </v-btn>
-        <v-btn flat color="error">
-          <v-icon left small>delete</v-icon>Eliminar
-        </v-btn>
-      </v-card>
-      <!--Fin de tarjeta del paciente.-->
-    </v-layout>
-    <v-layout column>
-      <!--Tarjeta del cliente.-->
-      <v-flex offset-xs1>
-      <v-card class="pa-3 ma-1 "  >
+              <!--Tarjeta del cliente.-->
           <v-layout column >
             <v-flex pb-2 xs1>
               <div class="caption grey--text">Nombre dueño</div>
@@ -86,11 +85,14 @@
               <div>{{ cliente.telefono }}</div>
             </v-flex>
           </v-layout>
-      </v-card >
-      </v-flex>
+
+        </v-layout >
       <!--Fin de tarjeta del cliente.-->
-    </v-layout>
-  </v-layout>
+
+        </v-layout>
+      <!--Fin de tarjeta del paciente.-->
+
+      </v-card>
   <!--Fin fila de datos de paciente y cliente.-->
 </div>
 </template>
