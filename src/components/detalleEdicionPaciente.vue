@@ -1,19 +1,30 @@
 <template>
 <div>
-  <!--Fila de datos de paciente y cliente.-->
-      <!--Tarjeta del paciente.-->
-      
       <v-card class="pa-2 ">
             <v-btn
+            v-if="!editing"
             class="mb-4"
               flat
               absolute
               bottom
               right
               color="warning"
+              v-on:click="edit()"
             >
               <v-icon top left absolute small>edit</v-icon>Editar
             </v-btn>
+            <div v-else>
+             <v-btn
+            class="mb-4"
+              absolute
+              bottom
+              right
+              color="green"
+              v-on:click="savePaciente()"
+            >
+              <v-icon top left absolute small></v-icon>GUARDAR
+            </v-btn>
+            </div>
         
         <v-layout row >
           <v-layout column>
@@ -23,9 +34,27 @@
               </v-avatar>
             </v-flex>
           </v-layout>
-          
 
-          <v-layout column>
+          <v-layout column v-if="editing">
+            <v-flex v-if="paciente.nombre" pb-1 xs1 align-self-left="true">
+              <v-text-field
+                  v-model="pacienteOnEdit.nombre"
+                  label="Nombre"
+                  required
+                ></v-text-field>
+            </v-flex>
+
+            <v-flex v-if="paciente.especie" pb-1 xs1 align-self-left="true">
+              <div class="caption grey--text">Especie</div>
+              <div>{{ paciente.especie }}</div>
+            </v-flex>
+
+            <v-flex v-if="paciente.castrado" pb-1 xs1>
+              <div class="caption grey--text">Castrado</div>
+              <div>{{ paciente.castrado }}</div>
+            </v-flex>
+          </v-layout >
+          <v-layout column v-else>
             <v-flex v-if="paciente.nombre" pb-1 xs1 align-self-left="true">
               <div class="caption grey--text">Nombre</div>
               <div>{{ paciente.nombre }}</div>
@@ -68,7 +97,6 @@
               <div>{{ paciente.color }}</div>
             </v-flex>
           </v-layout>
-              <!--Tarjeta del cliente.-->
           <v-layout column >
             <v-flex pb-2 xs1>
               <div class="caption grey--text">Nombre dueño</div>
@@ -85,15 +113,10 @@
               <div>{{ cliente.telefono }}</div>
             </v-flex>
           </v-layout>
-
         </v-layout >
-      <!--Fin de tarjeta del cliente.-->
-
         </v-layout>
-      <!--Fin de tarjeta del paciente.-->
 
       </v-card>
-  <!--Fin fila de datos de paciente y cliente.-->
 </div>
 </template>
 
@@ -107,7 +130,9 @@ export default {
   data: function() {
     return {
       paciente: null,
-      cliente: null
+      cliente: null,
+      pacienteOnEdit: null,
+      editing: false
     };
   },
 
@@ -128,6 +153,31 @@ export default {
               this.cliente = response.body;
             });
         });
+    },
+    edit: function() {
+    
+    this.pacienteOnEdit = JSON.parse(JSON.stringify(this.paciente));
+    this.editing = true;
+    console.log("EDIT");
+    },
+
+    cancelEditMode(){
+      this.editing = false;
+    },
+
+    savePaciente(){
+      this.editing = false;
+      delete this.pacienteOnEdit.Cliente;
+      delete this.pacienteOnEdit.RegistrosMedicos;
+      console.log(this.pacienteOnEdit);
+      this.$http
+          .put("http://localhost:3000/api/pacientes", this.pacienteOnEdit)
+          .then(function(response) {
+            this.pacienteOnEdit = response.body;
+            this.pacienteOnEdit.Clientes = this.paciente.Clientes;
+            this.pacienteOnEdit.RegistrosMedicos = this.paciente.RegistrosMedicos;
+            this.paciente = this.pacienteOnEdit;
+          });
     }
   },
 
@@ -139,7 +189,7 @@ export default {
     id: function (newId) {
       this.initialize();
     }
-  },
+  }
 
   // updated() {
   //   //Reinicializa el componente para reflejas cambios en la base de datos

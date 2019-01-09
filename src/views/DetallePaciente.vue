@@ -50,7 +50,8 @@ export default {
 
   created() {
     this.initialize()
-  },
+  }
+
 }
 
   
