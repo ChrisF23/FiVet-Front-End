@@ -79,9 +79,6 @@
     <v-btn flat color="warning">
       <v-icon left small>edit</v-icon>Editar
     </v-btn>
-    <v-btn flat color="error">
-      <v-icon left small>delete</v-icon>Eliminar
-    </v-btn>
   </v-card>
 </template>
 

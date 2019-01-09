@@ -11,11 +11,6 @@
       <v-card-text>
         <v-container grid-list-md>
           <v-layout row wrap>
-            <v-flex xs3 offset-xs9 justify-right>
-              <v-btn color="red" dark v-on:click="dialog=false">Cancelar
-                <v-icon dark right>close</v-icon>
-              </v-btn>
-            </v-flex>
             <v-flex>
               <v-textarea v-model="editedItem.motivo" label="Motivo" autofocus="true"></v-textarea>
             </v-flex>
@@ -82,20 +77,13 @@
               <v-text-field v-model="editedItem.condicion_corporal" label="Condicion Corporal"></v-text-field>
             </v-flex>
           </v-layout>
-          <v-layout wrap>
-            <v-flex md12 lg6>
-              <v-time-picker v-model="e4" color="green lighten-1"></v-time-picker>
-            </v-flex>
-            <v-flex xs12 sm6>
-              <v-date-picker v-model="picker" color="green lighten-1"></v-date-picker>
-            </v-flex>
-          </v-layout>
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" v-on:click="dialog=false">Cancelar</v-btn>
-        <v-btn color="blue darken-1" v-on:click="save">Guardar</v-btn>
+          <v-layout justify-center >
+            <v-btn right color="error" v-on:click="close">Cancelar</v-btn>
+            <v-btn left color="info" v-on:click="save">Guardar</v-btn>
+            </v-layout>
       </v-card-actions>
     </v-card>
   </v-dialog>

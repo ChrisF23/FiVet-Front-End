@@ -14,7 +14,7 @@
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="800px">
-        <v-btn round slot="activator" color="primario darken-1" dark class="mb-2">
+        <v-btn slot="activator" color="purple" dark class="mb-2">
           <v-icon small left>add</v-icon>Nuevo Registro
         </v-btn>
         <v-card>
@@ -91,20 +91,14 @@
                   <v-text-field v-model="editedItem.condicion_corporal" label="Condicion Corporal"></v-text-field>
                 </v-flex>
               </v-layout>
-              <v-layout wrap>
-                <v-flex md12 lg6>
-                  <v-time-picker v-model="e4" color="green lighten-1"></v-time-picker>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-date-picker v-model="picker" color="green lighten-1"></v-date-picker>
-                </v-flex>
-              </v-layout>
+              
             </v-container>
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" v-on:click="close">Cancelar</v-btn>
-            <v-btn color="blue darken-1" v-on:click="save">Guardar</v-btn>
+            <v-layout justify-center >
+            <v-btn right color="error" v-on:click="close">Cancelar</v-btn>
+            <v-btn left color="info" v-on:click="save">Guardar</v-btn>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-dialog>
