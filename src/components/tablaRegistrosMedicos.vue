@@ -1,7 +1,109 @@
 <template>
   <div>
 
-    
+
+  <v-dialog v-model="dialogRegistro">
+    <v-card>
+      <v-card-title>
+        <span class="headline">Registro Médico</span>
+      </v-card-title>
+      <v-form v-if="dialogRegistro">
+        <v-card-text>
+          <v-container grid-list-md>
+              <v-flex v-if="registroSeleccionado.fecha_creacion" xs12 sm6 md4>
+                <h4>Fecha: {{registroSeleccionado.fecha_creacion.replace("T", " ").replace("Z", " ")}}</h4> 
+                <p></p>
+              </v-flex>
+              <v-flex v-if="registroSeleccionado.motivo" xs12 sm6 md4>
+                <h3>Motivo</h3>
+                {{registroSeleccionado.motivo}}
+              </v-flex>
+
+              <v-flex v-if="registroSeleccionado.anamnesis" xs12 sm6 md4>
+                <h3>Anamnesis</h3>
+                {{registroSeleccionado.anamnesis}}
+              </v-flex>
+
+              <v-flex v-if="registroSeleccionado.peso" xs12 sm6 md4>
+                <h3>Peso</h3>
+                {{registroSeleccionado.peso}}
+              </v-flex>
+
+              <v-flex v-if="registroSeleccionado.temperatura" xs12 sm6 md4>
+                <h3>Temperatura</h3>
+                {{registroSeleccionado.temperatura}}
+              </v-flex>
+
+              <v-flex v-if="registroSeleccionado.hidratacion" xs12 sm6 md4>
+                <h3>Hidratacion</h3>
+                {{registroSeleccionado.hidratacion}}
+              </v-flex>
+
+              <v-flex v-if="registroSeleccionado.pulso" xs12 sm6 md4>
+                <h3>Pulso</h3>
+                {{registroSeleccionado.pulso}}
+              </v-flex>
+
+              <v-flex v-if="registroSeleccionado.frecuencia_cardiaca" xs12 sm6 md4>
+                <h3>Frecuencia Cardiaca</h3>
+                {{registroSeleccionado.frecuencia_cardiaca}}
+              </v-flex>
+
+              <v-flex v-if="registroSeleccionado.frecuencia_respiratoria" xs12 sm6 md4>
+                <h3>Frecuencia Respiratoria</h3>
+                {{registroSeleccionado.frecuencia_respiratoria}}
+              </v-flex>
+
+              <v-flex v-if="registroSeleccionado.musocas" xs12 sm6 md4>
+                <h3>Mucosas</h3>
+                {{registroSeleccionado.mucosas}}
+              </v-flex>
+              
+              <v-flex v-if="registroSeleccionado.tiempo_llenado_capilar" xs12 sm6 md4>
+                <h3>Tiempo de Llenado Capilar</h3>
+                {{registroSeleccionado.tiempo_llenado_capilar}}
+              </v-flex>
+              
+              <v-flex v-if="registroSeleccionado.ganglios" xs12 sm6 md4>
+                <h3>Ganglios</h3>
+                {{registroSeleccionado.ganglios}}
+              </v-flex>
+              
+              <v-flex v-if="registroSeleccionado.reflejo_tusigeno" xs12 sm6 md4>
+                <h3>Reflejo Tusigeno</h3>
+                {{registroSeleccionado.reflejo_tusigeno}}
+              </v-flex>
+              
+              <v-flex v-if="registroSeleccionado.reflejo_deglutorio" xs12 sm6 md4>
+                <h3>Reflejo Deglutorio</h3>
+                {{registroSeleccionado.reflejo_deglutorio}}
+              </v-flex>
+              
+              <v-flex v-if="registroSeleccionado.palpacion_abdominal" xs12 sm6 md4>
+                <h3>Palpación Abdominal</h3>
+                {{registroSeleccionado.palpacion_abdominal}}
+              </v-flex>
+              
+              <v-flex v-if="registroSeleccionado.palmopercusion" xs12 sm6 md4>
+                <h3>Palmopercusión</h3>
+                {{registroSeleccionado.palmopercusion}}
+              </v-flex>
+              
+              <v-flex v-if="registroSeleccionado.tonsilas" xs12 sm6 md4>
+                <h3>Tonsilas</h3>
+                {{registroSeleccionado.tonsilas}}
+              </v-flex>
+              
+              <v-flex v-if="registroSeleccionado.pulso_por_minuto" xs12 sm6 md4>
+                <h3>Pulso</h3>
+                {{registroSeleccionado.pulso_por_minuto}}
+              </v-flex>
+              
+          </v-container>
+        </v-card-text>
+      </v-form>
+    </v-card>
+  </v-dialog>
     <v-card>
           <v-text-field v-model="search" append-icon="search" label="Buscar" hide-details></v-text-field>
 
@@ -15,27 +117,32 @@
           <v-alert :value="true" color="error" icon="warning">No hay registros para mostrar</v-alert>
         </template>
         <template slot="items" slot-scope="props">
+        <tr @click="abrirRegistro(props.item)">
           <td>{{ props.item.patologia }}</td>
           <td>{{ props.item.motivo }}</td>
           <td>{{ props.item.anamnesis }}</td>
-          <td>{{ props.item.fecha_creacion }}</td>
+          <td>{{ props.item.fecha_creacion.replace("T", " ").replace("Z", " ") }}</td>
+        </tr>  
         </template>
       </v-data-table>
     </v-card>
+
   </div>
 </template>
 
 <script>
 const utils = require("../Utils");
 export default {
-  props: {
-    id: Number
-  },
+  props: [
+    'id',
+    'registroInicial'
+  ],
 
   data: function() {
     return {
       valid: false,
-      dialog: false,
+      dialogRegistro: false,
+      registroSeleccionado: null,
       search: "",
       headers: [
         { text: "Patologia", value: "patologia", sortable: true },
@@ -65,10 +172,21 @@ export default {
               if (rm.id_paciente == this.$props.id) {
                 this.registrosMedicos.push(rm);
               }
+
+              if(this.$props.registroInicial != null && this.$props.registroInicial != undefined){
+                
+                this.registroSeleccionado = this.$props.registroInicial;
+                this.dialogRegistro = true;
+              }
             });
           }
         });
       this.search = "";
+    },
+
+    abrirRegistro(registro){
+      this.registroSeleccionado = registro;
+      this.dialogRegistro = true;
     }
   },
 

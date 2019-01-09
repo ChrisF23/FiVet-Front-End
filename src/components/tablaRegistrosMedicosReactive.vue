@@ -5,7 +5,7 @@
         <v-alert :value="true" color="error" icon="warning">No hay registros para mostrar</v-alert>
       </template>
       <template slot="items" slot-scope="props">
-      <tr @click="redireccionPaciente(props.item.Paciente.id)"> 
+      <tr @click="redireccionPaciente(props.item)"> 
         <td>{{ props.item.patologia }}</td>
         <td>{{ props.item.motivo }}</td>
         <td>{{ props.item.anamnesis }}</td>
@@ -63,10 +63,17 @@ export default {
       this.search = "";
     },
 
-    redireccionPaciente(id) {
-      this.$router.push('/pacientes/'+id)
+    redireccionPaciente(registroSeleccionado) {
+      console.log(registroSeleccionado);
+      //this.$router.push({path: '/pacientes/'+registroSeleccionado.Paciente.id, params: {registroInicial: registroSeleccionado}})
+      this.$router.push({
+	name: 'paciente',
+	params: {
+		id: registroSeleccionado.Paciente.id,
+    registroInicial: registroSeleccionado
+	}
+});
       this.valid = true;
-      this.id_paciente = id;
     }
 
   },

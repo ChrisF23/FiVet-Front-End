@@ -4,7 +4,7 @@
 
     <datosPaciente :id="paciente_id"></datosPaciente>
     <dialog-agregar-registro-medico :id_paciente="paciente_id"></dialog-agregar-registro-medico>
-    <tablaRegistrosMedicos :id="paciente_id"></tablaRegistrosMedicos>
+    <tablaRegistrosMedicos :id="paciente_id" :registroInicial="registroInicial"></tablaRegistrosMedicos>
 
   </div>
 </template>
@@ -16,7 +16,8 @@ import datosPaciente from '../components/detalleEdicionPaciente';
 import dialogAgregarRegistroMedico from '../components/agregarRegistroMedico';
 export default {
   props: {
-        id: Number
+        id: null,
+        registroInicial: null
     },
 
   components :{
@@ -26,6 +27,7 @@ export default {
   },
 
   data: () => ({
+    registroInicial: null,
       update_db: false,
       paciente_id: null,
       paciente: null,
@@ -42,6 +44,7 @@ export default {
     //se carga el id del paciente para ser usado por los components
     initialize() {
       this.paciente_id = this.$props.id;
+      this.registroInicial = this.$props.registroInicial;
     },
   },
 

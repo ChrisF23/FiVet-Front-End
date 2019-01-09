@@ -81,20 +81,21 @@ export default {
 
     //Al inicializar, cargar la lista de pacientes.
     initialize() {
+      
       this.$http.get('http://localhost:3000/api/pacientes')
         .then(function (response) {
           this.pacientes = response.body;
           this.search = '';
         });
     },
-
+/*
     redireccionDetallePaciente() {
       this.$router.push('/pacientes/'+this.id_paciente)
     },
 
     redireccionDetallePaciente(id_paciente) {
       this.$router.push('/pacientes/'+id_paciente)
-    },
+    },*/
 
     mostrarDetallePaciente(id_paciente) {
       this.id_paciente=id_paciente
