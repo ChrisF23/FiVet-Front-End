@@ -114,7 +114,6 @@
             </v-flex>
           </v-layout>
         </v-layout >
-        </v-layout>
 
       </v-card>
 </div>
