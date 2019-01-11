@@ -116,7 +116,6 @@
 
 <script>
 import common_rules from "../scripts/rules";
-
 export default {
   props: {
     //paciente en caso de que estemos editando
@@ -196,7 +195,7 @@ export default {
         .then(function(response) {
           this.clientes = response.body;
           this.nombreRutClientes = response.body.map(function(item) {
-            return item.nombre + " " + item.rut;
+            return item.nombre + " " + item.apellido_p + " "+ (item.apellido_m || "") +" (" + item.rut +")";
           });
         });
     },
