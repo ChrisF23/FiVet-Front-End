@@ -123,8 +123,8 @@
             </v-flex>
           </v-layout >
           <v-layout column v-else>
-
-            <v-flex v-if="paciente.color"pb-2 xs1>
+            <!-- Fixed! -->
+            <v-flex v-if="paciente.color" pb-2 xs1>
               <div class="caption grey--text">Color</div>
               <div>{{ paciente.color }}</div>
             </v-flex>
