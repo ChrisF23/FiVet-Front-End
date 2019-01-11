@@ -136,12 +136,12 @@
             </v-flex>
 
             <v-flex v-if="cliente.email" pb-2 xs1>
-              <div class="caption grey--text">Email dueño</div>
+              <div class="caption grey--text">Correo electrónico dueño</div>
               <div>{{ cliente.email }}</div>
             </v-flex>
 
             <v-flex v-if="cliente.telefono" pb-2 xs1>
-              <div class="caption grey--text">Telefono dueño</div>
+              <div class="caption grey--text">Teléfono dueño</div>
               <div>{{ cliente.telefono }}</div>
             </v-flex>
           </v-layout>

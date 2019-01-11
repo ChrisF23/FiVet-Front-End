@@ -42,7 +42,7 @@
         :value="true"
         color="info"
         icon="info"
-      >No se encontraron resultados para tu busqueda.</v-alert>
+      >No se encontraron resultados para tu búsqueda.</v-alert>
       <template slot="no-data">
         <div>Cargando...</div>
       </template>
