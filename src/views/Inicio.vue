@@ -4,7 +4,13 @@
       <v-card-title class="headline">Pacientes
         <v-spacer></v-spacer>
 
-        <v-text-field v-model="search" append-icon="search" label="Nombre de paciente, Raza, Nombre del dueño, etc..." single-line hide-details></v-text-field>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Nombre de paciente, Raza, Nombre del dueño, etc..."
+          single-line
+          hide-details
+        ></v-text-field>
 
         <v-spacer></v-spacer>
 
@@ -60,6 +66,13 @@ export default {
   components: {
     dialogoAgregarPaciente,
     tablaRegistrosMedicosReactive
+  },
+
+  beforeCreate: function() {
+    if (!this.$session.exists()) {
+      //Desactivado mientras estemos en desarrollo
+      //this.$router.push("/login");
+    }
   },
 
   data: () => ({

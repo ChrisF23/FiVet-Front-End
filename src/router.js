@@ -8,6 +8,7 @@ import DetalleCliente from './views/DetalleCliente.vue'
 import DetallePaciente from './views/DetallePaciente.vue'
 import DetalleRegistroMedico from './views/DetalleRegistroMedico.vue'
 import RegistrosMedicos from './views/RegistrosMedicos.vue'
+import Login from './views/Login.vue'
 
 Vue.use(Router)
 
@@ -15,6 +16,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/login',
+      name: 'inicio',
+      component: Login
+    },
     // Muestra la pagina principal.
     {
       path: '/',

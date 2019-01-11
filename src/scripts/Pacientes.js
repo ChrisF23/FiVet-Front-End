@@ -7,6 +7,13 @@ export default {
     detallePaciente,
   },
 
+  beforeCreate: function() {
+    if (!this.$session.exists()) {
+      //Desactivado mientras estemos en desarrollo
+      //this.$router.push("/login");
+    }
+  },
+
   data: () => ({
     valid: false,
     dialog: false,

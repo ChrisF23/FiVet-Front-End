@@ -1,4 +1,5 @@
 export default {
+
     props: ["id"],
     data: () => ({
         initialCliente: null,
@@ -10,6 +11,13 @@ export default {
         //this.id = this.$route.params.id;
         this.initialize()
     },
+
+    beforeCreate: function() {
+        if (!this.$session.exists()) {
+          //Desactivado mientras estemos en desarrollo
+          //this.$router.push("/login");
+        }
+      },
 
     methods: {
         initialize() {
