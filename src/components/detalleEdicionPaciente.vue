@@ -201,9 +201,10 @@ export default {
           });
     },
     deletePaciente() {
-      this.$http.delete("http://localhost:3000/api/pacientes/"+this.paciente.id).then{
-        this.$router.push("inicio");
-      }
+      this.$http.delete("http://localhost:3000/api/pacientes/"+this.paciente.id).bind(this).then(function (response) {
+        console.log("asljkhfkasjhfdksldhjflsd");
+        this.$router.push("/");
+      }).bind(this);
     },
     fechaToString() {
         var options = {
