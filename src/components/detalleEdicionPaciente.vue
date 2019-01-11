@@ -30,7 +30,7 @@
           <v-layout column>
             <v-flex pa-3 xs1>
               <v-avatar size="100">
-                <img src="https://i.imgur.com/3pwLlj2.jpg">
+                <img src="https://e-fisiomedic.com/wp-content/uploads/2013/11/default-placeholder-300x300.png">
               </v-avatar>
             </v-flex>
           </v-layout>

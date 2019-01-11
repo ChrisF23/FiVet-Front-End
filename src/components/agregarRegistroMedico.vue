@@ -10,9 +10,9 @@
 
       <v-card-text>
         <v-container grid-list-md>
-          <v-flex xs3 offset-xs9 justify-right>
-            <v-btn color="red" dark v-on:click="dialog=false">Cancelar
-              <v-icon dark right>close</v-icon>
+          <v-flex xs3 offset-xs11 justify-right>
+            <v-btn outline fab color="red" v-on:click="dialog=false">
+              <v-icon>close</v-icon>
             </v-btn>
           </v-flex>
           <v-flex>
@@ -40,13 +40,17 @@
               <v-text-field v-model="editedItem.pulso" label="Pulso"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
-              <v-text-field v-model="editedItem.frecuencia_cardiaca" label="Frecuencia Cardiaca" suffix="bpm"></v-text-field>
+              <v-text-field
+                v-model="editedItem.frecuencia_cardiaca"
+                label="Frecuencia Cardiaca"
+                suffix="bpm"
+              ></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-text-field
                 v-model="editedItem.frecuencia_respiratoria"
                 label="Frecuencia Respiratoria"
-                 suffix="bpm"
+                suffix="bpm"
               ></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
