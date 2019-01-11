@@ -1,41 +1,30 @@
 <template>
 <div>
       <v-card class="pa-2 ">
-            <v-btn
-            v-if="!editing"
-            class="mb-4"
-              flat
-              absolute
-              bottom
-              right
-              color="warning"
-              v-on:click="edit()"
-            >
+            <v-btn v-if="!editing" class="mb-5" absolute bottom right color="warning" v-on:click="edit()">
               <v-icon top left absolute small>edit</v-icon>Editar
             </v-btn>
             <div v-else>
-             <v-btn
-            class="mb-4"
-              absolute
-              bottom
-              right
-              color="green"
-              v-on:click="savePaciente()"
-            >
-              <v-icon top left absolute small></v-icon>GUARDAR
+             <v-btn class="mb-5" absolute bottom right color="green" v-on:click="savePaciente()">
+              <v-icon top left absolute small>save</v-icon>GUARDAR
             </v-btn>
             </div>
         
-        <v-layout row >
+        <v-layout row class="ma-1">
           <v-layout column>
             <v-flex pa-3 xs1>
               <v-avatar size="100">
                 <img src="https://e-fisiomedic.com/wp-content/uploads/2013/11/default-placeholder-300x300.png">
               </v-avatar>
+
+            <v-btn v-if="editing" class="mb-5" absolute bottom left color="red" v-on:click="deletePaciente()">
+              <v-icon left absolute small>delete</v-icon>ELIMINAR
+            </v-btn>
             </v-flex>
+
           </v-layout>
 
-          <v-layout column v-if="editing">
+          <v-layout pl-3 column v-if="editing">
             <v-flex pb-1 xs1 align-self-left="true">
               <v-text-field
                   v-model="pacienteOnEdit.nombre"
@@ -210,6 +199,11 @@ export default {
             this.paciente = this.pacienteOnEdit;
             console.log("FUNCIONA", response.body);
           });
+    },
+    deletePaciente() {
+      this.$http.delete("http://localhost:3000/api/pacientes/"+this.paciente.id).bind(this).then(function (response) {
+        this.$router.push("/");
+      }).bind(this);
     },
     fechaToString() {
         var options = {
