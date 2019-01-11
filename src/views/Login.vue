@@ -35,11 +35,13 @@ export default {
           var emailUsuario = googleUser.getBasicProfile().U3;
           //Si el usuario loggeado esta entre los usuarios registrados
           if (usuariosRegistrados.indexOf(emailUsuario) > -1) {
-            this.$session.set("jwt", googleUser.getBasicProfile().U3)
-            this.google = true
+            this.$session.set("fivet-user", googleUser.getBasicProfile().U3)
+            //this.google = true
+            this.$root.$emit("user_login");
             this.$router.push("/");
           }
-        });
+        }) 
+        this.google = googleUser.getBasicProfile();;
     },
 
     onLoginFailure() {

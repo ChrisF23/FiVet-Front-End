@@ -7,12 +7,17 @@
         <span>FiVet :</span>
         <span class="font-weight-light">Sistema de Control Veterinario</span>
       </v-toolbar-title>
-      <GoogleLogin
-        :client_id="client_id"
-        :onSuccess="onLoginSuccess"
-        :onFailure="onLoginFailure"
-        :logoutButton="true"
-      >Login</GoogleLogin>
+      <v-spacer></v-spacer>
+      <v-layout column>
+        <GoogleLogin
+          v-if="hayUsuario"
+          :client_id="client_id"
+          :onSuccess="onLoginSuccess"
+          :onFailure="onLoginFailure"
+          :logoutButton="true"
+        ></GoogleLogin>
+        <div>{{UsuarioActual}}</div>
+      </v-layout>
     </v-toolbar>
 
     <v-navigation-drawer v-model="drawer" app class="secundario">
@@ -43,6 +48,8 @@ export default {
       // Por defecto, el drawer se encuentra escondido (false).
       client_id:
         "522114999150-8bao53rb2r1vmeufbveuoqh9j0c9cvu9.apps.googleusercontent.com",
+      hayUser: false,
+
       drawer: false,
 
       // La lista de links. Los iconos se obtienen de https://material.io/tools/icons/.
@@ -62,12 +69,37 @@ export default {
   methods: {
     onLoginSuccess(googleUser) {
       this.$session.destroy();
+      this.$session.clear();
       this.$router.push("/login");
     },
 
     onLoginFailure() {
       this.LoginFailure = true;
+    },
+
+    hasUser() {
+      return this.$session.has("fivet-user");
     }
+  },
+
+  computed: {
+    // a computed getter
+    UsuarioActual: function() {
+      if (this.$session.has("fivet-user")) {
+        return this.$session.get("fivet-user");
+      }
+      return "";
+    },
+
+    hayUsuario: function() {
+      return this.$session.has("fivet-user");
+    }
+  },
+
+  mounted() {
+    this.$root.$on("user_login", data => {
+      this.$forceUpdate();
+    });
   }
 };
 </script>
