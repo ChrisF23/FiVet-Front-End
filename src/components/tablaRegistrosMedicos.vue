@@ -111,6 +111,9 @@
       :headers="headers" 
       :items="registrosMedicos"
       :search="search" 
+      :rows-per-page-items="rows_per_page_items"
+      :rows-per-page-text="rows_per_page_text"
+
       class="elevation-1"
       >
         <template slot="no-data">
@@ -145,15 +148,15 @@ export default {
       registroSeleccionado: null,
       search: "",
       headers: [
-        { text: "Patologia", value: "patologia", sortable: true },
+        { text: "Patología", value: "patologia", sortable: true },
         { text: "Motivo", value: "motivo", sortable: true },
-        { text: "Anamnesis", value: "anamnesis", sortable: true },
+        { text: "Anamnesia", value: "anamnesis", sortable: true },
         { text: "Fecha", value: "fecha", sortable: true }
       ],
 
       registrosMedicos: [],
 
-      rows_per_page_text: "Registros por pagina:",
+      rows_per_page_text: "Registros por página:",
       rows_per_page_items: [5, 10, 20, { text: "Todos", value: -1 }]
     };
   },
