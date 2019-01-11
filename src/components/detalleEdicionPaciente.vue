@@ -14,7 +14,7 @@
           <v-layout column>
             <v-flex pa-3 xs1>
               <v-avatar size="100">
-                <img src="https://i.imgur.com/3pwLlj2.jpg">
+                <img src="https://e-fisiomedic.com/wp-content/uploads/2013/11/default-placeholder-300x300.png">
               </v-avatar>
 
             <v-btn v-if="editing" class="mb-5" absolute bottom left color="red" v-on:click="deletePaciente()">

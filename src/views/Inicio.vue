@@ -35,6 +35,7 @@
           <td>{{props.item.raza}}</td>
           <!-- El backend se asegura de que el registro en la posicion 0 sea el mas reciente. -->
           <td>{{obtenerFechaEdicionUltimoRegistro(props.item.RegistroMedicos[0])}}</td>
+          <td>{{ obtenerMotivoRegistro(props.item.RegistroMedicos[0])}}</td>
         </tr>
       </template>
       <v-alert
@@ -86,8 +87,12 @@ export default {
       { text: "Especie", value: "especie" },
       { text: "Raza", value: "raza" },
       {
-        text: "Fecha de ultimo registro",
+        text: "Fecha de último registro",
         value: "RegistroMedicos[0].fecha_edicion"
+      },
+      {
+        text: "Motivo de ultimo registro", 
+        value: "RegistroMedicos[0].motivo"
       }
     ],
 
@@ -97,7 +102,7 @@ export default {
     pacientes: [],
     id_paciente: null,
 
-    rows_per_page_text: "Pacientes por pagina:",
+    rows_per_page_text: "Pacientes por página:",
     rows_per_page_items: [5, 10, 20, { text: "Todos", value: -1 }],
     editedIndex: -1,
 
@@ -203,6 +208,13 @@ export default {
         );
       }
       return "Sin registros";
+    },
+
+    obtenerMotivoRegistro(_registro){
+      if (_registro != null){
+        return _registro.motivo;
+      }
+      return "";
     },
 
     obtenerNombreyRutDelDuenio(_duenio) {

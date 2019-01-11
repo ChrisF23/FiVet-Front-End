@@ -5,8 +5,13 @@
     </v-btn>
 
     <v-card>
+      <v-flex xs3 offset-xs10 justify-right>
+        <v-btn outline fab color="red" v-on:click="dialog=false">
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-flex>
       <v-card-title>
-        <span class="headline">{{ formTitle }}</span>
+        <span class="headline">Nuevo Paciente</span>
       </v-card-title>
       <v-form v-model="valid">
         <v-card-text>
@@ -39,12 +44,7 @@
               </v-flex>
 
               <v-flex xs12 sm6 md4>
-                <v-select
-                  v-model="paciente.sexo"
-                  :items="['M', 'F']"
-                  label="Sexo:"
-                  outline
-                ></v-select>
+                <v-select v-model="paciente.sexo" :items="['M', 'F']" label="Sexo:" outline></v-select>
               </v-flex>
             </v-layout>
 
@@ -104,10 +104,10 @@
         </v-card-text>
       </v-form>
       <v-card-actions>
-        <v-layout justify-center> 
-        <v-btn color="error" v-on:click="close">Cancelar</v-btn>
-        <v-btn v-if="valid" color="info" v-on:click="save()">Guardar</v-btn>
-        <v-btn v-if="!valid" disabled="true" v-on:click="save()">Guardar</v-btn>
+        <v-layout justify-center>
+          <v-btn color="error" v-on:click="close">Cancelar</v-btn>
+          <v-btn v-if="valid" color="info" v-on:click="save()">Guardar</v-btn>
+          <v-btn v-if="!valid" disabled="true" v-on:click="save()">Guardar</v-btn>
         </v-layout>
       </v-card-actions>
     </v-card>
@@ -116,7 +116,6 @@
 
 <script>
 import common_rules from "../scripts/rules";
-
 export default {
   props: {
     //paciente en caso de que estemos editando
@@ -196,7 +195,7 @@ export default {
         .then(function(response) {
           this.clientes = response.body;
           this.nombreRutClientes = response.body.map(function(item) {
-            return item.nombre + " " + item.rut;
+            return item.nombre + " " + item.apellido_p + " "+ (item.apellido_m || "") +" (" + item.rut +")";
           });
         });
     },
