@@ -52,21 +52,15 @@
         slot-scope="props"
       >Pacientes {{ props.pageStart }} - {{ props.pageStop }} (Total: {{ props.itemsLength }})</template>
     </v-data-table>
-    <p></p>
-    <template>
-      <tablaRegistrosMedicosReactive :id="null"></tablaRegistrosMedicosReactive>
-    </template>
   </div>
 </template>
 
 <script>
 import common_rules from "../scripts/rules";
 import dialogoAgregarPaciente from "../components/nuevoPaciente.vue";
-import tablaRegistrosMedicosReactive from "../components/tablaRegistrosMedicosReactive.vue";
 export default {
   components: {
-    dialogoAgregarPaciente,
-    tablaRegistrosMedicosReactive
+    dialogoAgregarPaciente
   },
 
   beforeCreate: function() {
@@ -147,26 +141,7 @@ export default {
   },
 
   methods: {
-    /*
-    
-    //FIXED. Ir al metodo initialize para saber como se implemento.
-    
-    filteredPacientes() {
-      this.search = this.search.toLowerCase();
-      //TODO: Ineficiencie en su maxima expresion.
-      let filtered = this.pacientes.filter(p => {
-        let text = (
-          p.nombre +
-          p.Cliente.nombre +
-          p.Cliente.rut +
-          p.Cliente.apellido_p
-        ).toLowerCase();
-        return text.indexOf(this.search) != -1;
-      });
-      return filtered;
-    },
-    */
-
+   
     //Al inicializar, cargar la lista de pacientes.
     initialize() {
       this.$http
