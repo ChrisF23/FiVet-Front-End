@@ -194,7 +194,8 @@ export default {
           weekday: "long",
           year: "numeric",
           month: "long",
-          day: "numeric"
+          day: "numeric",
+          timeZone: 'UTC'
         };
         return new Date(_registro.fecha_edicion).toLocaleDateString(
           "es-ES",
