@@ -18,6 +18,12 @@
           </v-btn>
 
           <v-card>
+            <v-flex xs3 offset-xs11 justify-right>
+            <v-btn outline small fab color="red" v-on:click="dialog=false">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-flex>
+          
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
