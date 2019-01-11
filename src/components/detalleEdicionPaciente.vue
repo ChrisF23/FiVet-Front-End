@@ -36,7 +36,7 @@
           </v-layout>
 
           <v-layout column v-if="editing">
-            <v-flex v-if="paciente.nombre" pb-1 xs1 align-self-left="true">
+            <v-flex pb-1 xs1 align-self-left="true">
               <v-text-field
                   v-model="pacienteOnEdit.nombre"
                   label="Nombre"
@@ -44,14 +44,20 @@
                 ></v-text-field>
             </v-flex>
 
-            <v-flex v-if="paciente.especie" pb-1 xs1 align-self-left="true">
-              <div class="caption grey--text">Especie</div>
-              <div>{{ paciente.especie }}</div>
+            <v-flex pb-1 xs1 align-self-left="true">
+              <v-text-field
+                  v-model="pacienteOnEdit.especie"
+                  label="Especie"
+                  required
+                ></v-text-field>
             </v-flex>
 
-            <v-flex v-if="paciente.castrado" pb-1 xs1>
-              <div class="caption grey--text">Castrado</div>
-              <div>{{ paciente.castrado }}</div>
+            <v-flex pb-1 xs1 align-self-left="true">
+              <v-text-field
+                  v-model="pacienteOnEdit.castrado"
+                  label="Castrado"
+                  required
+                ></v-text-field>
             </v-flex>
           </v-layout >
           <v-layout column v-else>
@@ -70,7 +76,28 @@
               <div>{{ paciente.castrado }}</div>
             </v-flex>
           </v-layout >
-          <v-layout column>
+          <v-layout column pl-3 v-if="editing">
+            <v-flex pb-1 xs1 align-self-left="true">
+              <v-text-field
+                  v-model="pacienteOnEdit.raza"
+                  label="Raza"
+                  required
+                ></v-text-field>
+            </v-flex>
+
+            <v-flex pb-1 xs1 align-self-left="true">
+              <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
+            </v-flex>
+
+            <v-flex pb-1 xs1 align-self-left="true">
+                <v-combobox
+                v-model="select"
+                :items="['F', 'M']"
+                label="Sexo"
+                ></v-combobox>
+            </v-flex>
+          </v-layout >
+          <v-layout column v-else>
             <v-flex v-if="paciente.raza" pb-1 xs1>
               <div class="caption grey--text">Raza</div>
               <div>{{ paciente.raza }}</div>
@@ -78,7 +105,7 @@
 
             <v-flex v-if="paciente.fecha_nacimiento" pb-2 xs1>
               <div class="caption grey--text">Fecha de Nacimiento</div>
-              <div>{{ paciente.fecha_nacimiento }}</div>
+              <div>{{ paciente.fecha_nacimiento.substring(paciente.fecha_nacimiento.indexOf("T")) }}</div>
             </v-flex>
 
             <v-flex v-if="paciente.sexo" pb-2 xs1>
@@ -86,11 +113,16 @@
               <div>{{ paciente.sexo }}</div>
             </v-flex>
           </v-layout>
-          <v-layout column>
-            <v-flex v-if="paciente.id" pb-2 xs1>
-              <div class="caption grey--text">Numero de Chip</div>
-              <div>{{ paciente.id }}</div>
+          <v-layout column pl-3 v-if="editing">
+            <v-flex pb-1 xs1 align-self-left="true">
+              <v-text-field
+                  v-model="pacienteOnEdit.color"
+                  label="Color"
+                  required
+                ></v-text-field>
             </v-flex>
+          </v-layout >
+          <v-layout column v-else>
 
             <v-flex v-if="paciente.color"pb-2 xs1>
               <div class="caption grey--text">Color</div>
