@@ -1,9 +1,11 @@
 import tablaRegistros from '../components/tablaRegistrosMedicos'
+import dialogAgregarRegistroMedico from "../components/agregarRegistroMedico";
 
 export default {
 
   components: {
-    tablaRegistros
+    tablaRegistros,
+    dialogAgregarRegistroMedico
   },
 
   beforeCreate: function() {

@@ -77,7 +77,7 @@
               <v-flex xs12 sm6 md4 v-if="clienteNuevo">
                 <v-text-field
                   v-model="cliente.apellido_p"
-                  label="Apellido Pater"
+                  label="Apellido Paterno"
                   :rules="rules.no_vacio"
                   required
                 ></v-text-field>
@@ -90,14 +90,14 @@
               <v-flex xs12 sm6 md4 v-if="clienteNuevo">
                 <v-text-field
                   v-model="cliente.email"
-                  label="Correo Electronico"
+                  label="Correo Electrónico"
                   :rules="rules.correo"
                   required
                 ></v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md4 v-if="clienteNuevo">
-                <v-text-field v-model="cliente.telefono" label="Telefono" required></v-text-field>
+                <v-text-field v-model="cliente.telefono" label="Teléfono" required></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>

@@ -20,7 +20,7 @@
               </v-flex>
 
               <v-flex v-if="registroSeleccionado.anamnesis" xs12 sm6 md4>
-                <h3>Anamnesis</h3>
+                <h3>Anamnesia</h3>
                 {{registroSeleccionado.anamnesis}}
               </v-flex>
 
@@ -35,7 +35,7 @@
               </v-flex>
 
               <v-flex v-if="registroSeleccionado.hidratacion" xs12 sm6 md4>
-                <h3>Hidratacion</h3>
+                <h3>Hidratación</h3>
                 {{registroSeleccionado.hidratacion}}
               </v-flex>
 
@@ -45,7 +45,7 @@
               </v-flex>
 
               <v-flex v-if="registroSeleccionado.frecuencia_cardiaca" xs12 sm6 md4>
-                <h3>Frecuencia Cardiaca</h3>
+                <h3>Frecuencia Cardíaca</h3>
                 {{registroSeleccionado.frecuencia_cardiaca}}
               </v-flex>
 
@@ -70,7 +70,7 @@
               </v-flex>
               
               <v-flex v-if="registroSeleccionado.reflejo_tusigeno" xs12 sm6 md4>
-                <h3>Reflejo Tusigeno</h3>
+                <h3>Reflejo Tusígeno</h3>
                 {{registroSeleccionado.reflejo_tusigeno}}
               </v-flex>
               
@@ -80,7 +80,7 @@
               </v-flex>
               
               <v-flex v-if="registroSeleccionado.palpacion_abdominal" xs12 sm6 md4>
-                <h3>Palpación Abdominal</h3>
+                <h3>Palpitación Abdominal</h3>
                 {{registroSeleccionado.palpacion_abdominal}}
               </v-flex>
               
