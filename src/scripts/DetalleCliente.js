@@ -1,9 +1,11 @@
 export default {
-
-    props: ["id"],
+    props: {
+        id: Number
+    },
     data: () => ({
+        dialog: false,
         initialCliente: null,
-        cliente : null,
+        cliente: null,
         editing: false
     }),
 
@@ -12,16 +14,16 @@ export default {
         this.initialize()
     },
 
-    beforeCreate: function() {
+    beforeCreate: function () {
         if (!this.$session.exists()) {
-          //Desactivado mientras estemos en desarrollo
-          //this.$router.push("/login");
+            //Desactivado mientras estemos en desarrollo
+            //this.$router.push("/login");
         }
-      },
+    },
 
     methods: {
         initialize() {
-            this.$http.get('http://localhost:3000/api/clientes/'+this.id)
+            this.$http.get('http://localhost:3000/api/clientes/' + this.id)
                 .then(function (response) {
                     this.cliente = response.body;
                     this.initialCliente = JSON.parse(JSON.stringify(response.body));
@@ -33,30 +35,30 @@ export default {
         edit() {
             this.editing = true;
         },
-          
+
         save() {
             this.editing = false;
-            if(this.validate){
+            if (this.validate) {
                 this.$http.put('http://localhost:3000/api/clientes/', this.cliente).then(
-                    function(res) {
+                    function (res) {
                         this.initialCliente = res.body;
                         console.log(res);
                     }
                 );
                 this.editing = false;
-            }else{
+            } else {
                 console.log("error de modelo.");
             }
         },
 
-        validate(){
+        validate() {
             return true;
         },
 
         remove() {
-            this.$http.delete('http://localhost:3000/api/clientes/'+this.cliente.id).then(
+            this.$http.delete('http://localhost:3000/api/clientes/' + this.cliente.id).then(
                 res => {
-                    this.$router.push({name:'clientes'});
+                    this.$router.push({ name: 'clientes' });
                     console.log("deleted");
                 }
             )

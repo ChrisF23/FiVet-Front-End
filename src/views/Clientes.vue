@@ -55,10 +55,10 @@
               </v-card-text>
             </v-form>
             <v-card-actions>
-             <v-layout justify-center >
-            <v-btn right color="error" v-on:click="close">Cancelar</v-btn>
-            <v-btn left color="info" v-on:click="save">Guardar</v-btn>
-            </v-layout>
+              <v-layout justify-center>
+                <v-btn right color="error" v-on:click="close">Cancelar</v-btn>
+                <v-btn left color="info" v-on:click="save">Guardar</v-btn>
+              </v-layout>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -75,44 +75,46 @@
       :rows-per-page-text="rows_per_page_text"
     >
       <template slot="items" slot-scope="props">
-        <td>{{props.item.id}}</td>
-        <td>{{ props.item.nombre }}</td>
-        <td class="text-xs-left">{{ props.item.apellido_paterno }}</td>
-        <td class="text-xs-left">{{ props.item.apellido_materno }}</td>
+        <tr @click="abrirDetallePaciente(props.item.id)">
+          <td>{{props.item.id}}</td>
+          <td>{{ props.item.nombre }}</td>
+          <td class="text-xs-left">{{ props.item.apellido_paterno }}</td>
+          <td class="text-xs-left">{{ props.item.apellido_materno }}</td>
 
-        <td class="text-xs-left">{{ props.item.rut }}</td>
-        <td class="text-xs-left">{{ props.item.email }}</td>
-        <td class="text-xs-left">{{ props.item.telefono }}</td>
-        <td class="text-xs-left">{{ props.item.direccion }}</td>
-        <td class="justify-center layout px-0">
-          <v-tooltip top>
-            <v-btn
-              slot="activator"
-              flat
-              icon
-              color="primario"
-              router
-              :to="'/clientes/'+props.item.id"
-            >
-              <v-icon>remove_red_eye</v-icon>
-            </v-btn>
-            <span>Ir al detalle</span>
-          </v-tooltip>
+          <td class="text-xs-left">{{ props.item.rut }}</td>
+          <td class="text-xs-left">{{ props.item.email }}</td>
+          <td class="text-xs-left">{{ props.item.telefono }}</td>
+          <td class="text-xs-left">{{ props.item.direccion }}</td>
+          <td class="justify-center layout px-0">
+            <v-tooltip top>
+              <v-btn
+                slot="activator"
+                flat
+                icon
+                color="primario"
+                router
+                :to="'/clientes/'+props.item.id"
+              >
+                <v-icon>remove_red_eye</v-icon>
+              </v-btn>
+              <span>Ir al detalle</span>
+            </v-tooltip>
 
-          <v-tooltip top>
-            <v-btn slot="activator" flat icon color="warning" @click="editItem(props.item)">
-              <v-icon>edit</v-icon>
-            </v-btn>
-            <span>Editar</span>
-          </v-tooltip>
+            <v-tooltip top>
+              <v-btn slot="activator" flat icon color="warning" @click="editItem(props.item)">
+                <v-icon>edit</v-icon>
+              </v-btn>
+              <span>Editar</span>
+            </v-tooltip>
 
-          <v-tooltip top>
-            <v-btn slot="activator" flat icon color="error" @click="deleteItem(props.item)">
-              <v-icon>delete</v-icon>
-            </v-btn>
-            <span>Eliminar</span>
-          </v-tooltip>
-        </td>
+            <v-tooltip top>
+              <v-btn slot="activator" flat icon color="error" @click="deleteItem(props.item)">
+                <v-icon>delete</v-icon>
+              </v-btn>
+              <span>Eliminar</span>
+            </v-tooltip>
+          </td>
+        </tr>
       </template>
       <v-alert
         slot="no-results"

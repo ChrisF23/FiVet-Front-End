@@ -1,4 +1,10 @@
+import detalleCliente from '../components/detalleCliente.vue'
 export default {
+
+  components :{
+    detalleCliente
+  },
+
   beforeCreate: function() {
     if (!this.$session.exists()) {
       //Desactivado mientras estemos en desarrollo
@@ -77,6 +83,10 @@ export default {
           this.clientes = response.body;
         });
       this.search = '';
+    },
+
+    abrirDetallePaciente(id) {
+      this.$router.push('/clientes/'+id)
     },
 
     // Carga el cliente seleccionado y lo muestra en el dialogo para editarlo.
