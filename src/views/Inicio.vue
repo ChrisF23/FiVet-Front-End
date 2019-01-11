@@ -35,6 +35,7 @@
           <td>{{props.item.raza}}</td>
           <!-- El backend se asegura de que el registro en la posicion 0 sea el mas reciente. -->
           <td>{{obtenerFechaEdicionUltimoRegistro(props.item.RegistroMedicos[0])}}</td>
+          <td>{{ obtenerMotivoRegistro(props.item.RegistroMedicos[0])}}</td>
         </tr>
       </template>
       <v-alert
@@ -88,6 +89,10 @@ export default {
       {
         text: "Fecha de ultimo registro",
         value: "RegistroMedicos[0].fecha_edicion"
+      },
+      {
+        text: "Motivo de ultimo registro", 
+        value: "RegistroMedicos[0].motivo"
       }
     ],
 
@@ -202,6 +207,13 @@ export default {
         );
       }
       return "Sin registros";
+    },
+
+    obtenerMotivoRegistro(_registro){
+      if (_registro != null){
+        return _registro.motivo;
+      }
+      return "";
     },
 
     obtenerNombreyRutDelDuenio(_duenio) {
