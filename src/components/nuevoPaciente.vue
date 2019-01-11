@@ -37,6 +37,15 @@
                   outline
                 ></v-select>
               </v-flex>
+
+              <v-flex xs12 sm6 md4>
+                <v-select
+                  v-model="paciente.sexo"
+                  :items="['M', 'F']"
+                  label="Sexo:"
+                  outline
+                ></v-select>
+              </v-flex>
             </v-layout>
 
             <v-layout wrap>
@@ -135,6 +144,7 @@ export default {
         especie: "",
         raza: "",
         castrado: "No",
+        sexo: "M",
         id_cliente: ""
       },
 

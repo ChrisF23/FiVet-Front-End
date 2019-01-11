@@ -155,12 +155,11 @@ export default {
             console.log('updated reg', this.registrosMedicos);
             this.registrosMedicos.splice(this.editedIndex, 1, this.editedItem);
             console.log('registro de arreglo', this.registrosMedicos[this.editedIndex]);
+            this.initialize();
           });
       } else {
         console.log("nuevo item", this.editedItem);
         delete this.editedItem.id;
-        this.editedItem.paciente_id = 1;
-        this.editedItem.cliente_id = 1;
         this.$http.post('http://localhost:3000/api/registros', this.cleanedItem(this.editedItem))
           .then(function (response) {
             console.log(this.registrosMedicos);

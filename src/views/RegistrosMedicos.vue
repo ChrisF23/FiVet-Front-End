@@ -6,7 +6,7 @@
 
 <script src= '../scripts/RegistrosMedicos'>
 </script>
-
+<!-- Antiguo. TODO: Actualizar esta vista. -->
 <template>
   <div>
     <v-toolbar flat color="white">

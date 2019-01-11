@@ -4,7 +4,7 @@
       <v-card-title class="headline">Pacientes
         <v-spacer></v-spacer>
 
-        <v-text-field v-model="search" append-icon="search" label="Buscar" single-line hide-details></v-text-field>
+        <v-text-field v-model="search" append-icon="search" label="Nombre de paciente, Raza, Nombre del dueño, etc..." single-line hide-details></v-text-field>
 
         <v-spacer></v-spacer>
 
@@ -15,19 +15,20 @@
     <v-data-table
       class="elevation-1"
       :headers="headers"
-      :items="filteredPacientes()"
+      :pagination.sync="pagination"
+      :items="pacientes"
+      :search="search"
       :rows-per-page-items="rows_per_page_items"
       :rows-per-page-text="rows_per_page_text"
     >
       <template slot="items" slot-scope="props">
         <tr @click="redireccionDetallePaciente(props.item.id)">
           <td>{{ props.item.nombre }}</td>
-          <td>{{props.item.Cliente.nombre}} {{props.item.Cliente.apellido_p}} ({{props.item.Cliente.rut}})</td>
+          <td>{{ obtenerNombreyRutDelDuenio(props.item.Cliente)}}</td>
           <td>{{props.item.especie}}</td>
           <td>{{props.item.raza}}</td>
-          <td>{{props.item.color}}</td>
-          <td v-if="props.item.castrado">{{'Si'}}</td>
-          <td v-else>{{'No'}}</td>
+          <!-- El backend se asegura de que el registro en la posicion 0 sea el mas reciente. -->
+          <td>{{obtenerFechaEdicionUltimoRegistro(props.item.RegistroMedicos[0])}}</td>
         </tr>
       </template>
       <v-alert
@@ -46,18 +47,17 @@
     </v-data-table>
     <p></p>
     <template>
-    <tablaRegistrosMedicosReactive :id="null"></tablaRegistrosMedicosReactive>
+      <tablaRegistrosMedicosReactive :id="null"></tablaRegistrosMedicosReactive>
     </template>
   </div>
 </template>
 
 <script>
 import common_rules from "../scripts/rules";
-import dialogoAgregarPaciente from '../components/nuevoPaciente.vue';
-import tablaRegistrosMedicosReactive from '../components/tablaRegistrosMedicosReactive.vue';
+import dialogoAgregarPaciente from "../components/nuevoPaciente.vue";
+import tablaRegistrosMedicosReactive from "../components/tablaRegistrosMedicosReactive.vue";
 export default {
-
-  components :{
+  components: {
     dialogoAgregarPaciente,
     tablaRegistrosMedicosReactive
   },
@@ -66,42 +66,47 @@ export default {
     valid: false,
     dialog: false,
     dialogoDetalle: false,
-    search: '',
+    search: "",
     headers: [
-      { text: "Nombre", value: "nombre", sortable: true },
-      { text: "Dueño", value: "dueño", sortable: true },
-      { text: "Especie", value: "especie", sortable: true },
-      { text: "Raza", value: "raza", sortable: true },
-      { text: "Color", value: "color", sortable: true },
-      { text: "Castrado", value: "castrado", sortable: true }
+      { text: "Nombre", value: "nombre" },
+      { text: "Dueño", value: "duenio" },
+      { text: "Especie", value: "especie" },
+      { text: "Raza", value: "raza" },
+      {
+        text: "Fecha de ultimo registro",
+        value: "RegistroMedicos[0].fecha_edicion"
+      }
     ],
+
+    // Para ordenar por defecto desde este atributo.
+    pagination: { sortBy: "RegistroMedicos[0].id", descending: true },
 
     pacientes: [],
     id_paciente: null,
 
     rows_per_page_text: "Pacientes por pagina:",
-    rows_per_page_items: [5, 10, 20, { 'text': 'Todos', 'value': -1 }],
+    rows_per_page_items: [5, 10, 20, { text: "Todos", value: -1 }],
     editedIndex: -1,
 
     //---------------------
 
     editedItem: {
-      id: '',
-      nombre: '',
-      numero_chip: '',
-      especie: '',
-      raza: '',
-      color: '',
-      castrado: 'No'
+      id: "",
+      nombre: "",
+      numero_chip: "",
+      especie: "",
+      raza: "",
+      color: "",
+      castrado: "No"
     },
     defaultItem: {
-      id: '',
-      nombre: '',
-      numero_chip: '',
-      especie: '',
-      raza: '',
-      color: '',
-      castrado: 'No'
+      id: "",
+      nombre: "",
+      numero_chip: "",
+      especie: "",
+      raza: "",
+      color: "",
+      castrado: "No"
     }
   }),
 
@@ -109,68 +114,128 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'Nuevo Paciente' : 'Editar Paciente'
+      return this.editedIndex === -1 ? "Nuevo Paciente" : "Editar Paciente";
     }
   },
 
   watch: {
     dialog(val) {
-      val || this.close()
+      val || this.close();
     }
   },
 
   created() {
-    this.initialize()
+    this.initialize();
   },
 
   methods: {
+    /*
+    
+    //FIXED. Ir al metodo initialize para saber como se implemento.
+    
     filteredPacientes() {
       this.search = this.search.toLowerCase();
       //TODO: Ineficiencie en su maxima expresion.
-      let filtered = this.pacientes.filter((p) => {
-        let text = (p.nombre + p.Cliente.nombre + p.Cliente.rut + p.Cliente.apellido_p).toLowerCase();
+      let filtered = this.pacientes.filter(p => {
+        let text = (
+          p.nombre +
+          p.Cliente.nombre +
+          p.Cliente.rut +
+          p.Cliente.apellido_p
+        ).toLowerCase();
         return text.indexOf(this.search) != -1;
       });
       return filtered;
     },
+    */
 
     //Al inicializar, cargar la lista de pacientes.
     initialize() {
-      this.$http.get('http://localhost:3000/api/pacientes')
-        .then(function (response) {
+      this.$http
+        .get("http://localhost:3000/api/pacientes")
+        .then(function(response) {
           this.pacientes = response.body;
-          this.search = '';
+
+          // Para cada paciente, crear el atributo duenio.
+          // Esto sirve para asignarlo a la columna Dueño de la datatable
+          // Y asi poder completar la metabusqueda.
+          this.pacientes.forEach(p => {
+            p.duenio =
+              p.Cliente.nombre +
+              " " +
+              p.Cliente.apellido_p +
+              " " +
+              p.Cliente.apellido_m +
+              " " +
+              p.Cliente.rut;
+          });
+
+          this.search = "";
         });
     },
-    
+
+    // Se encarga de obtener la fecha de edicion del ultimo registro medico de un paciente.
+    obtenerFechaEdicionUltimoRegistro(_registro) {
+      if (_registro != null) {
+        var options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        };
+        return new Date(_registro.fecha_edicion).toLocaleDateString(
+          "es-ES",
+          options
+        );
+      }
+      return "Sin registros";
+    },
+
+    obtenerNombreyRutDelDuenio(_duenio) {
+      // El duenio nunca sera nulo.
+      // Apellido materno puede ser nulo. En ese caso, no mostrarlo.
+      return (
+        _duenio.nombre +
+        " " +
+        _duenio.apellido_p +
+        " " +
+        (_duenio.apellido_m || "") +
+        " (" +
+        _duenio.rut +
+        ")"
+      );
+    },
 
     redireccionDetallePaciente(id_paciente) {
-      this.$router.push('/pacientes/'+id_paciente)
+      this.$router.push("/pacientes/" + id_paciente);
     },
 
     mostrarDetallePaciente(id_paciente) {
-      this.id_paciente=id_paciente
-      this.$root.$emit("db_update")
+      this.id_paciente = id_paciente;
+      this.$root.$emit("db_update");
       //setTimeout(() => {this.dialogoDetalle = true;}, 2500);
       this.dialogoDetalle = true;
     },
 
     // Carga el paciente seleccionado y lo muestra en el dialogo para editarlo.
     editItem(item) {
-      this.editedIndex = this.pacientes.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+      this.editedIndex = this.pacientes.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
     },
 
     // Muestra un mensaje para confirmar la eliminacion del paciente. Al aceptar, se envia la peticion al backend.
     deleteItem(item) {
-      const index = this.pacientes.indexOf(item)
-      if (confirm('¿Estás seguro de que quieres eliminar al paciente?') && this.pacientes.splice(index, 1)) {
-        this.$http.delete('http://localhost:3000/api/pacientes/' + item.id).then(
-          function (response) {
+      const index = this.pacientes.indexOf(item);
+      if (
+        confirm("¿Estás seguro de que quieres eliminar al paciente?") &&
+        this.pacientes.splice(index, 1)
+      ) {
+        this.$http
+          .delete("http://localhost:3000/api/pacientes/" + item.id)
+          .then(function(response) {
             console.log(response);
-          }
-        );
+          });
       }
     },
 
@@ -191,7 +256,7 @@ export default {
     },
 
     // Cierra el dialogo.
-    close: function () {
+    close: function() {
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
@@ -203,8 +268,12 @@ export default {
     save() {
       if (this.editedItem.id) {
         console.log("edited item");
-        this.$http.put('http://localhost:3000/api/pacientes', this.cleanedItem(this.editedItem))
-          .then(function (response) {
+        this.$http
+          .put(
+            "http://localhost:3000/api/pacientes",
+            this.cleanedItem(this.editedItem)
+          )
+          .then(function(response) {
             this.pacientes.splice(this.editedIndex, 1, this.editedItem);
 
             // Actualiza la lista.
@@ -213,8 +282,12 @@ export default {
       } else {
         console.log("nuevo item", this.editedItem);
         delete this.editedItem.id;
-        this.$http.post('http://localhost:3000/api/pacientes', this.cleanedItem(this.editedItem))
-          .then(function (response) {
+        this.$http
+          .post(
+            "http://localhost:3000/api/pacientes",
+            this.cleanedItem(this.editedItem)
+          )
+          .then(function(response) {
             //if (response.status==200){}
             this.pacientes.push(response.body);
 
@@ -222,8 +295,8 @@ export default {
             this.initialize();
           });
       }
-      this.close()
+      this.close();
     }
   }
-}
+};
 </script>
