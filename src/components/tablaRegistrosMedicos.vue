@@ -1,17 +1,22 @@
 <template>
   <div>
+    <v-dialog v-model="dialogRegistro">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Registro Médico</span>
+        </v-card-title>
+        <v-form v-if="dialogRegistro">
+          
+          <v-flex xs3 offset-xs11 justify-right>
+            <v-btn icon outline color="red" v-on:click="dialogRegistro=false">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-flex>
 
-
-  <v-dialog v-model="dialogRegistro">
-    <v-card>
-      <v-card-title>
-        <span class="headline">Registro Médico</span>
-      </v-card-title>
-      <v-form v-if="dialogRegistro">
-        <v-card-text>
-          <v-container grid-list-md>
+          <v-card-text>
+            <v-container grid-list-md>
               <v-flex v-if="registroSeleccionado.fecha_creacion" xs12 sm6 md4>
-                <h4>Fecha: {{registroSeleccionado.fecha_creacion.replace("T", " ").replace("Z", " ")}}</h4> 
+                <h4>Fecha: {{registroSeleccionado.fecha_creacion.replace("T", " ").replace("Z", " ")}}</h4>
                 <p></p>
               </v-flex>
               <v-flex v-if="registroSeleccionado.motivo" xs12 sm6 md4>
@@ -58,88 +63,82 @@
                 <h3>Mucosas</h3>
                 {{registroSeleccionado.mucosas}}
               </v-flex>
-              
+
               <v-flex v-if="registroSeleccionado.tiempo_llenado_capilar" xs12 sm6 md4>
                 <h3>Tiempo de Llenado Capilar</h3>
                 {{registroSeleccionado.tiempo_llenado_capilar}}
               </v-flex>
-              
+
               <v-flex v-if="registroSeleccionado.ganglios" xs12 sm6 md4>
                 <h3>Ganglios</h3>
                 {{registroSeleccionado.ganglios}}
               </v-flex>
-              
+
               <v-flex v-if="registroSeleccionado.reflejo_tusigeno" xs12 sm6 md4>
                 <h3>Reflejo Tusígeno</h3>
                 {{registroSeleccionado.reflejo_tusigeno}}
               </v-flex>
-              
+
               <v-flex v-if="registroSeleccionado.reflejo_deglutorio" xs12 sm6 md4>
                 <h3>Reflejo Deglutorio</h3>
                 {{registroSeleccionado.reflejo_deglutorio}}
               </v-flex>
-              
+
               <v-flex v-if="registroSeleccionado.palpacion_abdominal" xs12 sm6 md4>
                 <h3>Palpitación Abdominal</h3>
                 {{registroSeleccionado.palpacion_abdominal}}
               </v-flex>
-              
+
               <v-flex v-if="registroSeleccionado.palmopercusion" xs12 sm6 md4>
                 <h3>Palmopercusión</h3>
                 {{registroSeleccionado.palmopercusion}}
               </v-flex>
-              
+
               <v-flex v-if="registroSeleccionado.tonsilas" xs12 sm6 md4>
                 <h3>Tonsilas</h3>
                 {{registroSeleccionado.tonsilas}}
               </v-flex>
-              
+
               <v-flex v-if="registroSeleccionado.pulso_por_minuto" xs12 sm6 md4>
                 <h3>Pulso</h3>
                 {{registroSeleccionado.pulso_por_minuto}}
               </v-flex>
-              
-          </v-container>
-        </v-card-text>
-      </v-form>
-    </v-card>
-  </v-dialog>
+            </v-container>
+          </v-card-text>
+        </v-form>
+      </v-card>
+    </v-dialog>
     <v-card>
-          <v-text-field v-model="search" append-icon="search" label="Buscar" hide-details></v-text-field>
+      <v-text-field v-model="search" append-icon="search" label="Buscar" hide-details></v-text-field>
 
-      <v-data-table 
-      :headers="headers" 
-      :items="registrosMedicos"
-      :search="search" 
-      :rows-per-page-items="rows_per_page_items"
-      :rows-per-page-text="rows_per_page_text"
-
-      class="elevation-1"
+      <v-data-table
+        :headers="headers"
+        :items="registrosMedicos"
+        :search="search"
+        :rows-per-page-items="rows_per_page_items"
+        :rows-per-page-text="rows_per_page_text"
+        class="elevation-1"
       >
         <template slot="no-data">
           <v-alert :value="true" color="error" icon="warning">No hay registros para mostrar</v-alert>
         </template>
         <template slot="items" slot-scope="props">
-        <tr @click="abrirRegistro(props.item)">
-          <td>{{ props.item.patologia }}</td>
-          <td>{{ props.item.motivo }}</td>
-          <td>{{ props.item.anamnesis }}</td>
-          <td>{{ props.item.fecha_creacion.replace("T", " ").replace("Z", " ") }}</td>
-        </tr>  
+          <tr @click="abrirRegistro(props.item)">
+            <td>{{ props.item.patologia }}</td>
+            <td>{{ props.item.motivo }}</td>
+            <td>{{ props.item.anamnesis }}</td>
+            <td>{{ props.item.fecha_creacion.replace("T", " ").replace("Z", " ") }}</td>
+          </tr>
         </template>
       </v-data-table>
     </v-card>
-
   </div>
 </template>
 
 <script>
 const utils = require("../Utils");
 export default {
-  props: [
-    'id',
-    'registroInicial'
-  ],
+  props: ["id", "registroInicial"],
 
   data: function() {
     return {
@@ -176,8 +175,10 @@ export default {
                 this.registrosMedicos.push(rm);
               }
 
-              if(this.$props.registroInicial != null && this.$props.registroInicial != undefined){
-                
+              if (
+                this.$props.registroInicial != null &&
+                this.$props.registroInicial != undefined
+              ) {
                 this.registroSeleccionado = this.$props.registroInicial;
                 this.dialogRegistro = true;
               }
@@ -187,7 +188,7 @@ export default {
       this.search = "";
     },
 
-    abrirRegistro(registro){
+    abrirRegistro(registro) {
       this.registroSeleccionado = registro;
       this.dialogRegistro = true;
     }

@@ -5,13 +5,13 @@
     </v-btn>
     <v-card>
       <v-card-title>
-        <span class="headline">{{ formTitle }}</span>
+        <span class="headline">{{ "Nuevo Registro" }}</span>
       </v-card-title>
 
       <v-card-text>
         <v-container grid-list-md>
           <v-flex xs3 offset-xs11 justify-right>
-            <v-btn outline fab color="red" v-on:click="dialog=false">
+            <v-btn icon outline color="red" v-on:click="dialog=false">
               <v-icon>close</v-icon>
             </v-btn>
           </v-flex>
