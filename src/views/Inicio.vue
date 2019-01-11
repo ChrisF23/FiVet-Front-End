@@ -43,7 +43,7 @@
         :value="true"
         color="info"
         icon="info"
-      >No se encontraron resultados para tu busqueda.</v-alert>
+      >No se encontraron resultados para tu búsqueda.</v-alert>
       <template slot="no-data">
         <div>Cargando...</div>
       </template>
@@ -87,7 +87,7 @@ export default {
       { text: "Especie", value: "especie" },
       { text: "Raza", value: "raza" },
       {
-        text: "Fecha de ultimo registro",
+        text: "Fecha de último registro",
         value: "RegistroMedicos[0].fecha_edicion"
       },
       {
@@ -102,7 +102,7 @@ export default {
     pacientes: [],
     id_paciente: null,
 
-    rows_per_page_text: "Pacientes por pagina:",
+    rows_per_page_text: "Pacientes por página:",
     rows_per_page_items: [5, 10, 20, { text: "Todos", value: -1 }],
     editedIndex: -1,
 
@@ -199,7 +199,8 @@ export default {
           weekday: "long",
           year: "numeric",
           month: "long",
-          day: "numeric"
+          day: "numeric",
+          timeZone: 'UTC'
         };
         return new Date(_registro.fecha_edicion).toLocaleDateString(
           "es-ES",

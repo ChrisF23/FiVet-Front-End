@@ -86,6 +86,7 @@
             </v-flex>
 
             <v-flex pb-1 xs1 align-self-left="true">
+              <div class="caption grey--text">Fecha de Nacimiento</div>
               <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
             </v-flex>
 
@@ -105,7 +106,7 @@
 
             <v-flex v-if="paciente.fecha_nacimiento" pb-2 xs1>
               <div class="caption grey--text">Fecha de Nacimiento</div>
-              <div>{{ paciente.fecha_nacimiento.substring(paciente.fecha_nacimiento.indexOf("T")) }}</div>
+              <div>{{ fechaToString() }}</div>
             </v-flex>
 
             <v-flex v-if="paciente.sexo" pb-2 xs1>
@@ -123,8 +124,7 @@
             </v-flex>
           </v-layout >
           <v-layout column v-else>
-
-            <v-flex v-if="paciente.color"pb-2 xs1>
+            <v-flex v-if="paciente.color" pb-2 xs1>
               <div class="caption grey--text">Color</div>
               <div>{{ paciente.color }}</div>
             </v-flex>
@@ -136,12 +136,12 @@
             </v-flex>
 
             <v-flex v-if="cliente.email" pb-2 xs1>
-              <div class="caption grey--text">Email dueño</div>
+              <div class="caption grey--text">Correo electrónico dueño</div>
               <div>{{ cliente.email }}</div>
             </v-flex>
 
             <v-flex v-if="cliente.telefono" pb-2 xs1>
-              <div class="caption grey--text">Telefono dueño</div>
+              <div class="caption grey--text">Teléfono dueño</div>
               <div>{{ cliente.telefono }}</div>
             </v-flex>
           </v-layout>
@@ -210,7 +210,20 @@ export default {
             this.paciente = this.pacienteOnEdit;
             console.log("FUNCIONA", response.body);
           });
-    }
+    },
+    fechaToString() {
+        var options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          timeZone: 'UTC'
+        };
+        return new Date(this.paciente.fecha_nacimiento).toLocaleString(
+          "es-ES",
+          options
+        );
+    },
   },
 
   created() {

@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-    <v-btn round slot="activator" color="purple" dark class="mb-2">
+    <v-btn slot="activator" color="purple" dark class="mb-2">
       <v-icon small left>add</v-icon>Nuevo Registro
     </v-btn>
     <v-card>

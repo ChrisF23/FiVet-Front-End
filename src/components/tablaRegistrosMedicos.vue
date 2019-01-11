@@ -20,7 +20,7 @@
               </v-flex>
 
               <v-flex v-if="registroSeleccionado.anamnesis" xs12 sm6 md4>
-                <h3>Anamnesis</h3>
+                <h3>Anamnesia</h3>
                 {{registroSeleccionado.anamnesis}}
               </v-flex>
 
@@ -35,7 +35,7 @@
               </v-flex>
 
               <v-flex v-if="registroSeleccionado.hidratacion" xs12 sm6 md4>
-                <h3>Hidratacion</h3>
+                <h3>Hidratación</h3>
                 {{registroSeleccionado.hidratacion}}
               </v-flex>
 
@@ -45,7 +45,7 @@
               </v-flex>
 
               <v-flex v-if="registroSeleccionado.frecuencia_cardiaca" xs12 sm6 md4>
-                <h3>Frecuencia Cardiaca</h3>
+                <h3>Frecuencia Cardíaca</h3>
                 {{registroSeleccionado.frecuencia_cardiaca}}
               </v-flex>
 
@@ -70,7 +70,7 @@
               </v-flex>
               
               <v-flex v-if="registroSeleccionado.reflejo_tusigeno" xs12 sm6 md4>
-                <h3>Reflejo Tusigeno</h3>
+                <h3>Reflejo Tusígeno</h3>
                 {{registroSeleccionado.reflejo_tusigeno}}
               </v-flex>
               
@@ -80,7 +80,7 @@
               </v-flex>
               
               <v-flex v-if="registroSeleccionado.palpacion_abdominal" xs12 sm6 md4>
-                <h3>Palpación Abdominal</h3>
+                <h3>Palpitación Abdominal</h3>
                 {{registroSeleccionado.palpacion_abdominal}}
               </v-flex>
               
@@ -111,6 +111,9 @@
       :headers="headers" 
       :items="registrosMedicos"
       :search="search" 
+      :rows-per-page-items="rows_per_page_items"
+      :rows-per-page-text="rows_per_page_text"
+
       class="elevation-1"
       >
         <template slot="no-data">
@@ -145,15 +148,15 @@ export default {
       registroSeleccionado: null,
       search: "",
       headers: [
-        { text: "Patologia", value: "patologia", sortable: true },
+        { text: "Patología", value: "patologia", sortable: true },
         { text: "Motivo", value: "motivo", sortable: true },
-        { text: "Anamnesis", value: "anamnesis", sortable: true },
+        { text: "Anamnesia", value: "anamnesis", sortable: true },
         { text: "Fecha", value: "fecha", sortable: true }
       ],
 
       registrosMedicos: [],
 
-      rows_per_page_text: "Registros por pagina:",
+      rows_per_page_text: "Registros por página:",
       rows_per_page_items: [5, 10, 20, { text: "Todos", value: -1 }]
     };
   },
