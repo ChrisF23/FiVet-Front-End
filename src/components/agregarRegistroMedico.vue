@@ -16,7 +16,7 @@
             </v-btn>
           </v-flex>
           <v-flex>
-            <v-textarea v-model="editedItem.patologia" label="Patologia" autofocus="true"></v-textarea>
+            <v-textarea v-model="editedItem.patologia" label="Patología" autofocus="true"></v-textarea>
           </v-flex>
           <v-layout row wrap>
             <v-flex>
@@ -28,10 +28,10 @@
           </v-layout>
           <v-layout wrap>
             <v-flex xs12 sm6 md4>
-              <v-text-field v-model="editedItem.peso" label="Peso"></v-text-field>
+              <v-text-field v-model="editedItem.peso" label="Peso" suffix="kgs"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
-              <v-text-field v-model="editedItem.temperatura" label="Temperatura"></v-text-field>
+              <v-text-field v-model="editedItem.temperatura" label="Temperatura" suffix="°C"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-text-field v-model="editedItem.hidratacion" label="Hidratación"></v-text-field>
@@ -40,12 +40,13 @@
               <v-text-field v-model="editedItem.pulso" label="Pulso"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
-              <v-text-field v-model="editedItem.frecuencia_cardiaca" label="Frecuencia Cardiaca"></v-text-field>
+              <v-text-field v-model="editedItem.frecuencia_cardiaca" label="Frecuencia Cardiaca" suffix="bpm"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-text-field
                 v-model="editedItem.frecuencia_respiratoria"
                 label="Frecuencia Respiratoria"
+                 suffix="bpm"
               ></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
@@ -55,6 +56,7 @@
               <v-text-field
                 v-model="editedItem.tiempo_de_llenado_capilar"
                 label="Tiempo de llenado capilar"
+                suffix="segs"
               ></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
@@ -73,7 +75,7 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
-              <v-text-field v-model="editedItem.palmopercusion" label="Palmopercusion"></v-text-field>
+              <v-text-field v-model="editedItem.palmopercusion" label="Palmopercusión"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-text-field v-model="editedItem.tonsilas" label="Tonsilas"></v-text-field>
@@ -82,7 +84,7 @@
               <v-text-field v-model="editedItem.conciencia" label="Conciencia"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4>
-              <v-text-field v-model="editedItem.condicion_corporal" label="Condicion Corporal"></v-text-field>
+              <v-text-field v-model="editedItem.condicion_corporal" label="Condición Corporal"></v-text-field>
             </v-flex>
           </v-layout>
         </v-container>
@@ -128,7 +130,7 @@ export default {
         pulso: 0,
         frecuencia_cardiaca: 0,
         frecuencia_respiratoria: 0,
-        mucosas: 0,
+        mucosas: "",
         tiempo_de_llenado_capilar: 0,
         ganglios: "",
         reflejo_tusigeno: "",
