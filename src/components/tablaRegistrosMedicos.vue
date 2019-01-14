@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="dialogRegistro">
+    <v-dialog v-model="dialogRegistro" persistent>
       <v-card>
         <v-card-title>
           <span class="headline">Registro Médico</span>

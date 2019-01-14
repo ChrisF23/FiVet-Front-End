@@ -44,14 +44,6 @@
                   required
               ></v-text-field>
             </v-flex>
-
-            <v-flex pl-2 xs4>
-              <v-text-field
-                  v-model="cliente.direccion"
-                  label="Dirección"
-                  required
-              ></v-text-field>
-            </v-flex>
         </v-layout>
       </div>  
       <div v-else>
