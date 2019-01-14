@@ -7,77 +7,76 @@
 </script>
 
 <template>
+<div>
   <v-card flat class="pa-3">
     <!-- El layout exterior -->
-    <v-layout row wrap>
       <!-- El segundo layout dentro del layout exterior. Los elementos dentro de el estaran en la misma columna. -->
       <div v-if="editing">
-      <v-container grid-list-md text-xs-center>
-        <v-layout row wrap>
-            <v-flex xs12>
-              <v-text-field v-model="cliente.nombre" label="Nombre"></v-text-field>
+        <v-layout row justify-center>
+          <v-flex pl-2 xs4>
+              <v-text-field
+                  v-model="cliente.nombre"
+                  label="Nombre"
+                  required
+              ></v-text-field>
             </v-flex>
-            <v-flex xs12>
-              <v-text-field v-model="cliente.rut" label="Rut"></v-text-field>
+
+            <v-flex pl-2 xs4>
+              <v-text-field
+                  v-model="cliente.rut"
+                  label="Rut"
+                  required
+              ></v-text-field>
             </v-flex>
-            <v-flex xs12>
-              <v-text-field v-model="cliente.telefono" label="Teléfono"></v-text-field>
+
+            <v-flex pl-2 xs4>
+              <v-text-field
+                  v-model="cliente.telefono"
+                  label="Teléfono"
+                  required
+              ></v-text-field>
             </v-flex>
-            <v-flex xs12>
-              <v-text-field v-model="cliente.email" label="Email"></v-text-field>
+
+            <v-flex pl-2 xs4>
+              <v-text-field
+                  v-model="cliente.email"
+                  label="Email"
+                  required
+              ></v-text-field>
             </v-flex>
-            <v-flex xs12>
-              <v-text-field v-model="cliente.direccion" label="Dirección"></v-text-field>
+
+            <v-flex pl-2 xs4>
+              <v-text-field
+                  v-model="cliente.direccion"
+                  label="Dirección"
+                  required
+              ></v-text-field>
             </v-flex>
         </v-layout>
-        </v-container>
       </div>  
       <div v-else>
-      <v-layout column wrap>
-          <v-flex pb-2 xs1>
-            <div class="caption grey--text">Nombre</div>
-            <div>{{ this.cliente.nombre }}</div>
-          </v-flex>
-
-          <v-flex pb-2 xs1>
-            <div class="caption grey--text">Rut</div>
-            <div>{{ this.cliente.rut }}</div>
-          </v-flex>
-
-          <v-flex pb-2 xs1>
-            <div class="caption grey--text">Telefono</div>
-            <div>{{ this.cliente.telefono }}</div>
-          </v-flex>
-
-          <v-flex pb-2 xs1>
-            <div class="caption grey--text">Email</div>
-            <div>{{ this.cliente.email }}</div>
-          </v-flex>
-
-          <v-flex pb-2 xs1>
-            <div class="caption grey--text">Direccion</div>
-            <div>{{ cliente.direccion }}</div>
+        <v-layout row justify-center>
+          <v-flex ml-1 mr-1 v-for="(data, key) of computedClienteData()">
+            <div class="caption grey--text">{{key}}</div>
+            <div>{{data}}</div>
           </v-flex>
         </v-layout>
       </div>
-    </v-layout>
 
     <div v-if="editing">
-    <v-btn @click="save" flat color="primary" dark>
-        <v-icon left small>check_circle</v-icon>
-        Aceptar
+    <v-btn @click="save" color="green" >
+        <v-icon top left absolute small>save</v-icon>
+        GUARDAR
       </v-btn>
-      <v-btn @click="cancel" flat color="error" dark>
-        <v-icon left small>remove_circle</v-icon>Cancelar
+      <v-btn @click="cancel" color="error" >
+        <v-icon left absolute small>remove_circle</v-icon>CANCELAR
       </v-btn>
     </div>
     <div v-else>
-    <v-btn @click="edit" flat color="warning">
-      <v-icon left small>edit</v-icon>Editar
-    </v-btn>
-    <v-btn @click="remove" flat color="error">
-      <v-icon left small>delete</v-icon>Eliminar
+    <v-btn @click="edit" color="warning">
+      <v-icon left absolute  small>edit</v-icon>Editar
     </v-btn>
     </div>
   </v-card>
+  </div>
 </template>

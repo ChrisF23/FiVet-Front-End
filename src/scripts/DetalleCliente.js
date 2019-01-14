@@ -6,7 +6,14 @@ export default {
         dialog: false,
         initialCliente: null,
         cliente: null,
-        editing: false
+        editing: false,
+        clienteLabels: {
+            nombre: "Nombre",
+            rut: "Rut",
+            telefono: "Teléfono",
+            email: "Email",
+            direccion: "Dirección"
+        }
     }),
 
     created() {
@@ -30,6 +37,17 @@ export default {
                     console.log(this.cliente);
                     //console.log(JSON.stringify(response.body));
                 });
+        },
+
+        computedClienteData() {
+            var data = {};
+            Object.keys(this.cliente).forEach(function (key) {
+                if(this.cliente[key] != null && this.cliente[key] != undefined) {
+                    if(this.clienteLabels[key] != null && this.clienteLabels[key] != undefined)
+                    data[this.clienteLabels[key]] = this.cliente[key];
+                    }
+             }, this);
+             return data;
         },
 
         edit() {

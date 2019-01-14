@@ -1,8 +1,17 @@
 <template>
-<div>
 <v-card>
   <v-container grid-list-xs>
 
+    <v-dialog v-model="detalleClienteDialog" persistent>
+      <v-card>
+        <v-flex xs1>
+          <v-btn icon outline color="red" v-on:click="closeClienteDialog()">
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-flex>
+      <detalleCliente :id="cliente.id" v-if="detalleClienteDialog"></detalleCliente>
+      </v-card>
+    </v-dialog>
     <v-btn v-if="editing" color="red" v-on:click="deletePaciente()">
       <v-icon top absolute small>delete</v-icon>ELIMINAR
     </v-btn>
@@ -23,6 +32,14 @@
             <v-card color="transparent" flat>
                 <div class="caption grey--text">{{key}}</div>
                 <div>{{data}}</div>
+            </v-card>
+          </v-flex>
+
+          <v-flex d-flex xs ml-1 mr-1>
+            <v-card color="transparent" flat>
+                <div  class="caption grey--text">Nombre Dueño</div>
+                <a class="blue--text" @click="showClienteDialog()">{{nombreCliente()}}</a>
+                
             </v-card>
           </v-flex>
 
@@ -82,6 +99,7 @@
               <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
             </v-flex>
 
+
         </v-layout>
       </v-flex>  
 
@@ -100,14 +118,18 @@
     </v-layout>
   </v-container>
 </v-card >
-</div>
 </template>
 
 <script>
 import "../Utils";
+import detalleCliente from "../components/detalleCliente.vue"
 export default {
   props: {
     id: Number
+  },
+
+  components: {
+    detalleCliente
   },
 
   data: function() {
@@ -116,6 +138,7 @@ export default {
       cliente: null,
       pacienteOnEdit: null,
       editing: false,
+      detalleClienteDialog: false,
       pacienteLabels: {
         nombre: "Nombre",
         especie: "Especie",
@@ -190,6 +213,36 @@ export default {
         );
     },
 
+    nombreCliente() {
+      if(this.cliente != null && this.cliente != undefined) {
+        return this.cliente.nombre + " " + this.cliente.apellido_p + " " + this.cliente.apellido_m;
+      }
+    },
+
+    rutaCliente() {
+      return "/clientes/" + this.cliente.id;
+    },
+
+    showClienteDialog() {
+      this.detalleClienteDialog = true;
+    },
+
+    closeClienteDialog() {
+      this.detalleClienteDialog = false;
+      this.updateCliente();
+    },
+
+    updateCliente() {
+      this.$http
+        .get(
+          "http://192.168.0.33:3000/api/clientes/" + this.paciente.id_cliente
+        )
+        .then(function(response) {
+          this.cliente = response.body;
+          this.computedPacienteClienteData();
+        });
+    },
+
     computedPacienteClienteData() {
       var data = {};
       
@@ -200,9 +253,6 @@ export default {
         }
       }, this);
 
-      if (this.cliente.nombre != null && this.cliente.nombre != undefined) {
-        data["Nombre Dueño"] = this.cliente.nombre + " " + this.cliente.apellido_p + " " + this.cliente.apellido_m;
-      }
       if (this.cliente.rut != null && this.cliente.rut != undefined) {
         data["Rut Dueño"] = this.cliente.rut;
       }

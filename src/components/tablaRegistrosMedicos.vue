@@ -7,12 +7,13 @@
         </v-card-title>
         <v-form v-if="dialogRegistro">
           
-          <v-flex xs3 offset-xs11 justify-right>
+        <v-layout row justify-right>
+          <v-flex xs3 justify-right>
             <v-btn icon outline color="red" v-on:click="dialogRegistro=false">
               <v-icon>close</v-icon>
             </v-btn>
           </v-flex>
-
+        </v-layout>
           <v-card-text>
             <v-container grid-list-md>
               <v-flex v-if="registroSeleccionado.fecha_creacion" xs12 sm6 md4>
@@ -163,6 +164,7 @@ export default {
   methods: {
     //Al inicializar, cargar la lista de registros.
     initialize() {
+      this.registrosMedicos = [];
       this.$http
         .get("http://192.168.0.33:3000/api/registros")
         .then(function(response) {
