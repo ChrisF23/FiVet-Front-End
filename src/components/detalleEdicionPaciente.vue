@@ -1,39 +1,51 @@
 <template>
 <div>
-      <v-card class="pa-2 ">
-            <v-btn v-if="!editing" class="mb-5" absolute bottom right color="warning" v-on:click="edit()">
-              <v-icon top left absolute small>edit</v-icon>Editar
-            </v-btn>
-            <div v-else>
-             <v-btn class="mb-5" absolute bottom right color="green" v-on:click="savePaciente()">
-              <v-icon top left absolute small>save</v-icon>GUARDAR
-            </v-btn>
-            </div>
-        
-        <v-layout row class="ma-1">
-          <v-layout column>
-            <v-flex pa-3 xs1>
-              <v-avatar size="100">
-                <img src="https://e-fisiomedic.com/wp-content/uploads/2013/11/default-placeholder-300x300.png">
-              </v-avatar>
+<v-card>
+  <v-container grid-list-xs>
 
-            <v-btn v-if="editing" class="mb-5" absolute bottom left color="red" v-on:click="deletePaciente()">
-              <v-icon left absolute small>delete</v-icon>ELIMINAR
-            </v-btn>
-            </v-flex>
-
+    <v-btn v-if="editing" color="red" v-on:click="deletePaciente()">
+      <v-icon top absolute small>delete</v-icon>ELIMINAR
+    </v-btn>
+    <v-layout row align-center wrap>
+      <v-flex d-flex > 
+        <v-card color="transparent" flat>
+          <v-layout column justify-center wrap>
+            <v-avatar size="100">
+              <img src="../images/placeholder.png">
+            </v-avatar>
           </v-layout>
+        </v-card>
+      </v-flex>
 
-          <v-layout pl-3 column v-if="editing">
-            <v-flex pb-1 xs1 align-self-left="true">
+      <v-flex d-flex v-if="!editing">
+        <v-layout row wrap>
+          <v-flex d-flex xs ml-1 mr-1 v-for="(data, key) of computedPacienteClienteData()">
+            <v-card color="transparent" flat>
+                <div class="caption grey--text">{{key}}</div>
+                <div>{{data}}</div>
+            </v-card>
+          </v-flex>
+
+          <v-flex d-flex xs ml-1 mr-1>
+            <v-card color="transparent" flat>
+                <div class="caption grey--text">Fecha de Nacimiento</div>
+                <div>{{fechaToString()}}</div>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-flex>  
+
+      <v-flex d-flex v-else>
+        <v-layout row wrap>
+          <v-flex pl-2 xs4>
               <v-text-field
                   v-model="pacienteOnEdit.nombre"
                   label="Nombre"
                   required
-                ></v-text-field>
+              ></v-text-field>
             </v-flex>
 
-            <v-flex pb-1 xs1 align-self-left="true">
+            <v-flex pl-2 xs3>
               <v-text-field
                   v-model="pacienteOnEdit.especie"
                   label="Especie"
@@ -41,32 +53,15 @@
                 ></v-text-field>
             </v-flex>
 
-            <v-flex pb-1 xs1 align-self-left="true">
-              <v-text-field
-                  v-model="pacienteOnEdit.castrado"
-                  label="Castrado"
-                  required
-                ></v-text-field>
-            </v-flex>
-          </v-layout >
-          <v-layout column v-else>
-            <v-flex v-if="paciente.nombre" pb-1 xs1 align-self-left="true">
-              <div class="caption grey--text">Nombre</div>
-              <div>{{ paciente.nombre }}</div>
+            <v-flex pl-2 xs2>
+                <v-combobox
+                v-model="pacienteOnEdit.castrado"
+                :items="['SI', 'NO']"
+                label="Castrado"
+                ></v-combobox>
             </v-flex>
 
-            <v-flex v-if="paciente.especie" pb-1 xs1 align-self-left="true">
-              <div class="caption grey--text">Especie</div>
-              <div>{{ paciente.especie }}</div>
-            </v-flex>
-
-            <v-flex v-if="paciente.castrado" pb-1 xs1>
-              <div class="caption grey--text">Castrado</div>
-              <div>{{ paciente.castrado }}</div>
-            </v-flex>
-          </v-layout >
-          <v-layout column pl-3 v-if="editing">
-            <v-flex pb-1 xs1 align-self-left="true">
+            <v-flex pl-2 xs3>
               <v-text-field
                   v-model="pacienteOnEdit.raza"
                   label="Raza"
@@ -74,69 +69,37 @@
                 ></v-text-field>
             </v-flex>
 
-            <v-flex pb-1 xs1 align-self-left="true">
-              <div class="caption grey--text">Fecha de Nacimiento</div>
-              <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
-            </v-flex>
-
-            <v-flex pb-1 xs1 align-self-left="true">
+             <v-flex pl-2 xs1>
                 <v-combobox
                 v-model="select"
                 :items="['F', 'M']"
                 label="Sexo"
                 ></v-combobox>
             </v-flex>
-          </v-layout >
-          <v-layout column v-else>
-            <v-flex v-if="paciente.raza" pb-1 xs1>
-              <div class="caption grey--text">Raza</div>
-              <div>{{ paciente.raza }}</div>
+
+            <v-flex pl-2 xs2>
+              <div class="caption grey--text pb-2">Fecha de Nacimiento</div>
+              <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
             </v-flex>
 
-            <v-flex v-if="paciente.fecha_nacimiento" pb-2 xs1>
-              <div class="caption grey--text">Fecha de Nacimiento</div>
-              <div>{{ fechaToString() }}</div>
-            </v-flex>
+        </v-layout>
+      </v-flex>  
 
-            <v-flex v-if="paciente.sexo" pb-2 xs1>
-              <div class="caption grey--text">Sexo</div>
-              <div>{{ paciente.sexo }}</div>
-            </v-flex>
-          </v-layout>
-          <v-layout column pl-3 v-if="editing">
-            <v-flex pb-1 xs1 align-self-left="true">
-              <v-text-field
-                  v-model="pacienteOnEdit.color"
-                  label="Color"
-                  required
-                ></v-text-field>
-            </v-flex>
-          </v-layout >
-          <v-layout column v-else>
-            <v-flex v-if="paciente.color" pb-2 xs1>
-              <div class="caption grey--text">Color</div>
-              <div>{{ paciente.color }}</div>
-            </v-flex>
-          </v-layout>
-          <v-layout column >
-            <v-flex pb-2 xs1>
-              <div class="caption grey--text">Nombre dueño</div>
-              <div>{{ cliente.nombre }} {{cliente.apellido_p}} {{cliente.apellido_m}}</div>
-            </v-flex>
-
-            <v-flex v-if="cliente.email" pb-2 xs1>
-              <div class="caption grey--text">Correo electrónico dueño</div>
-              <div>{{ cliente.email }}</div>
-            </v-flex>
-
-            <v-flex v-if="cliente.telefono" pb-2 xs1>
-              <div class="caption grey--text">Teléfono dueño</div>
-              <div>{{ cliente.telefono }}</div>
-            </v-flex>
-          </v-layout>
-        </v-layout >
-
-      </v-card>
+      <v-flex d-flex> 
+        <v-card color="transparent" flat>
+          <v-btn v-if="!editing" color="warning" v-on:click="edit()">
+            <v-icon top left small>edit</v-icon>Editar
+          </v-btn>      
+          <div v-else>
+            <v-btn color="green" v-on:click="savePaciente()">
+            <v-icon top left absolute small>save</v-icon>GUARDAR
+          </v-btn>
+          </div>
+        </v-card>
+      </v-flex> 
+    </v-layout>
+  </v-container>
+</v-card >
 </div>
 </template>
 
@@ -152,7 +115,13 @@ export default {
       paciente: null,
       cliente: null,
       pacienteOnEdit: null,
-      editing: false
+      editing: false,
+      pacienteLabels: {
+        nombre: "Nombre",
+        especie: "Especie",
+        raza: "Raza",
+        sexo: "Sexo"
+      }
     };
   },
 
@@ -161,16 +130,19 @@ export default {
     initialize() {
       //obtenemos el paciente baso en el prop
       this.$http
-        .get("http://localhost:3000/api/pacientes/" + this.$props.id)
+        .get("http://192.168.0.33:3000/api/pacientes/" + this.$props.id)
         .then(function(response) {
           this.paciente = response.body;
-          //obtenemos el cliente basado en la id_cliente que devolvio la reques getPaciente
+          console.log("PACIENTE",this.paciente);
+          //obtenemos el cliente basado en la id_cliente que retornó la request getPaciente
           this.$http
             .get(
-              "http://localhost:3000/api/clientes/" + this.paciente.id_cliente
+              "http://192.168.0.33:3000/api/clientes/" + this.paciente.id_cliente
             )
             .then(function(response) {
               this.cliente = response.body;
+              console.log("CLIENTE",this.cliente);
+              this.computedPacienteClienteData() 
             });
         });
     },
@@ -178,7 +150,6 @@ export default {
     
     this.pacienteOnEdit = JSON.parse(JSON.stringify(this.paciente));
     this.editing = true;
-    console.log("EDIT");
     },
 
     cancelEditMode(){
@@ -191,20 +162,20 @@ export default {
       delete this.pacienteOnEdit.RegistrosMedicos;
       console.log(this.pacienteOnEdit);
       this.$http
-          .put("http://localhost:3000/api/pacientes", this.pacienteOnEdit)
+          .put("http://192.168.0.33:3000/api/pacientes", this.pacienteOnEdit)
           .then(function(response) {
             this.pacienteOnEdit = response.body;
             this.pacienteOnEdit.Clientes = this.paciente.Clientes;
             this.pacienteOnEdit.RegistrosMedicos = this.paciente.RegistrosMedicos;
             this.paciente = this.pacienteOnEdit;
-            console.log("FUNCIONA", response.body);
           });
     },
     deletePaciente() {
-      this.$http.delete("http://localhost:3000/api/pacientes/"+this.paciente.id).bind(this).then(function (response) {
+      this.$http.delete("http://192.168.0.33:3000/api/pacientes/"+this.paciente.id).bind(this).then(function (response) {
         this.$router.push("/");
       }).bind(this);
     },
+
     fechaToString() {
         var options = {
           weekday: "long",
@@ -218,6 +189,35 @@ export default {
           options
         );
     },
+
+    computedPacienteClienteData() {
+      var data = {};
+      
+      Object.keys(this.paciente).forEach(function (key) {
+        if(this.paciente[key] != null && this.paciente[key] != undefined) {
+          if(this.pacienteLabels[key] != null && this.pacienteLabels[key] != undefined)
+          data[this.pacienteLabels[key]] = this.paciente[key];
+        }
+      }, this);
+
+      if (this.cliente.nombre != null && this.cliente.nombre != undefined) {
+        data["Nombre Dueño"] = this.cliente.nombre + " " + this.cliente.apellido_p + " " + this.cliente.apellido_m;
+      }
+      if (this.cliente.rut != null && this.cliente.rut != undefined) {
+        data["Rut Dueño"] = this.cliente.rut;
+      }
+
+      if (this.cliente.email != null && this.cliente.email != undefined) {
+        data["Email Dueño"] = this.cliente.email;
+      }
+      
+      if (this.cliente.telefono != null && this.cliente.telefono != undefined) {
+        data["Teléfono Dueño"] = this.cliente.telefono;
+      }
+
+      console.log("AVAIBLE DATA", data);
+      return data;
+    }
   },
 
   created() {

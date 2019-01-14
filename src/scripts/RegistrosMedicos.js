@@ -103,10 +103,10 @@ export default {
   methods: {
     initialize() {
       
-        this.$http.get('http://localhost:3000/api/pacientes')
+        this.$http.get('http://192.168.0.33:3000/api/pacientes')
           .then(function(response) {
             this.pacientes = response.body;
-            this.$http.get('http://localhost:3000/api/registros')
+            this.$http.get('http://192.168.0.33:3000/api/registros')
               .then(function(response) {
                 this.registrosMedicos = response.body;
                 console.log(this.registrosMedicos);
@@ -130,7 +130,7 @@ export default {
     deleteItem(item) {
       const index = this.registrosMedicos.indexOf(item)
       if (confirm('¿Estás seguro de que quieres eliminar el registro médico?') && this.registrosMedicos.splice(index, 1)) {
-        this.$http.delete('http://localhost:3000/api/registros/' + item.id).then(
+        this.$http.delete('http://192.168.0.33:3000/api/registros/' + item.id).then(
           function (response) {
             console.log(response);
           }
@@ -159,7 +159,7 @@ export default {
     save() {
       if (this.editedItem.id) {
         console.log("edited item");
-        this.$http.put('http://localhost:3000/api/registros', this.cleanedItem(this.editedItem))
+        this.$http.put('http://192.168.0.33:3000/api/registros', this.cleanedItem(this.editedItem))
           .then(function (response) {
             console.log('updated reg', this.registrosMedicos);
             this.registrosMedicos.splice(this.editedIndex, 1, this.editedItem);
@@ -169,7 +169,7 @@ export default {
       } else {
         console.log("nuevo item", this.editedItem);
         delete this.editedItem.id;
-        this.$http.post('http://localhost:3000/api/registros', this.cleanedItem(this.editedItem))
+        this.$http.post('http://192.168.0.33:3000/api/registros', this.cleanedItem(this.editedItem))
           .then(function (response) {
             console.log(this.registrosMedicos);
             this.registrosMedicos.push(response.body);

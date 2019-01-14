@@ -165,7 +165,7 @@ export default {
         return;
       }
       this.$http
-        .get("http://localhost:3000/api/registros/" + this.$props.id_registro)
+        .get("http://192.168.0.33:3000/api/registros/" + this.$props.id_registro)
         .then(function(response) {
           this.editedItem = response.body;
         });
@@ -197,7 +197,7 @@ export default {
       if (this.editedItem.id) {
         this.$http
           .put(
-            "http://localhost:3000/api/registros",
+            "http://192.168.0.33:3000/api/registros",
             cleanedItem(this.editedItem)
           )
           .then(function() {
@@ -208,7 +208,7 @@ export default {
         delete this.editedItem.id;
         this.$http
           .post(
-            "http://localhost:3000/api/registros",
+            "http://192.168.0.33:3000/api/registros",
             this.cleanedItem(this.editedItem)
           )
           .then(function(response) {

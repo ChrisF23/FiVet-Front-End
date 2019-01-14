@@ -164,7 +164,7 @@ export default {
     //Al inicializar, cargar la lista de registros.
     initialize() {
       this.$http
-        .get("http://localhost:3000/api/registros")
+        .get("http://192.168.0.33:3000/api/registros")
         .then(function(response) {
           if (this.$props.id == undefined || this.$props.id == null) {
             this.registrosMedicos = response.body;

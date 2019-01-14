@@ -78,7 +78,7 @@ export default {
   methods: {
     //Al inicializar, cargar la lista de clientes.
     initialize() {
-      this.$http.get('http://localhost:3000/api/clientes')
+      this.$http.get('http://192.168.0.33:3000/api/clientes')
         .then(function (response) {
           this.clientes = response.body;
         });
@@ -100,7 +100,7 @@ export default {
     deleteItem(item) {
       const index = this.clientes.indexOf(item)
       if (confirm('¿Estás seguro de que quieres eliminar el cliente?') && this.clientes.splice(index, 1)) {
-        this.$http.delete('http://localhost:3000/api/clientes/' + item.id).then(
+        this.$http.delete('http://192.168.0.33:3000/api/clientes/' + item.id).then(
           function (response) {
             console.log(response);
           }
@@ -133,7 +133,7 @@ export default {
     save() {
       if (this.editedItem.id) {
         console.log("edited item");
-        this.$http.put('http://localhost:3000/api/clientes', this.editedItem)
+        this.$http.put('http://192.168.0.33:3000/api/clientes', this.editedItem)
           .then(function (response) {
             this.clientes.splice(this.editedIndex, 1, this.editedItem);
 
@@ -143,7 +143,7 @@ export default {
       } else {
         console.log("nuevo item", this.editedItem);
         delete this.editedItem.id;
-        this.$http.post('http://localhost:3000/api/clientes', this.cleanedItem(this.editedItem))
+        this.$http.post('http://192.168.0.33:3000/api/clientes', this.cleanedItem(this.editedItem))
           .then(function (response) {
             //if (response.status==200){}
             this.clientes.push(response.body);

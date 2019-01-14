@@ -145,7 +145,7 @@ export default {
     //Al inicializar, cargar la lista de pacientes.
     initialize() {
       this.$http
-        .get("http://localhost:3000/api/pacientes")
+        .get("http://192.168.0.33:3000/api/pacientes")
         .then(function(response) {
           this.pacientes = response.body;
 
@@ -233,7 +233,7 @@ export default {
         this.pacientes.splice(index, 1)
       ) {
         this.$http
-          .delete("http://localhost:3000/api/pacientes/" + item.id)
+          .delete("http://192.168.0.33:3000/api/pacientes/" + item.id)
           .then(function(response) {
             console.log(response);
           });
@@ -271,7 +271,7 @@ export default {
         console.log("edited item");
         this.$http
           .put(
-            "http://localhost:3000/api/pacientes",
+            "http://192.168.0.33:3000/api/pacientes",
             this.cleanedItem(this.editedItem)
           )
           .then(function(response) {
@@ -285,7 +285,7 @@ export default {
         delete this.editedItem.id;
         this.$http
           .post(
-            "http://localhost:3000/api/pacientes",
+            "http://192.168.0.33:3000/api/pacientes",
             this.cleanedItem(this.editedItem)
           )
           .then(function(response) {

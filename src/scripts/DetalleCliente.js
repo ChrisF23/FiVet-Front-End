@@ -23,7 +23,7 @@ export default {
 
     methods: {
         initialize() {
-            this.$http.get('http://localhost:3000/api/clientes/' + this.id)
+            this.$http.get('http://192.168.0.33:3000/api/clientes/' + this.id)
                 .then(function (response) {
                     this.cliente = response.body;
                     this.initialCliente = JSON.parse(JSON.stringify(response.body));
@@ -39,7 +39,7 @@ export default {
         save() {
             this.editing = false;
             if (this.validate) {
-                this.$http.put('http://localhost:3000/api/clientes/', this.cliente).then(
+                this.$http.put('http://192.168.0.33:3000/api/clientes/', this.cliente).then(
                     function (res) {
                         this.initialCliente = res.body;
                         console.log(res);
@@ -56,7 +56,7 @@ export default {
         },
 
         remove() {
-            this.$http.delete('http://localhost:3000/api/clientes/' + this.cliente.id).then(
+            this.$http.delete('http://192.168.0.33:3000/api/clientes/' + this.cliente.id).then(
                 res => {
                     this.$router.push({ name: 'clientes' });
                     console.log("deleted");
