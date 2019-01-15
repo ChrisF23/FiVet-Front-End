@@ -1,19 +1,16 @@
 <template>
   <div>
-    <v-dialog v-model="dialogRegistro" persistent>
+    <v-dialog v-model="dialogRegistro" width="700">
       <v-card>
-        <v-card-title>
-          <span class="headline">Registro Médico</span>
-        </v-card-title>
-        <v-form v-if="dialogRegistro">
-          
-        <v-layout row justify-right>
-          <v-flex xs3 justify-right>
-            <v-btn icon outline color="red" v-on:click="dialogRegistro=false">
+        <v-toolbar card dark color="green">
+            <v-btn icon dark @click="dialog = false">
               <v-icon>close</v-icon>
             </v-btn>
-          </v-flex>
-        </v-layout>
+            <v-toolbar-title>Registro Médico</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+       
+        <v-form v-if="dialogRegistro">
           <v-card-text>
             <v-container grid-list-md>
               <v-flex v-if="registroSeleccionado.fecha_creacion" xs12 sm6 md4>
