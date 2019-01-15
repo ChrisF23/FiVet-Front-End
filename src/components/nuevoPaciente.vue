@@ -3,16 +3,14 @@
     <v-btn slot="activator" color="purple" dark class="mb-2">
       <v-icon small left>add</v-icon>Nuevo Paciente
     </v-btn>
-
+        <v-toolbar card dark color="green">
+            <v-btn icon dark @click="dialog=false">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Nuevo Paciente</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
     <v-card>
-      <v-flex xs3 offset-xs10 justify-right>
-        <v-btn outline fab color="red" v-on:click="dialog=false">
-          <v-icon>close</v-icon>
-        </v-btn>
-      </v-flex>
-      <v-card-title>
-        <span class="headline">Nuevo Paciente</span>
-      </v-card-title>
       <v-form v-model="valid">
         <v-card-text>
           <v-container grid-list-md>
