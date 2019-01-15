@@ -1,6 +1,6 @@
 <template>
-<v-card>
-  <v-container grid-list-xs>
+<v-card class="mt-5">
+  <v-container grid-list-xs align-content-center>
 
     <v-dialog v-model="detalleClienteDialog" persistent>
       <v-card>
@@ -153,14 +153,14 @@ export default {
     initialize() {
       //obtenemos el paciente baso en el prop
       this.$http
-        .get("http://192.168.0.33:3000/api/pacientes/" + this.$props.id)
+        .get("http://localhost:3000/api/pacientes/" + this.$props.id)
         .then(function(response) {
           this.paciente = response.body;
           console.log("PACIENTE",this.paciente);
           //obtenemos el cliente basado en la id_cliente que retornó la request getPaciente
           this.$http
             .get(
-              "http://192.168.0.33:3000/api/clientes/" + this.paciente.id_cliente
+              "http://localhost:3000/api/clientes/" + this.paciente.id_cliente
             )
             .then(function(response) {
               this.cliente = response.body;
@@ -185,7 +185,7 @@ export default {
       delete this.pacienteOnEdit.RegistrosMedicos;
       console.log(this.pacienteOnEdit);
       this.$http
-          .put("http://192.168.0.33:3000/api/pacientes", this.pacienteOnEdit)
+          .put("http://localhost:3000/api/pacientes", this.pacienteOnEdit)
           .then(function(response) {
             this.pacienteOnEdit = response.body;
             this.pacienteOnEdit.Clientes = this.paciente.Clientes;
@@ -194,7 +194,7 @@ export default {
           });
     },
     deletePaciente() {
-      this.$http.delete("http://192.168.0.33:3000/api/pacientes/"+this.paciente.id).bind(this).then(function (response) {
+      this.$http.delete("http://localhost:3000/api/pacientes/"+this.paciente.id).bind(this).then(function (response) {
         this.$router.push("/");
       }).bind(this);
     },
@@ -235,7 +235,7 @@ export default {
     updateCliente() {
       this.$http
         .get(
-          "http://192.168.0.33:3000/api/clientes/" + this.paciente.id_cliente
+          "http://localhost:3000/api/clientes/" + this.paciente.id_cliente
         )
         .then(function(response) {
           this.cliente = response.body;

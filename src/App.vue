@@ -2,13 +2,13 @@
 <template>
   <v-app class="grey lighten-3">
     <!-- Utilizar mi navigationbar -->
-    <navigationBar/>
+    <navigationBar></navigationBar>
     <!-- 
       El contenido sera la vista del router.
       Aplica un margen de 4 a los bordes laterales y un margen de 2 al borde superior e inferior.
       Mas info: https://vuetifyjs.com/en/layout/spacing
     -->
-    <v-content class="mx-4 my-2">
+    <v-content>
       <router-view/>
     </v-content>
   </v-app>

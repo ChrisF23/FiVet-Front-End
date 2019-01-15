@@ -121,7 +121,7 @@
         class="elevation-1"
       >
         <template slot="no-data">
-          <v-alert :value="true" color="error" icon="warning">No hay registros para mostrar</v-alert>
+          <v-alert :value="true" color="yellow" icon="warning">No hay registros para mostrar</v-alert>
         </template>
         <template slot="items" slot-scope="props">
           <tr @click="abrirRegistro(props.item)">
@@ -166,7 +166,7 @@ export default {
     initialize() {
       this.registrosMedicos = [];
       this.$http
-        .get("http://192.168.0.33:3000/api/registros")
+        .get("http://localhost:3000/api/registros")
         .then(function(response) {
           if (this.$props.id == undefined || this.$props.id == null) {
             this.registrosMedicos = response.body;

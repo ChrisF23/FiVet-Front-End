@@ -191,7 +191,7 @@ export default {
   methods: {
     initialize() {
       this.$http
-        .get("http://192.168.0.33:3000/api/clientes/")
+        .get("http://localhost:3000/api/clientes/")
         .then(function(response) {
           this.clientes = response.body;
           this.nombreRutClientes = response.body.map(function(item) {
@@ -237,7 +237,7 @@ export default {
     //guardar el paciente en la base de datos
     savePaciente: function() {
       this.$http
-        .post("http://192.168.0.33:3000/api/pacientes", this.paciente)
+        .post("http://localhost:3000/api/pacientes", this.paciente)
         .then(function(response) {
           this.$root.$emit("db_update");
           this.debug_response = response;
@@ -262,7 +262,7 @@ export default {
         return;
       }
       //Si el cliente es nuevo
-      this.$http.post("http://192.168.0.33:3000/api/clientes", this.cliente).then(
+      this.$http.post("http://localhost:3000/api/clientes", this.cliente).then(
         function(response) {
           this.$root.$emit("db_update");
           this.debug_response = response;

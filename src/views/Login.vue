@@ -27,7 +27,7 @@ export default {
   methods: {
     onLoginSuccess(googleUser) {
       this.$http
-        .get("http://192.168.0.33:3000/api/usuarios")
+        .get("http://localhost:3000/api/usuarios")
         .then(function(response) {
           var usuariosRegistrados = response.body.map(function(item) {
             return item.email;

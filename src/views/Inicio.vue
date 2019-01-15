@@ -66,7 +66,7 @@ export default {
   beforeCreate: function() {
     if (!this.$session.exists()) {
       //Desactivado mientras estemos en desarrollo
-      //this.$router.push("/login");
+      this.$router.push("/login");
     }
   },
 
@@ -85,7 +85,7 @@ export default {
         value: "RegistroMedicos[0].fecha_edicion"
       },
       {
-        text: "Motivo de ultimo registro", 
+        text: "Motivo de último registro", 
         value: "RegistroMedicos[0].motivo"
       }
     ],
@@ -145,7 +145,7 @@ export default {
     //Al inicializar, cargar la lista de pacientes.
     initialize() {
       this.$http
-        .get("http://192.168.0.33:3000/api/pacientes")
+        .get("http://localhost:3000/api/pacientes")
         .then(function(response) {
           this.pacientes = response.body;
 
@@ -233,7 +233,7 @@ export default {
         this.pacientes.splice(index, 1)
       ) {
         this.$http
-          .delete("http://192.168.0.33:3000/api/pacientes/" + item.id)
+          .delete("http://localhost:3000/api/pacientes/" + item.id)
           .then(function(response) {
             console.log(response);
           });
@@ -271,7 +271,7 @@ export default {
         console.log("edited item");
         this.$http
           .put(
-            "http://192.168.0.33:3000/api/pacientes",
+            "http://localhost:3000/api/pacientes",
             this.cleanedItem(this.editedItem)
           )
           .then(function(response) {
@@ -285,7 +285,7 @@ export default {
         delete this.editedItem.id;
         this.$http
           .post(
-            "http://192.168.0.33:3000/api/pacientes",
+            "http://localhost:3000/api/pacientes",
             this.cleanedItem(this.editedItem)
           )
           .then(function(response) {

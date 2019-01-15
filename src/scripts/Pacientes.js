@@ -10,7 +10,7 @@ export default {
   beforeCreate: function() {
     if (!this.$session.exists()) {
       //Desactivado mientras estemos en desarrollo
-      //this.$router.push("/login");
+      this.$router.push("/login");
     }
   },
 
@@ -89,7 +89,7 @@ export default {
     //Al inicializar, cargar la lista de pacientes.
     initialize() {
       
-      this.$http.get('http://192.168.0.33:3000/api/pacientes')
+      this.$http.get('http://localhost:3000/api/pacientes')
         .then(function (response) {
           this.pacientes = response.body;
           this.search = '';
@@ -122,7 +122,7 @@ export default {
     deleteItem(item) {
       const index = this.pacientes.indexOf(item)
       if (confirm('¿Estás seguro de que quieres eliminar al paciente?') && this.pacientes.splice(index, 1)) {
-        this.$http.delete('http://192.168.0.33:3000/api/pacientes/' + item.id).then(
+        this.$http.delete('http://localhost:3000/api/pacientes/' + item.id).then(
           function (response) {
             console.log(response);
           }
@@ -159,7 +159,7 @@ export default {
     save() {
       if (this.editedItem.id) {
         console.log("edited item");
-        this.$http.put('http://192.168.0.33:3000/api/pacientes', this.cleanedItem(this.editedItem))
+        this.$http.put('http://localhost:3000/api/pacientes', this.cleanedItem(this.editedItem))
           .then(function (response) {
             this.pacientes.splice(this.editedIndex, 1, this.editedItem);
 
@@ -169,7 +169,7 @@ export default {
       } else {
         console.log("nuevo item", this.editedItem);
         delete this.editedItem.id;
-        this.$http.post('http://192.168.0.33:3000/api/pacientes', this.cleanedItem(this.editedItem))
+        this.$http.post('http://localhost:3000/api/pacientes', this.cleanedItem(this.editedItem))
           .then(function (response) {
             //if (response.status==200){}
             this.pacientes.push(response.body);
