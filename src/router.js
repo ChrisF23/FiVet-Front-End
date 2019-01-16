@@ -6,7 +6,6 @@ import Pacientes from './views/Pacientes.vue'
 import Clientes from './views/Clientes.vue'
 import DetalleCliente from './views/DetalleCliente.vue'
 import DetallePaciente from './views/DetallePaciente.vue'
-import DetalleRegistroMedico from './views/DetalleRegistroMedico.vue'
 import RegistrosMedicos from './views/RegistrosMedicos.vue'
 import Login from './views/Login.vue'
 
@@ -58,13 +57,6 @@ export default new Router({
       path: '/registros',
       name: 'registrosMedicos',
       component: RegistrosMedicos
-    },
-    // Muestra el detalle de un registro medico dado su id.
-    {
-      path: '/registros/:id',
-      name: 'registroMedico',
-      props: true,
-      component: DetalleRegistroMedico
     }
 
   ]

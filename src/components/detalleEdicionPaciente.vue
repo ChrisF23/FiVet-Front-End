@@ -12,11 +12,103 @@
       <detalleCliente :id="cliente.id" v-if="detalleClienteDialog"></detalleCliente>
       </v-card>
     </v-dialog>
-    <v-btn v-if="editing" color="red" v-on:click="deletePaciente()">
-      <v-icon top absolute small>delete</v-icon>ELIMINAR
-    </v-btn>
+
+    <v-dialog v-model="editing" persistent>
+      <v-card class="pa-3">
+        <v-layout row>
+
+          <v-layout row mb-2>
+            <v-flex>
+              <v-btn color="red" v-on:click="deleting=true">
+                <v-icon top absolute small>delete</v-icon>ELIMINAR
+              </v-btn>
+            </v-flex>
+          </v-layout>
+          <v-layout justify-end row>
+              <v-btn icon outline color="red" v-on:click="closePacienteDialog()">
+                <v-icon>close</v-icon>
+              </v-btn>
+          </v-layout>
+        </v-layout>
+
+          <v-flex d-flex v-if="editing">
+            <v-layout row >
+              <v-avatar size="100" class="mr-3">
+                <img src="../images/placeholder.png">
+              </v-avatar>
+              <v-layout row wrap>
+              <v-flex d-flex>
+                  <v-text-field
+                      v-model="pacienteOnEdit.nombre"
+                      label="Nombre"
+                      required
+                  ></v-text-field>
+                </v-flex>
+
+                <v-flex d-flex>
+                  <v-text-field
+                      v-model="pacienteOnEdit.especie"
+                      label="Especie"
+                      required
+                    ></v-text-field>
+                </v-flex>
+
+                <v-flex d-flex>
+                    <v-combobox
+                    v-model="pacienteOnEdit.castrado"
+                    :items="['SI', 'NO']"
+                    label="Castrado"
+                    ></v-combobox>
+                </v-flex>
+
+                <v-flex d-flex>
+                  <v-text-field
+                      v-model="pacienteOnEdit.raza"
+                      label="Raza"
+                      required
+                    ></v-text-field>
+                </v-flex>
+
+                <v-flex d-flex>
+                    <v-combobox
+                    v-model="pacienteOnEdit.sexo"
+                    :items="['F', 'M']"
+                    label="Sexo"
+                    ></v-combobox>
+                </v-flex>
+
+                <v-flex>
+                  <div class="caption grey--text pb-2">Fecha de Nacimiento</div>
+                  <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
+                </v-flex>
+
+              </v-layout>
+            </v-layout>
+          </v-flex> 
+        <v-layout row justify-end>
+          <v-btn color="green" v-on:click="savePaciente()">
+              <v-icon top left absolute small>save</v-icon>GUARDAR
+          </v-btn>
+        </v-layout>
+      </v-card>
+    </v-dialog>
+    
+    <v-dialog v-model="deleting" persistent>
+      <v-card class="pa-3">
+        <h2 align="center" class="pt-2 pb-2">¿Está seguro que desea eliminar al paciente?</h2>
+        <v-layout pb-2 row justify-center>
+          <v-btn color="green" v-on:click="deletePaciente()">
+            <h2>SI</h2>
+          </v-btn>
+          <v-btn class="ml-5" color="red" v-on:click="deleting=false">
+            <h2>NO</h2>
+          </v-btn>
+        </v-layout>
+      </v-card>
+    </v-dialog>
+
     <v-layout row align-center wrap>
-      <v-flex d-flex > 
+      <v-flex d-flex mr-3 > 
         <v-card color="transparent" flat>
           <v-layout column justify-center wrap>
             <v-avatar size="100">
@@ -26,7 +118,7 @@
         </v-card>
       </v-flex>
 
-      <v-flex d-flex v-if="!editing">
+      <v-flex d-flex>
         <v-layout row wrap>
           <v-flex d-flex xs ml-1 mr-1 v-for="(data, key) of computedPacienteClienteData()">
             <v-card color="transparent" flat>
@@ -50,71 +142,14 @@
             </v-card>
           </v-flex>
         </v-layout>
-      </v-flex>  
-
-      <v-flex d-flex v-else>
-        <v-layout row wrap>
-          <v-flex pl-2 xs4>
-              <v-text-field
-                  v-model="pacienteOnEdit.nombre"
-                  label="Nombre"
-                  required
-              ></v-text-field>
-            </v-flex>
-
-            <v-flex pl-2 xs3>
-              <v-text-field
-                  v-model="pacienteOnEdit.especie"
-                  label="Especie"
-                  required
-                ></v-text-field>
-            </v-flex>
-
-            <v-flex pl-2 xs2>
-                <v-combobox
-                v-model="pacienteOnEdit.castrado"
-                :items="['SI', 'NO']"
-                label="Castrado"
-                ></v-combobox>
-            </v-flex>
-
-            <v-flex pl-2 xs3>
-              <v-text-field
-                  v-model="pacienteOnEdit.raza"
-                  label="Raza"
-                  required
-                ></v-text-field>
-            </v-flex>
-
-             <v-flex pl-2 xs1>
-                <v-combobox
-                v-model="select"
-                :items="['F', 'M']"
-                label="Sexo"
-                ></v-combobox>
-            </v-flex>
-
-            <v-flex pl-2 xs2>
-              <div class="caption grey--text pb-2">Fecha de Nacimiento</div>
-              <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
-            </v-flex>
-
-
-        </v-layout>
-      </v-flex>  
-
-      <v-flex d-flex> 
-        <v-card color="transparent" flat>
-          <v-btn v-if="!editing" color="warning" v-on:click="edit()">
-            <v-icon top left small>edit</v-icon>Editar
-          </v-btn>      
-          <div v-else>
-            <v-btn color="green" v-on:click="savePaciente()">
-            <v-icon top left absolute small>save</v-icon>GUARDAR
-          </v-btn>
-          </div>
-        </v-card>
       </v-flex> 
+    
+    </v-layout>
+
+    <v-layout row justify-end>
+      <v-btn color="warning" v-on:click="edit()">
+        <v-icon top left small>edit</v-icon>Editar
+      </v-btn>
     </v-layout>
   </v-container>
 </v-card >
@@ -138,12 +173,14 @@ export default {
       cliente: null,
       pacienteOnEdit: null,
       editing: false,
+      deleting:false,
       detalleClienteDialog: false,
       pacienteLabels: {
         nombre: "Nombre",
         especie: "Especie",
         raza: "Raza",
-        sexo: "Sexo"
+        sexo: "Sexo",
+        castrado: "Castrado"
       }
     };
   },
@@ -169,10 +206,10 @@ export default {
             });
         });
     },
+
     edit: function() {
-    
-    this.pacienteOnEdit = JSON.parse(JSON.stringify(this.paciente));
-    this.editing = true;
+      this.pacienteOnEdit = JSON.parse(JSON.stringify(this.paciente));
+      this.editing = true;
     },
 
     cancelEditMode(){
@@ -193,10 +230,15 @@ export default {
             this.paciente = this.pacienteOnEdit;
           });
     },
+
     deletePaciente() {
       this.$http.delete("http://localhost:3000/api/pacientes/"+this.paciente.id).bind(this).then(function (response) {
         this.$router.push("/");
       }).bind(this);
+    },
+
+    closePacienteDialog() {
+      this.editing = false;
     },
 
     fechaToString() {
