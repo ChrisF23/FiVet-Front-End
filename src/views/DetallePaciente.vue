@@ -2,13 +2,42 @@
 <template>
   <div class="paciente">
     <datosPaciente :id="paciente_id"></datosPaciente>
-    <dialog-agregar-registro-medico :id_paciente="paciente_id"></dialog-agregar-registro-medico>
-    <tablaRegistrosMedicos :id="paciente_id" :registroInicial="registroInicial"></tablaRegistrosMedicos>
+
+    <v-card>
+    <v-layout row allign-center>
+    <v-flex>
+      <v-card-title class="headline">Registros Médicos
+      
+        </v-card-title>
+    </v-flex>
+    <v-flex>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Nombre de paciente, Raza, Nombre del dueño, etc..."
+          single-line
+          hide-details
+        ></v-text-field>
+        
+</v-flex>
+        <!-- Inicio formulario -->
+        <v-spacer></v-spacer>
+        <v-flex>
+        
+        <dialog-agregar-registro-medico :id_paciente="paciente_id"></dialog-agregar-registro-medico>
+      </v-flex>
+      
+      </v-layout>
+      <tablaRegistrosMedicosReactive :id="paciente_id" :registroInicial="registroInicial"></tablaRegistrosMedicosReactive>
+    </v-card>
+     
+    
+    
   </div>
 </template>
 
 <script>
-import tablaRegistrosMedicos from "../components/tablaRegistrosMedicos";
+import tablaRegistrosMedicosReactive from "../components/tablaRegistrosMedicosReactive";
 import datosPaciente from "../components/detalleEdicionPaciente";
 import dialogAgregarRegistroMedico from "../components/agregarRegistroMedico";
 export default {
@@ -18,14 +47,14 @@ export default {
   },
 
   beforeCreate: function() {
-    if (!this.$session.exists()) {
+    //if (!this.$session.exists()) {
       //Desactivado mientras estemos en desarrollo
-      this.$router.push("/login");
-    }
+      //this.$router.push("/login");
+    //}
   },
 
   components: {
-    tablaRegistrosMedicos,
+    tablaRegistrosMedicosReactive,
     datosPaciente,
     dialogAgregarRegistroMedico
   },

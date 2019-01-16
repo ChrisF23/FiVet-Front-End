@@ -1,20 +1,19 @@
 <template>
   <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+     <v-toolbar card dark color="green">
+            <v-btn icon dark @click="dialog=false">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Nuevo Registro</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>    
+
     <v-btn slot="activator" color="purple" dark class="mb-2">
       <v-icon small left>add</v-icon>Nuevo Registro
     </v-btn>
     <v-card>
-      <v-card-title>
-        <span class="headline">{{ "Nuevo Registro" }}</span>
-      </v-card-title>
-
       <v-card-text>
         <v-container grid-list-md>
-          <v-flex xs3 offset-xs11 justify-right>
-            <v-btn icon outline color="red" v-on:click="dialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-          </v-flex>
           <v-flex>
             <v-textarea v-model="editedItem.patologia" label="Patología" autofocus="true"></v-textarea>
           </v-flex>

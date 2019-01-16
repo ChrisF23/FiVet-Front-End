@@ -2,13 +2,15 @@
 <v-card class="mt-5">
   <v-container grid-list-xs align-content-center>
 
-    <v-dialog v-model="detalleClienteDialog" persistent>
+    <v-dialog v-model="detalleClienteDialog" max-width="600px">
       <v-card>
-        <v-flex xs1>
-          <v-btn icon outline color="red" v-on:click="closeClienteDialog()">
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-flex>
+        <v-toolbar card dark color="green">
+            <v-btn icon dark @click="closeClienteDialog()">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Dueño</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
       <detalleCliente :id="cliente.id" v-if="detalleClienteDialog"></detalleCliente>
       </v-card>
     </v-dialog>
