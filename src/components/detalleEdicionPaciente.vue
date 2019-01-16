@@ -4,94 +4,104 @@
 
     <v-dialog v-model="detalleClienteDialog" >
       <v-card>
-        <v-toolbar card dark color="green">
-            <v-btn icon dark @click="closeClienteDialog()">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Dueño</v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
+        <v-toolbar flat card dark color="green">
+          <v-layout row>
+            <v-card-title class="headline ml-1">Cliente</v-card-title>
+
+            <v-layout align-center justify-end row>
+              <v-btn icon dark @click="closeClienteDialog()">
+                <v-icon>close</v-icon>
+              </v-btn>
+            </v-layout>
+          </v-layout>
+        </v-toolbar>
       <detalleCliente :id="cliente.id" v-if="detalleClienteDialog"></detalleCliente>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="editing" persistent>
-      <v-card class="pa-3">
-        <v-layout row>
 
-          <v-layout row mb-2>
-            <v-flex>
-              <v-btn color="red" v-on:click="deleting=true">
-                <v-icon top absolute small>delete</v-icon>ELIMINAR
-              </v-btn>
-            </v-flex>
-          </v-layout>
-          <v-layout justify-end row>
-              <v-btn icon outline color="red" v-on:click="closePacienteDialog()">
-                <v-icon>close</v-icon>
-              </v-btn>
-          </v-layout>
-        </v-layout>
-
-          <v-flex d-flex v-if="editing">
-            <v-layout row >
-              <v-avatar size="100" class="mr-3">
-                <img src="../images/placeholder.png">
-              </v-avatar>
-              <v-layout row wrap>
-              <v-flex d-flex>
-                  <v-text-field
-                      v-model="pacienteOnEdit.nombre"
-                      label="Nombre"
-                      required
-                  ></v-text-field>
-                </v-flex>
-
-                <v-flex d-flex>
-                  <v-text-field
-                      v-model="pacienteOnEdit.especie"
-                      label="Especie"
-                      required
-                    ></v-text-field>
-                </v-flex>
-
-                <v-flex d-flex>
-                    <v-combobox
-                    v-model="pacienteOnEdit.castrado"
-                    :items="['SI', 'NO']"
-                    label="Castrado"
-                    ></v-combobox>
-                </v-flex>
-
-                <v-flex d-flex>
-                  <v-text-field
-                      v-model="pacienteOnEdit.raza"
-                      label="Raza"
-                      required
-                    ></v-text-field>
-                </v-flex>
-
-                <v-flex d-flex>
-                    <v-combobox
-                    v-model="pacienteOnEdit.sexo"
-                    :items="['F', 'M']"
-                    label="Sexo"
-                    ></v-combobox>
-                </v-flex>
-
-                <v-flex>
-                  <div class="caption grey--text pb-2">Fecha de Nacimiento</div>
-                  <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
-                </v-flex>
-
-              </v-layout>
-            </v-layout>
-          </v-flex> 
-        <v-layout row justify-end>
-          <v-btn color="green" v-on:click="savePaciente()">
-              <v-icon top left absolute small>save</v-icon>GUARDAR
+        <v-toolbar flat card dark color="green">
+          <v-layout row>
+          <v-card-title class="headline ml-1">Editar Paciente</v-card-title>
+          <v-layout align-center justify-end row>
+          <v-btn icon dark @click="closePacienteDialog()">
+            <v-icon>close</v-icon>
           </v-btn>
-        </v-layout>
+          </v-layout>
+          </v-layout>
+        </v-toolbar>
+      <v-card class="pa-3">
+          <v-layout row>
+
+            <v-layout row mb-2>
+              <v-flex>
+                <v-btn color="red" v-on:click="deleting=true" dark>
+                  <v-icon top small>delete</v-icon>ELIMINAR
+                </v-btn>
+              </v-flex>
+            </v-layout>
+          </v-layout>
+
+            <v-flex d-flex v-if="editing">
+              <v-layout row >
+                <v-avatar size="100" class="mr-3">
+                  <img src="../images/placeholder.png">
+                </v-avatar>
+                <v-layout row wrap>
+                <v-flex d-flex>
+                    <v-text-field
+                        v-model="pacienteOnEdit.nombre"
+                        label="Nombre"
+                        required
+                    ></v-text-field>
+                  </v-flex>
+
+                  <v-flex d-flex>
+                    <v-text-field
+                        v-model="pacienteOnEdit.especie"
+                        label="Especie"
+                        required
+                      ></v-text-field>
+                  </v-flex>
+
+                  <v-flex d-flex>
+                      <v-combobox
+                      v-model="pacienteOnEdit.castrado"
+                      :items="['SI', 'NO']"
+                      label="Castrado"
+                      ></v-combobox>
+                  </v-flex>
+
+                  <v-flex d-flex>
+                    <v-text-field
+                        v-model="pacienteOnEdit.raza"
+                        label="Raza"
+                        required
+                      ></v-text-field>
+                  </v-flex>
+
+                  <v-flex d-flex>
+                      <v-combobox
+                      v-model="pacienteOnEdit.sexo"
+                      :items="['F', 'M']"
+                      label="Sexo"
+                      ></v-combobox>
+                  </v-flex>
+
+                  <v-flex>
+                    <div class="caption grey--text pb-2">Fecha de Nacimiento</div>
+                    <input v-model="pacienteOnEdit.fecha_nacimiento"  id="date" type="date">
+                  </v-flex>
+
+                </v-layout>
+              </v-layout>
+            </v-flex> 
+          <v-layout row justify-end>
+            <v-btn color="green" v-on:click="savePaciente()" dark>
+                <v-icon top left absolute small>save</v-icon>GUARDAR
+            </v-btn>
+          </v-layout>
       </v-card>
     </v-dialog>
     
@@ -99,10 +109,10 @@
       <v-card class="pa-3">
         <h2 align="center" class="pt-2 pb-2">¿Está seguro que desea eliminar al paciente?</h2>
         <v-layout pb-2 row justify-center>
-          <v-btn color="green" v-on:click="deletePaciente()">
+          <v-btn color="green" v-on:click="deletePaciente()" dark>
             <h2>SI</h2>
           </v-btn>
-          <v-btn class="ml-5" color="red" v-on:click="deleting=false">
+          <v-btn class="ml-5" color="red" v-on:click="deleting=false" dark>
             <h2>NO</h2>
           </v-btn>
         </v-layout>

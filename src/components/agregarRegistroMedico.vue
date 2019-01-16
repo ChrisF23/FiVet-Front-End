@@ -94,8 +94,8 @@
       </v-card-text>
       <v-card-actions>
         <v-layout justify-center>
-          <v-btn right color="red" v-on:click="close">Cancelar</v-btn>
-          <v-btn left color="green" v-on:click="save">Guardar</v-btn>
+          <v-btn right color="red" v-on:click="close" dark>Cancelar</v-btn >
+          <v-btn left color="green" v-on:click="save" dark>Guardar</v-btn>
         </v-layout>
       </v-card-actions>
     </v-card>
