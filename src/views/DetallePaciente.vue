@@ -4,29 +4,20 @@
     <datosPaciente :id="paciente_id"></datosPaciente>
 
     <v-card>
-    <v-layout row allign-center>
-    <v-flex>
-      <v-card-title class="headline">Registros Médicos
-      
-        </v-card-title>
-    </v-flex>
-    <v-flex>
-        <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Nombre de paciente, Raza, Nombre del dueño, etc..."
-          single-line
-          hide-details
-        ></v-text-field>
-        
-</v-flex>
+      <v-layout row align-center>
+        <v-flex>
+          <v-card-title class="headline ml-1">Registros Médicos
+          
+          </v-card-title>
+        </v-flex>
         <!-- Inicio formulario -->
         <v-spacer></v-spacer>
         <v-flex>
+          <v-layout row justify-end>
+            <dialog-agregar-registro-medico :id_paciente="paciente_id" class="mr-3"></dialog-agregar-registro-medico>
+          </v-layout>
+        </v-flex>
         
-        <dialog-agregar-registro-medico :id_paciente="paciente_id"></dialog-agregar-registro-medico>
-      </v-flex>
-      
       </v-layout>
       <tablaRegistrosMedicosReactive :id="paciente_id" :registroInicial="registroInicial"></tablaRegistrosMedicosReactive>
     </v-card>

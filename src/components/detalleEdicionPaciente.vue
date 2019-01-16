@@ -1,8 +1,8 @@
 <template>
-<v-card class="mt-5 mb-1">
+<v-card class="mt-2 mb-2">
   <v-container grid-list-xs align-content-center>
 
-    <v-dialog v-model="detalleClienteDialog" max-width="600px">
+    <v-dialog v-model="detalleClienteDialog" >
       <v-card>
         <v-toolbar card dark color="green">
             <v-btn icon dark @click="closeClienteDialog()">
@@ -110,9 +110,9 @@
     </v-dialog>
 
     <v-layout row align-center wrap>
-      <v-flex d-flex mr-3 > 
+      <v-flex d-flex > 
         <v-card color="transparent" flat>
-          <v-layout column justify-center wrap>
+          <v-layout mr-2 column justify-center wrap>
             <v-avatar size="100">
               <img src="../images/placeholder.png">
             </v-avatar>
@@ -145,11 +145,10 @@
           </v-flex>
         </v-layout>
       </v-flex> 
-    
     </v-layout>
 
     <v-layout row justify-end>
-      <v-btn color="warning" v-on:click="edit()">
+      <v-btn offset-xl2 color="warning" v-on:click="edit()">
         <v-icon top left small>edit</v-icon>Editar
       </v-btn>
     </v-layout>

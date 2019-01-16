@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+  <v-dialog v-model="dialog" fullscreen hide-overlay persistent transition="dialog-bottom-transition">
      <v-toolbar card dark color="green">
             <v-btn icon dark @click="dialog=false">
               <v-icon>close</v-icon>
@@ -94,8 +94,8 @@
       </v-card-text>
       <v-card-actions>
         <v-layout justify-center>
-          <v-btn right color="error" v-on:click="close">Cancelar</v-btn>
-          <v-btn left color="info" v-on:click="save">Guardar</v-btn>
+          <v-btn right color="red" v-on:click="close">Cancelar</v-btn>
+          <v-btn left color="green" v-on:click="save">Guardar</v-btn>
         </v-layout>
       </v-card-actions>
     </v-card>
