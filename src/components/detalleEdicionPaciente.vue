@@ -1,5 +1,5 @@
 <template>
-<v-card class="mt-5">
+<v-card class="mt-5 mb-1">
   <v-container grid-list-xs align-content-center>
 
     <v-dialog v-model="detalleClienteDialog" max-width="600px">

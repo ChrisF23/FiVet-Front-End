@@ -1,15 +1,126 @@
 <template>
   <div>
+    <v-dialog v-model="dialogRegistro" width="700">
+        <v-card>
+          <v-toolbar card dark color="green">
+              <v-btn icon dark @click="dialogRegistro = false">
+                <v-icon>close</v-icon>
+              </v-btn>
+              <v-toolbar-title>Registro Médico</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+        
+          <v-form v-if="dialogRegistro">
+            <v-card-text>
+              <v-container grid-list-md>
+                <v-flex v-if="registroSeleccionado.patologia" xs12 sm6 md4>
+                  <h4>Patología: {{registroSeleccionado.patologia}}</h4>
+                  <p></p>
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.fecha_creacion" xs12 sm6 md4>
+                  <h4>Fecha: {{registroSeleccionado.fecha_creacion.replace("T", " ").replace("Z", " ")}}</h4>
+                  <p></p>
+                </v-flex>
+                <v-flex v-if="registroSeleccionado.motivo" xs12 sm6 md4>
+                  <h3>Motivo</h3>
+                  {{registroSeleccionado.motivo}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.anamnesis" xs12 sm6 md4>
+                  <h3>Anamnesia</h3>
+                  {{registroSeleccionado.anamnesis}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.peso" xs12 sm6 md4>
+                  <h3>Peso</h3>
+                  {{registroSeleccionado.peso}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.temperatura" xs12 sm6 md4>
+                  <h3>Temperatura</h3>
+                  {{registroSeleccionado.temperatura}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.hidratacion" xs12 sm6 md4>
+                  <h3>Hidratación</h3>
+                  {{registroSeleccionado.hidratacion}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.pulso" xs12 sm6 md4>
+                  <h3>Pulso</h3>
+                  {{registroSeleccionado.pulso}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.frecuencia_cardiaca" xs12 sm6 md4>
+                  <h3>Frecuencia Cardíaca</h3>
+                  {{registroSeleccionado.frecuencia_cardiaca}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.frecuencia_respiratoria" xs12 sm6 md4>
+                  <h3>Frecuencia Respiratoria</h3>
+                  {{registroSeleccionado.frecuencia_respiratoria}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.musocas" xs12 sm6 md4>
+                  <h3>Mucosas</h3>
+                  {{registroSeleccionado.mucosas}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.tiempo_llenado_capilar" xs12 sm6 md4>
+                  <h3>Tiempo de Llenado Capilar</h3>
+                  {{registroSeleccionado.tiempo_llenado_capilar}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.ganglios" xs12 sm6 md4>
+                  <h3>Ganglios</h3>
+                  {{registroSeleccionado.ganglios}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.reflejo_tusigeno" xs12 sm6 md4>
+                  <h3>Reflejo Tusígeno</h3>
+                  {{registroSeleccionado.reflejo_tusigeno}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.reflejo_deglutorio" xs12 sm6 md4>
+                  <h3>Reflejo Deglutorio</h3>
+                  {{registroSeleccionado.reflejo_deglutorio}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.palpacion_abdominal" xs12 sm6 md4>
+                  <h3>Palpitación Abdominal</h3>
+                  {{registroSeleccionado.palpacion_abdominal}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.palmopercusion" xs12 sm6 md4>
+                  <h3>Palmopercusión</h3>
+                  {{registroSeleccionado.palmopercusion}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.tonsilas" xs12 sm6 md4>
+                  <h3>Tonsilas</h3>
+                  {{registroSeleccionado.tonsilas}}
+                </v-flex>
+
+                <v-flex v-if="registroSeleccionado.pulso_por_minuto" xs12 sm6 md4>
+                  <h3>Pulso</h3>
+                  {{registroSeleccionado.pulso_por_minuto}}
+                </v-flex>
+              </v-container>
+            </v-card-text>
+          </v-form>
+        </v-card>
+    </v-dialog>
     <v-data-table :headers="headers" :items="registrosMedicos" class="elevation-1">
       <template slot="no-data">
         <v-alert :value="true" color="error" icon="warning">No hay registros para mostrar</v-alert>
       </template>
       <template slot="items" slot-scope="props">
-      <tr @click="redireccionPaciente(props.item)"> 
+      <tr @click="abrirRegistro(props.item)"> 
         <td>{{ props.item.patologia }}</td>
         <td>{{ props.item.motivo }}</td>
         <td>{{ props.item.anamnesis }}</td>
-        <td>{{ props.item.fecha_creacion }}</td>
+        <td>{{ props.item.fecha_creacion.replace("T", " ").replace("Z", " ") }}</td>
       </tr>  
       </template>
     </v-data-table>
@@ -27,6 +138,8 @@ export default {
     return {
       id_paciente: "",
       valid: false,
+      dialogRegistro: false,
+      registroSeleccionado: null,
       dialog: false,
       search: "",
       headers: [
@@ -46,6 +159,7 @@ export default {
   methods: {
     //Al inicializar, cargar la lista de registros.
     initialize() {
+      this.registrosMedicos = [];
       this.$http
         .get("http://localhost:3000/api/registros")
         .then(function(response) {
@@ -63,17 +177,9 @@ export default {
       this.search = "";
     },
 
-    redireccionPaciente(registroSeleccionado) {
-      console.log(registroSeleccionado);
-      //this.$router.push({path: '/pacientes/'+registroSeleccionado.Paciente.id, params: {registroInicial: registroSeleccionado}})
-      this.$router.push({
-	name: 'paciente',
-	params: {
-		id: registroSeleccionado.Paciente.id,
-    registroInicial: registroSeleccionado
-	}
-});
-      this.valid = true;
+    abrirRegistro(registro) {
+      this.registroSeleccionado = registro;
+      this.dialogRegistro = true;
     }
 
   },
